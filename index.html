@@ -3,147 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dziedzictwo Żelaza – Gra Miejska</title>
+  <title>Dziedzictwo Żelaza</title>
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Uncial Antiqua', serif;
-      margin: 0;
-      padding: 0;
-      background: url('tło.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #f8f1d9;
-    }
-    .overlay {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 20px;
-      min-height: 100vh;
-    }
-    .box {
-      background: rgba(51, 28, 7, 0.9);
-      padding: 30px;
-      margin: 20px auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.7);
-      max-width: 900px;
-    }
-    h1, h2, h3 {
-      text-align: center;
-      color: #ffcc66;
-    }
-    p {
-      line-height: 1.6;
-    }
-    button {
-      padding: 12px 20px;
-      background: #a6763c;
-      border: none;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 10px;
-      font-family: 'Uncial Antiqua', serif;
-      font-size: 16px;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #c18e52;
-    }
-    .stats, .chat {
-      margin-top: 20px;
-      padding: 15px;
-      background: rgba(0,0,0,0.6);
-      border-radius: 8px;
-    }
-    .stats h3, .chat h3 {
-      margin-top: 0;
-    }
-    .chat-box {
-      height: 200px;
-      overflow-y: auto;
-      background: #1a1207;
-      padding: 10px;
-      border-radius: 6px;
-    }
-    .chat-input {
-      width: calc(100% - 100px);
-      padding: 8px;
-      margin-right: 10px;
-      border-radius: 4px;
-      border: none;
-    }
-    .chat-send {
-      width: 80px;
-    }
+    body {font-family:'Uncial Antiqua', serif; margin:0; padding:0; background:#1a1207; color:#f8f1d9;}
+    .container {max-width:800px; margin:auto; padding:20px;}
+    .section {display:none; background:#2e1b0f; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.7); margin-bottom:20px;}
+    .section.active {display:block;}
+    h1, h2 {text-align:center; color:#e0b869;}
+    p, ul {line-height:1.5;}
+    button {display:block; width:100%; padding:12px; margin:10px 0; background:#7a5230; border:none; border-radius:8px; color:#fff; font-size:16px; cursor:pointer;}
+    button:hover {background:#96714e;}
+    .tasks-list li {margin:8px 0;}
+    .stats {margin-top:10px; font-weight:bold;}
+    .certificate {text-align:center;}
+    .certificate img {max-width:200px; display:block; margin:20px auto;}
   </style>
 </head>
 <body>
-  <div class="overlay">
-    <div class="box" id="intro">
+  <div class="container">
+    <!-- 1. Intro i instrukcja -->
+    <div id="intro" class="section active">
       <h1>🛡️ Dziedzictwo Żelaza</h1>
-      <p>Rok 972. Zmierzch starych bogów i świt nowych porządków. Grodzisko wzywa Was – strażników pamięci – by ocalić przeszłość i zdecydować o przyszłości Grodu.</p>
-      <button onclick="scrollToTasks()">Przejdź do zadań</button>
+      <p>Rok 972. Zmierzch starych bogów, świt nowych porządków. Grodzisko wzywa Was - Strażników Pamięci, by ocalić przeszłość i zdecydować o przyszłości Grodu.</p>
+      <h2>Instrukcja</h2>
+      <ul>
+        <li>Wybierz postać i wylosuj zadanie poboczne.</li>
+        <li>Odwiedź i wykonaj 4 z 6 głównych punktów gry.</li>
+        <li>Następnie przejdź do Rady Starszych i podejmij decyzję.</li>
+        <li>2+ wykonane punkty → decyzja negatywna. 3+ → decyzja pozytywna i certyfikat.</li>
+      </ul>
+      <button onclick="showSection('selection')">Start</button>
     </div>
 
-    <div class="box" id="tasks" style="display:none;">
-      <h2>Wybór postaci i misji pobocznej</h2>
-      <button onclick="selectRole('Zwiadowca')">Zwiadowca</button>
-      <button onclick="selectRole('Tkaczka')">Tkaczka</button>
-      <button onclick="selectRole('Zielarka')">Zielarka</button>
-      <button onclick="selectRole('Kupiec')">Kupiec</button>
-      <button onclick="selectRole('Rzemieślnik')">Rzemieślnik</button>
-      <button onclick="selectRole('Starszy')">Starszy</button>
-      <p id="role-desc"></p>
-      <button onclick="startGame()" style="display:none;" id="start-btn">Rozpocznij grę</button>
+    <!-- 2. Wybór postaci i zadania pobocznego -->
+    <div id="selection" class="section">
+      <h2>Wybór postaci</h2>
+      <button onclick="choose('Zwiadowca')">Zwiadowca</button>
+      <button onclick="choose('Tkaczka')">Tkaczka</button>
+      <button onclick="choose('Zielarka')">Zielarka</button>
+      <button onclick="choose('Kupiec')">Kupiec</button>
+      <button onclick="choose('Rzemieślnik')">Rzemieślnik</button>
+      <button onclick="choose('Starszy')">Starszy</button>
+      <p id="selectedRole" style="text-align:center;margin-top:10px;"></p>
+      <button id="nextToTasks" style="display:none;" onclick="showSection('mainTasks')">Dalej</button>
     </div>
 
-    <div class="stats box">
-      <h3>📊 Statystyki drużyny</h3>
-      <p>Zadania ukończone: <span id="completed">0</span>/4</p>
-      <p>Fragmenty Dziedzictwa: <span id="fragments">0</span>/6</p>
+    <!-- 3. Główne zadania i statystyki -->
+    <div id="mainTasks" class="section">
+      <h2>Główne punkty Gry</h2>
+      <ul class="tasks-list">
+        <li><button onclick="complete(1)">Brama Grodu</button></li>
+        <li><button onclick="complete(2)">Warsztat Kowala</button></li>
+        <li><button onclick="complete(3)">Zagroda</button></li>
+        <li><button onclick="complete(4)">Chata Tkaczki</button></li>
+        <li><button onclick="complete(5)">Chata Zielarki</button></li>
+        <li><button onclick="complete(6)">Kamień Decyzji</button></li>
+      </ul>
+      <div class="stats">
+        Zadania ukończone: <span id="doneCount">0</span>/4
+      </div>
+      <button id="toCouncil" style="display:none;" onclick="showSection('council')">Do Rady Starszych</button>
     </div>
 
-    <div class="chat box">
-      <h3>💬 Pomoc Mędrców</h3>
-      <div class="chat-box" id="chat-box"></div>
-      <input type="text" class="chat-input" id="chat-input" placeholder="Zadaj pytanie...">
-      <button class="chat-send" onclick="sendMessage()">Wyślij</button>
+    <!-- 4. Rada Starszych i decyzja -->
+    <div id="council" class="section">
+      <h2>🪨 Rada Starszych</h2>
+      <p>Podejmijcie decyzję o przyszłości Grodu:</p>
+      <button onclick="decide()">Zakończ grę</button>
+      <p id="decisionResult" style="text-align:center;margin-top:15px;"></p>
+    </div>
+
+    <!-- 5. Certyfikat -->
+    <div id="certificate" class="section">
+      <div class="certificate">
+        <h2>🎖️ Medalion Grodu i Certyfikat</h2>
+        <img src="certyfikat1.png" alt="Certyfikat">
+        <p>Niniejsze zaświadczenie potwierdza udział i sukces w Próbie Dziedzictwa Żelaza.</p>
+      </div>
     </div>
   </div>
+
   <script>
-    let roleSelected = false;
-    function scrollToTasks() {
-      document.getElementById('intro').scrollIntoView({ behavior: 'smooth' });
-      document.getElementById('tasks').style.display = 'block';
+    let done = 0;
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
-    function selectRole(role) {
-      const descs = {
-        'Zwiadowca': 'Zwiadowca – odważny wędrowiec, który...',
-        'Tkaczka': 'Tkaczka – ekspertka od wzorów i symboli...',
-        'Zielarka': 'Zielarka – specjalistka od wiedzy przyrodniczej...',
-        'Kupiec': 'Kupiec – mistrz komunikacji i handlu...',
-        'Rzemieślnik': 'Rzemieślnik – mistrz techniki i precyzji...',
-        'Starszy': 'Starszy – podejmuje decyzje końcowe...'
-      };
-      document.getElementById('role-desc').innerText = descs[role];
-      roleSelected = true;
-      document.getElementById('start-btn').style.display = 'inline-block';
+    function choose(role) {
+      const side = ['Znalezienie ukrytego symbolu','Ułożenie fragmentów mapy','Odszyfrowanie runicznej wiadomości','Zadanie logiczne','Utrzymanie równowagi'][Math.floor(Math.random()*5)];
+      document.getElementById('selectedRole').innerText = `Wybrano: ${role}\nZadanie poboczne: ${side}`;
+      document.getElementById('nextToTasks').style.display = 'block';
     }
-    function startGame() {
-      if (!roleSelected) return alert('Wybierz rolę!');
-      window.location.href = 'index_gra_dziedzictwo.html';
+    function complete(n) {
+      if (document.querySelector(`#mainTasks button:nth-child(${n})`).disabled) return;
+      done++;
+      document.getElementById('doneCount').innerText = done;
+      event.target.disabled = true;
+      if (done >= 4) document.getElementById('toCouncil').style.display = 'block';
     }
-    function sendMessage() {
-      const inp = document.getElementById('chat-input');
-      const text = inp.value.trim();
-      if (!text) return;
-      const box = document.getElementById('chat-box');
-      const userMsg = document.createElement('div'); userMsg.innerText = 'Ty: ' + text;
-      box.appendChild(userMsg);
-      const botMsg = document.createElement('div'); botMsg.innerText = 'Mędrzec: Sprawdź punkt „Chata Tkaczki” – tam znajdziesz wskazówkę.';
-      setTimeout(()=> box.appendChild(botMsg), 800);
-      inp.value = '';
-      box.scrollTop = box.scrollHeight;
+    function decide() {
+      const res = done >= 3 ? 'Decyzja pozytywna! Otrzymujecie certyfikat.' : 'Decyzja negatywna. Brak certyfikatu.';
+      document.getElementById('decisionResult').innerText = res;
+      if (done >= 3) setTimeout(()=> showSection('certificate'),1000);
     }
   </script>
 </body>
