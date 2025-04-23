@@ -6,104 +6,50 @@
   <title>Dziedzictwo Żelaza – Gra Miejska</title>
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    body { font-family:'Uncial Antiqua', serif; margin:0; padding:0; background: url('tło.png') no-repeat center center fixed; background-size: cover; color:#f8f1d9; }
-    .container { max-width:960px; margin:0 auto; padding:20px; background:rgba(0,0,0,0.7); }
-    h1,h2,h3 { text-align:center; color:#ffe680; margin:10px 0; }
-    .hidden { display:none; }
-    input, button { display:block; width:200px; margin:10px auto; padding:10px; background:#a6763c; color:#1a1a1a; border:none; border-radius:5px; font-family:'Uncial Antiqua'; cursor:pointer; }
-    button:hover { background:#d9a066; }
-    #avatars { display:flex; flex-wrap:wrap; justify-content:space-around; }
-    .avatar { text-align:center; margin:10px; }
-    .avatar img { width:100px; height:100px; border:3px solid #ffe680; border-radius:50%; transition:0.3s; }
-    .avatar:hover img { transform:scale(1.1); }
-    #map-section { position:relative; margin:20px 0; }
-    #game-map-embed { width:100%; height:400px; border:none; }
-    .point-btn { position:absolute; width:30px; height:30px; background:rgba(255,204,102,0.8); border:none; border-radius:50%; cursor:pointer; }
-    #role-info { background:rgba(61,33,10,0.9); padding:15px; border-radius:8px; margin:10px auto; max-width:600px; }
-    #role-info img { width:120px; height:120px; border-radius:50%; display:block; margin:0 auto 10px; }
-    #instructions { background:rgba(32,32,32,0.9); padding:15px; border-radius:8px; margin:20px auto; max-width:800px; }
-    #instructions ul { list-style: none; padding-left:0; }
-    #instructions li { margin:8px 0; }
-    #final-screen img { display:block; margin:20px auto; max-width:80%; border:4px solid #ffe680; }
+    body { font-family: 'Uncial Antiqua', serif; margin: 0; padding: 0; background: url('tło.png') no-repeat center center fixed; background-size: cover; color: #f8f1d9; }
+    .overlay { background: rgba(0, 0, 0, 0.7); padding: 30px; min-height: 100vh; }
+    .box { background: rgba(51, 28, 7, 0.85); padding: 20px; margin: 20px auto; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.6); max-width: 800px; }
+    h1, h2 { text-align: center; color: #ffcc66; }
+    p, ul { line-height: 1.6; }
+    button { padding: 10px 15px; background: #a6763c; border: none; color: white; border-radius: 5px; cursor: pointer; margin: 10px auto; font-family: 'Uncial Antiqua', serif; display: block; }
   </style>
+  <script>
+    function goToTasks() {
+      window.location.href = '#game-panel';
+    }
+  </script>
 </head>
 <body>
-  <div class="container">
-    <h1>🛡️ Gra terenowa RPG: Dziedzictwo Żelaza</h1>
-    <div id="instructions">
-      <h2>🔍 Proces rejestracji i rozgrywki</h2>
+  <div class="overlay">
+    <div class="box" id="intro">
+      <h1>🛡️ Dziedzictwo Żelaza – Gra Miejska</h1>
+      <p>Rok 972. Świat na krawędzi zmiany: stare wierzenia gasną, nowe potęgi rosną. Grodzisko Sopockie wzywa mieszkańców do Próby Dziedzictwa Żelaza, by ocalić pamięć przodków i zadecydować o losie Grodu.</p>
+      <p>Przewodzisz drużynie od 3 do 6 osób. Wypełnij zadania edukacyjne, zbierz fragmenty dziedzictwa, weź udział w Radzie Grodu i zadecyduj o przyszłości!</p>
+      <button onclick="goToTasks()">Przejdź do zadań</button>
+    </div>
+
+    <div class="box" id="game-panel">
+      <h2>Wybierz swoją rolę</h2>
       <ul>
-        <li><strong>1. Rejestracja drużyny:</strong> Wpisz nazwę (3–6 osób, do 50 drużyn). Unikaj danych osobowych.</li>
-        <li><strong>2. Wstęp fabularny:</strong> Poznaj rok 972 – wyzwania Grodu, historia i kontekst.</li>
-        <li><strong>3. Wybór postaci:</strong> Zwiadowca, Tkaczka, Zielarka, Kupiec, Rzemieślnik, Starszy.</li>
-        <li><strong>4. Zadania poboczne:</strong> Każdy losuje: ukryty symbol, fragment mapy, runiczne wiadomości, test spostrzegawczości, równowaga w grupie.</li>
-        <li><strong>5. Punkty gry:</strong> Odwiedź min. 4 z 6 modułów – Obrona, Kowal, Zagroda, Tkaczka, Zielarka, Kamień Decyzji.</li>
-        <li><strong>6. Panel postępów:</strong> Sprawdzaj ukończone zadania i misję poboczną.</li>
-        <li><strong>7. Rada Grodu:</strong> Po zdobyciu min. 4 fragmentów – decyzja końcowa (handel, granice, prawo) wpisana do Księgi.</li>
-        <li><strong>8. Zakończenie:</strong> Podsumowanie punktów, tytuły (Uczestnik, Strażnik, medalion) i wpisy do Księgi Starszyzny.</li>
+        <li>🔭 <strong>Zwiadowca</strong> – odkrywa punkty, podejmuje ryzyko.</li>
+        <li>🧵 <strong>Tkaczka</strong> – mistrzyni wzorów i symboli.</li>
+        <li>🌿 <strong>Zielarka</strong> – specjalistka od wiedzy przyrodniczej.</li>
+        <li>💼 <strong>Kupiec</strong> – mistrz komunikacji i handlu.</li>
+        <li>🛠️ <strong>Rzemieślnik</strong> – rozwiązuje zadania techniczne.</li>
+        <li>👴 <strong>Starszy</strong> – podejmuje decyzje końcowe.</li>
       </ul>
-    </div>
-    <div id="start">
-      <input id="team-name" placeholder="Nazwa drużyny">
-      <h3>Wybierz postać:</h3>
-      <div id="avatars"></div>
-      <button onclick="startGame()">Rozpocznij grę</button>
-    </div>
-
-    <div id="game" class="hidden">
-      <h2>Drużyna: <span id="team-name-display"></span></h2>
-      <h3 id="character"></h3>
-      <button onclick="showRole()">Pokaż opis postaci</button>
-      <div id="role-info" class="hidden">
-        <img src="" alt="Avatar">
-        <h3></h3>
-        <p></p>
-      </div>
-      <p><strong>🎯 Misja poboczna:</strong> <span id="mission"></span></p>
-      <div id="map-section">
-        <iframe id="game-map-embed" src="https://www.canva.com/design/DAGlcv4Ci6s/rPm9T0Iq0b5sfLtdPEamyA/view?embed" allowfullscreen></iframe>
-        <button id="btn1" class="point-btn" onclick="completePoint(this)"></button>
-        <button id="btn2" class="point-btn" onclick="completePoint(this)"></button>
-        <button id="btn3" class="point-btn" onclick="completePoint(this)"></button>
-        <button id="btn4" class="point-btn" onclick="completePoint(this)"></button>
-        <button id="btn5" class="point-btn" onclick="completePoint(this)"></button>
-        <button id="btn6" class="point-btn" onclick="completePoint(this)"></button>
-      </div>
-      <button id="finish-btn" onclick="endGame()" disabled>Zakończ i podsumuj</button>
-    </div>
-
-    <div id="final-screen" class="hidden">
-      <h2>📜 Zakończenie gry</h2>
-      <p>Gratulacje! Twój wynik: <strong><span id="score"></span>/6</strong> punktów.</p>
-      <p>Na znak ukończenia Próby Dziedzictwa Żelaza otrzymujesz:</p>
-      <img src="certyfikat1.png" alt="Medalion i certyfikat">
-      <p>Dziękujemy za udział i wkład w przyszłość Grodu!</p>
+      <button onclick="alert('Twoja rola została wylosowana!')">Losuj rolę</button>
+      <h2>Zadania poboczne</h2>
+      <ul>
+        <li>📸 Znajdź 4 kolory natury.</li>
+        <li>🔠 Ułóż słowo z symboli.</li>
+        <li>👣 Zbierz 3 różne ślady przodków.</li>
+        <li>🌀 Przerysuj wzór liniowy.</li>
+        <li>🪵 Zbierz 5 materiałów.</li>
+      </ul>
+      <button onclick="alert('Misja poboczna wylosowana!')">Losuj misję</button>
+      <button onclick="window.location.href='index_gra_dziedzictwo.html'">Rozpocznij grę</button>
     </div>
   </div>
-
-  <audio id="audio" loop>
-    <source src="celtic-legends-307629.mp3" type="audio/mp3">
-  </audio>
-
-  <script>
-    const roles=[
-      {id:'zwiadowca',name:'Zwiadowca',desc:'Zwiadowca to odważny wędrowiec, który nie boi się stawiać kroków tam, gdzie inni nie odważyliby się zajrzeć. To on pierwszy przekracza granice nieznanych terenów... ',img:'zwiadowca.png'},
-      {id:'tkaczka',name:'Tkaczka',desc:'Tkaczka to mistrzyni w tworzeniu i rozumieniu wzorów oraz symboli, które dla innych są jedynie chaotycznym zbiorem znaków... ',img:'tkaczka.png'},
-      {id:'zielarka',name:'Zielarka',desc:'Zielarka to kobieta, która zna każdy zakątek lasu, każdą roślinę, każdy ziołowy sekret... ',img:'zielarka (2).png'},
-      {id:'kupiec',name:'Kupiec',desc:'Kupiec to osoba, która nie tylko doskonale rozumie wartość rzeczy, ale ma także dar wyczuwania niuansów w rozmowach... ',img:'kupiec.png'},
-      {id:'rzemieslnik',name:'Rzemieślnik',desc:'Rzemieślnik to mistrz techniki i precyzji, który zna się na każdym narzędziu, materiałach i metodach pracy. Jego ręce są pełne talentu i pomysłów, a jego umiejętności pozwalają na rozwiązywanie nawet najbardziej skomplikowanych problemów technicznych. Z jego pomocą żadne zadanie nie jest niemożliwe do wykonania – naprawi, skonstruuje i stworzy rozwiązania, które wydają się niewykonalne. Rzemieślnik zna się na wszelkich materiałach, od drewna po metal, i jest niezastąpiony, gdy w grupie pojawiają się trudności techniczne, które trzeba natychmiastowo rozwiązać. Jego umiejętności sprawiają, że każda sytuacja staje się bardziej znośna, a każdy problem ma swoje rozwiązanie.',img:'rzemieslnik.png'},
-      {id:'starszy',name:'Starszy',desc:'Starszy to lider, który podejmuje decyzje końcowe, biorąc na siebie odpowiedzialność za dobro całej grupy... ',img:'starszy.png'}
-    ];
-    const missions=['📸 Zdjęcie z 4 kolorami','🔠 Słowo z symboli','👣 Ślady przodków','🌀 Wzór liniowy','🪵 5 materiałów','⌛ Stara historia','🔢 Cicha sekwencja','🌿 Trójkąt natury','🔠 Akrostych','🗣️ Jedno słowo'];
-    let completed=0;
-    window.onload=() => {
-      const av=document.getElementById('avatars');
-      roles.forEach(r=>{const d=document.createElement('div');d.className='avatar';d.innerHTML=`<img src="${r.img}"><br><input type="radio" name="role" value="${r.id}"> ${r.name}`;av.appendChild(d);});
-    };
-    function startGame(){const n=document.getElementById('team-name').value.trim();if(!n) return alert('Wpisz nazwę drużyny');const s=document.querySelector('input[name=role]:checked');if(!s) return alert('Wybierz postać');const r=roles.find(x=>x.id===s.value);document.getElementById('start').classList.add('hidden');document.getElementById('team-name-display').innerText=n;document.getElementById('character').innerText=r.name;document.getElementById('mission').innerText=missions[Math.floor(Math.random()*missions.length)];document.getElementById('game').classList.remove('hidden');document.getElementById('audio').play();}
-    function showRole(){const rn=document.getElementById('character').innerText;const r=roles.find(x=>x.name===rn);const i=document.getElementById('role-info');i.querySelector('h3').innerText=r.name;i.querySelector('img').src=r.img;i.querySelector('p').innerText=r.desc;i.classList.remove('hidden');}
-    function completePoint(b){if(b.disabled)return;b.disabled=true;b.style.background='rgba(153,255,153,0.9)';completed++;if(completed>=4) document.getElementById('finish-btn').disabled=false;}
-    function endGame(){document.getElementById('game').classList.add('hidden');document.getElementById('score').innerText=completed;document.getElementById('final-screen').classList.remove('hidden');}
-  </script>
 </body>
 </html>
