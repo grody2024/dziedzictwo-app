@@ -1,102 +1,83 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from "@/components/ui/button";
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dziedzictwo Żelaza</title>
+  <style>
+    /* Reset & podstawy */
+    *{box-sizing:border-box;margin:0;padding:0}
+    body {font-family: sans-serif; background: #f5f0e8; color: #333;}
+    img {max-width:100%; display:block;}
+    button {cursor:pointer;}
 
-// 1. Intro Animation Component
-export function IntroSequence({ onComplete }) {
-  useEffect(() => {
-    const timer = setTimeout(onComplete, 10000);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
+    /* Ogólne kontenery */
+    .screen {display:none; padding:20px; max-width:800px; margin:auto;}
+    .active {display:block;}
 
-  return (
-    <AnimatePresence>
-      <motion.div
-        key="intro"
-        className="absolute inset-0 flex items-center justify-center bg-black"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <motion.div
-          className="text-white text-4xl font-bold"
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-        >
-          Dziedzictwo Żelaza
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-}
+    h1, h2 {text-align:center; margin-bottom:1rem;}
+    p {margin-bottom:1rem; line-height:1.4;}
 
-// 2. Role Selection Icon with Popup
-export function RoleIcon({ role, icon: Icon, description, onSelect }) {
-  const [hovered, setHovered] = useState(false);
+    .btn {display:inline-block; background:#7b5e34; color:#fff; padding:0.8rem 1.2rem; border:none; border-radius:5px; text-decoration:none; margin:0.5rem 0;}
+    .btn:disabled {opacity:.5; cursor:default;}
 
-  return (
-    <div
-      className="relative p-4"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={() => onSelect(role)}
-    >
-      <Icon className="w-16 h-16 cursor-pointer hover:scale-110 transform transition" />
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            className="absolute top-full mt-2 w-48 p-2 bg-white rounded shadow-lg text-sm"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <strong>{role}</strong>
-            <p>{description}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
+    /* Wybór postaci */
+    .roles {display:flex; flex-wrap:wrap; justify-content:space-around; gap:1rem;}
+    .role {width:120px; text-align:center;}
+    .role img {border:2px solid #ccc; border-radius:10px; transition:all .2s;}
+    .role input {display:none;}
+    .role:hover img, .role input:checked + img {border-color:#7b5e34; transform:scale(1.05);}
+    .role label {cursor:pointer; display:block; margin-top:.5rem;}
 
-// 3. Seal Stamp Animation
-export function SealStamp({ show }) {
-  return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center"
-          initial={{ scale: 0, rotate: -45, opacity: 0 }}
-          animate={{ scale: 1, rotate: 0, opacity: 1 }}
-          exit={{ scale: 0, opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        >
-          <img src="/stamp.png" alt="Seal" className="w-40 h-40" />
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
+    /* Chat pomoc Mędrców */
+    #chatBox {border:1px solid #ccc; border-radius:5px; height:150px; overflow-y:auto; padding:0.5rem; background:#fff;}
+    #chatInput {width:calc(100% - 100px); padding:.5rem;}
 
-// 4. Button Reveal for Task Details
-export function RevealButton({ active, onClick }) {
-  return (
-    <AnimatePresence>
-      {active && (
-        <motion.div
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 50, opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Button onClick={onClick} className="mt-4">
-            Szczegóły zadania
-          </Button>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
+    /* Panel postępów */
+    #progressList {list-style:none; margin-top:1rem;}
+    #progressList li {margin:.3rem 0;}
+  </style>
+</head>
+<body>
+
+  <!-- 1. Intro fabularne -->
+  <section id="intro" class="screen active">
+    <h1>Dziedzictwo Żelaza</h1>
+    <p>Rok 972. Ziemia drży, imperia patrzą łapczywie – a Ty wraz z drużyną masz ocalić pamięć przodków.</p>
+    <p>Odwiedź min. 4 z 6 punktów edukacyjnych, wykonaj zadania, zdobądź Fragmenty Dziedzictwa, weź udział w Radzie Starszych i zdecyduj o przyszłości Grodu.</p>
+    <button class="btn" onclick="showScreen('selectRole')">Rozpocznij przygodę</button>
+  </section>
+
+  <!-- 2. Wybór drużyny i roli -->
+  <section id="selectRole" class="screen">
+    <h2>1. Wybierz drużynę i rolę</h2>
+    <p>Podaj nazwę drużyny:</p>
+    <input type="text" id="teamName" placeholder="Nazwa drużyny" style="width:100%; padding:.7rem; margin-bottom:1rem;">
+    <div class="roles">
+      <div class="role">
+        <input type="radio" id="role-zwiadowca" name="role" value="Zwiadowca">
+        <label for="role-zwiadowca">
+          <img src="zwiadowca.png" alt="Zwiadowca"><br>Zwiadowca
+        </label>
+      </div>
+      <div class="role">
+        <input type="radio" id="role-tkaczka" name="role" value="Tkaczka">
+        <label for="role-tkaczka">
+          <img src="tkaczka.png" alt="Tkaczka"><br>Tkaczka
+        </label>
+      </div>
+      <div class="role">
+        <input type="radio" id="role-zielarka" name="role" value="Zielarka">
+        <label for="role-zielarka">
+          <img src="zielarka.png" alt="Zielarka"><br>Zielarka
+        </label>
+      </div>
+      <div class="role">
+        <input type="radio" id="role-kupiec" name="role" value="Kupiec">
+        <label for="role-kupiec">
+          <img src="kupiec.png" alt="Kupiec"><br>Kupiec
+        </label>
+      </div>
+      <div class="role">
+        <input type="radio" id="role-rzemieslnik" name="role" value="Rzemieślnik">
+        <label for
