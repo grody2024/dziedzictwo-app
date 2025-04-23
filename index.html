@@ -4,51 +4,136 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dziedzictwo Żelaza – Gra Miejska</title>
-  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Uncial Antiqua', serif; margin: 0; padding: 0; background: url('tło.png') no-repeat center center fixed; background-size: cover; color: #f8f1d9; }
-    .overlay { background: rgba(0, 0, 0, 0.7); padding: 30px; min-height: 100vh; }
-    .box { background: rgba(51, 28, 7, 0.85); padding: 20px; margin: 20px auto; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.6); max-width: 800px; }
-    h1, h2 { text-align: center; color: #ffcc66; }
-    p, ul { line-height: 1.6; }
-    button { padding: 10px 15px; background: #a6763c; border: none; color: white; border-radius: 5px; cursor: pointer; margin: 10px auto; font-family: 'Uncial Antiqua', serif; display: block; }
+    /* Reset & Base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: #2c1f0e url('tło.png') center/cover fixed no-repeat; color: #f8f1d9; }
+    .overlay { background: rgba(0, 0, 0, 0.75); min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+
+    /* Containers */
+    .panel { background: rgba(51,28,7,0.9); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.7); max-width: 900px; width: 100%; margin: 20px auto; padding: 20px; }
+
+    h1, h2, h3 { font-family: 'Uncial Antiqua', serif; color: #ffd966; text-align: center; margin-bottom: 16px; }
+    p { line-height: 1.5; margin-bottom: 12px; }
+
+    button { font-family: 'Uncial Antiqua', serif; background: #a6763c; color: #fff; border: none; border-radius: 6px; padding: 10px 18px; cursor: pointer; transition: background .2s; }
+    button:hover { background: #c08e4b; }
+
+    /* Layout */
+    #intro { display: flex; flex-direction: column; align-items: center; }
+    #intro input { width: 80%; padding: 10px; margin-bottom: 12px; border: 2px solid #a6763c; border-radius: 6px; }
+    #game-panel { display: none; }
+
+    /* Stats bar */
+    .stats { display: flex; justify-content: space-around; background: rgba(40,20,5,0.85); padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+    .stat { text-align: center; }
+    .stat span { display: block; font-size: 1.6rem; font-weight: bold; }
+
+    /* Chat window */
+    .chat-container { background: rgba(20,10,5,0.9); border-radius: 8px; padding: 12px; height: 200px; overflow-y: auto; margin-bottom: 12px; }
+    .chat-input { display: flex; }
+    .chat-input input { flex: 1; padding: 8px; border-radius: 4px 0 0 4px; border: 1px solid #444; }
+    .chat-input button { border-radius: 0 4px 4px 0; }
+
+    /* Role selector & mission */
+    .choices { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .card { background: rgba(80,50,20,0.9); border-radius: 8px; padding: 12px; width: 140px; text-align: center; cursor: pointer; transition: transform .2s; }
+    .card:hover { transform: translateY(-4px); }
+    .card img { max-width: 100%; border-radius: 4px; margin-bottom: 8px; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
   </style>
   <script>
-    function goToTasks() {
-      window.location.href = '#game-panel';
+    const roles = [
+      { id: 'Zwiadowca', desc: `Zwiadowca to odważny wędrowiec...` },
+      { id: 'Tkaczka', desc: `Tkaczka to mistrzyni w tworzeniu...` },
+      { id: 'Zielarka', desc: `Zielarka to kobieta, która zna...` },
+      { id: 'Kupiec', desc: `Kupiec to osoba, która nie tylko...` },
+      { id: 'Rzemieślnik', desc: `Rzemieślnik to mistrz techniki...` },
+      { id: 'Starszy', desc: `Starszy to lider, który podejmuje...` }
+    ];
+    const missions = [
+      `Znalezienie ukrytego symbolu`,
+      `Ułożenie fragmentów mapy`,
+      `Odszyfrowanie runicznej wiadomości`,
+      `Zadanie logiczne na spostrzegawczość`,
+      `Utrzymanie społecznej równowagi w grupie`
+    ];
+
+    function startGame() {
+      const name = document.getElementById('team-name').value.trim();
+      if (!name) return alert('Wpisz nazwę drużyny!');
+
+      // show game panel
+      document.getElementById('intro').style.display = 'none';
+      document.getElementById('game-panel').style.display = 'block';
+      document.getElementById('team-display').innerText = name;
+      // init stats
+      window.stats = { completed: 0, total: 0, mission: missions[Math.floor(Math.random() * missions.length)] };
+      document.getElementById('mission').innerText = window.stats.mission;
+      updateStats();
+    }
+
+    function pickRole(id) {
+      const role = roles.find(r=>r.id===id);
+      alert(`${role.id}\n\n${role.desc}`);
+      // after picking, disable all
+      document.querySelectorAll('.card').forEach(c=>c.onclick=null);
+    }
+
+    function sendChat() {
+      const inp = document.getElementById('chat-in');
+      if (!inp.value.trim()) return;
+      const box = document.getElementById('chat-box');
+      const msg = document.createElement('div'); msg.innerHTML = `<b>Drużyna:</b> ${inp.value}`; box.append(msg);
+      inp.value=''; box.scrollTop = box.scrollHeight;
+    }
+
+    function updateStats() {
+      document.getElementById('stat-completed').innerText = window.stats.completed;
+      document.getElementById('stat-total').innerText = window.stats.total;
     }
   </script>
 </head>
 <body>
   <div class="overlay">
-    <div class="box" id="intro">
-      <h1>🛡️ Dziedzictwo Żelaza – Gra Miejska</h1>
-      <p>Rok 972. Świat na krawędzi zmiany: stare wierzenia gasną, nowe potęgi rosną. Grodzisko Sopockie wzywa mieszkańców do Próby Dziedzictwa Żelaza, by ocalić pamięć przodków i zadecydować o losie Grodu.</p>
-      <p>Przewodzisz drużynie od 3 do 6 osób. Wypełnij zadania edukacyjne, zbierz fragmenty dziedzictwa, weź udział w Radzie Grodu i zadecyduj o przyszłości!</p>
-      <button onclick="goToTasks()">Przejdź do zadań</button>
+    <div class="panel" id="intro">
+      <h1>🛡️ Dziedzictwo Żelaza</h1>
+      <p>Rok 972. Grodzisko wzywa do Próby Dziedzictwa... Czy uratujecie pamięć przodków?</p>
+      <input id="team-name" placeholder="Nazwa drużyny">
+      <button onclick="startGame()">Rozpocznij przygodę</button>
     </div>
 
-    <div class="box" id="game-panel">
-      <h2>Wybierz swoją rolę</h2>
-      <ul>
-        <li>🔭 <strong>Zwiadowca</strong> – odkrywa punkty, podejmuje ryzyko.</li>
-        <li>🧵 <strong>Tkaczka</strong> – mistrzyni wzorów i symboli.</li>
-        <li>🌿 <strong>Zielarka</strong> – specjalistka od wiedzy przyrodniczej.</li>
-        <li>💼 <strong>Kupiec</strong> – mistrz komunikacji i handlu.</li>
-        <li>🛠️ <strong>Rzemieślnik</strong> – rozwiązuje zadania techniczne.</li>
-        <li>👴 <strong>Starszy</strong> – podejmuje decyzje końcowe.</li>
-      </ul>
-      <button onclick="alert('Twoja rola została wylosowana!')">Losuj rolę</button>
-      <h2>Zadania poboczne</h2>
-      <ul>
-        <li>📸 Znajdź 4 kolory natury.</li>
-        <li>🔠 Ułóż słowo z symboli.</li>
-        <li>👣 Zbierz 3 różne ślady przodków.</li>
-        <li>🌀 Przerysuj wzór liniowy.</li>
-        <li>🪵 Zbierz 5 materiałów.</li>
-      </ul>
-      <button onclick="alert('Misja poboczna wylosowana!')">Losuj misję</button>
-      <button onclick="window.location.href='index_gra_dziedzictwo.html'">Rozpocznij grę</button>
+    <div class="panel" id="game-panel">
+      <h2>Drużyna: <span id="team-display"></span></h2>
+
+      <div class="stats">
+        <div class="stat">
+          <span id="stat-completed">0</span>
+          ukończonych
+        </div>
+        <div class="stat">
+          <span id="stat-total">0</span>
+          zadań
+        </div>
+      </div>
+
+      <div class="chat-container" id="chat-box"></div>
+      <div class="chat-input">
+        <input id="chat-in" placeholder="Pomoc Mędrców...">
+        <button onclick="sendChat()">Wyślij</button>
+      </div>
+
+      <h3>Wybierz swoją rolę</h3>
+      <div class="choices">
+        ${roles.map(r=>`<div class="card" onclick="pickRole('${r.id}')"><img src="${r.id.toLowerCase()}.png" alt="${r.id}"><strong>${r.id}</strong></div>`).join('')}
+      </div>
+
+      <p><strong>🎯 Misja poboczna:</strong> <span id="mission"></span></p>
+      <button onclick="alert('Przechodzimy do modułu gry!')">Przejdź do zadań</button>
     </div>
   </div>
 </body>
