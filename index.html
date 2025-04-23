@@ -1,179 +1,102 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dziedzictwo Żelaza – Aplikacja</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
-  <style>
-    body, html { margin:0; padding:0; height:100%; font-family:'Uncial Antiqua', serif; background:#1a1207; color:#f8f1d9; }
-    #app { display:flex; flex-direction:column; height:100%; }
-    .screen { display:none; flex:1; padding:20px; box-sizing:border-box; overflow:auto; }
-    .active { display:block; }
-    button { background:#7a5230; color:#fff; border:none; padding:12px; margin:10px 0; border-radius:8px; cursor:pointer; }
-    button:hover { background:#96714e; }
-    h1,h2 { text-align:center; color:#e0b869; }
-    #map { height:60vh; margin-bottom:10px; border:3px solid #e0b869; }
-    #progress { width:100%; height:20px; background:#333; border-radius:10px; overflow:hidden; margin-bottom:10px; }
-    #progress div { height:100%; background:#e0b869; width:0%; transition:width 0.5s; }
-    #nextPoint { text-align:center; margin-bottom:10px; }
-    .task { background:#2e1b0f; padding:15px; border-radius:8px; margin-bottom:10px; }
-    #dashboard { display:flex; justify-content:space-around; }
-    #dashboard div { background:#2e1b0f; padding:10px; border-radius:8px; flex:1; margin:5px; }
-    #chat { position:fixed; bottom:0; right:0; width:300px; background:rgba(0,0,0,0.8); border-top-left-radius:8px; }
-    #chat h3 { margin:5px; }
-    #chatBox { height:200px; overflow:auto; background:#1a1207; margin:5px; padding:5px; border-radius:4px; }
-    #chatInput { width:70%; }
-    #chatSend { width:25%; }
-  </style>
-</head>
-<body>
-<div id="app">
-  <!-- 1. Animowany intro -->
-  <div id="intro" class="screen active">
-    <h1>🛡️ Dziedzictwo Żelaza</h1>
-    <p>Odkryj przeszłość, zdecyduj o przyszłości Grodu!</p>
-    <audio id="audioIntro" src="celtic-morning-call-307627.mp3"></audio>
-    <button onclick="showScreen('selection')">Start</button>
-  </div>
-  <!-- 2. Wybór roli -->
-  <div id="selection" class="screen">
-    <h2>Wybór postaci</h2>
-    <div id="roles"></div>
-    <p id="roleBonus"></p>
-    <button id="toMap" onclick="showScreen('mapView')" disabled>Rozpocznij Podróż</button>
-  </div>
-  <!-- 3. Główny ekran mapy -->
-  <div id="mapView" class="screen">
-    <div id="map"></div>
-    <div id="progress"><div id="progressBar"></div></div>
-    <div id="nextPoint"></div>
-    <button id="taskDetail" onclick="showTask()" disabled>Szczegóły zadania</button>
-  </div>
-  <!-- 4. Ekran zadania -->
-  <div id="taskScreen" class="screen">
-    <div class="task"><h2 id="taskTitle"></h2><p id="taskDesc"></p><img id="taskImg" style="width:100%;border-radius:8px;"/></div>
-    <button id="completeTask" onclick="completeTask()">Zatwierdź</button>
-  </div>
-  <!-- 5. Dashboard początkowy stanu -->
-  <div id="dashboardView" class="screen">
-    <h2>Twoje Postępy</h2>
-    <div id="dashboard">
-      <div>Agregacja punktów:<br/><span id="dashPoints"></span>/6</div>
-      <div>Zadania poboczne:<br/><span id="dashSide"></span>/1</div>
-      <div>Bonus roli:<br/><span id="dashBonus"></span></div>
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from "@/components/ui/button";
+
+// 1. Intro Animation Component
+export function IntroSequence({ onComplete }) {
+  useEffect(() => {
+    const timer = setTimeout(onComplete, 10000);
+    return () => clearTimeout(timer);
+  }, [onComplete]);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="intro"
+        className="absolute inset-0 flex items-center justify-center bg-black"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <motion.div
+          className="text-white text-4xl font-bold"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
+          Dziedzictwo Żelaza
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+// 2. Role Selection Icon with Popup
+export function RoleIcon({ role, icon: Icon, description, onSelect }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      className="relative p-4"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={() => onSelect(role)}
+    >
+      <Icon className="w-16 h-16 cursor-pointer hover:scale-110 transform transition" />
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            className="absolute top-full mt-2 w-48 p-2 bg-white rounded shadow-lg text-sm"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <strong>{role}</strong>
+            <p>{description}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-    <button onclick="showScreen('council')">Do Rady Starszych</button>
-  </div>
-  <!-- 6. Rada Starszych -->
-  <div id="council" class="screen">
-    <h2>🪨 Rada Starszych</h2>
-    <p>Wybierz decyzję:</p>
-    <select id="councilChoice">
-      <option>Otwarcie na handel</option>
-      <option>Izolacja granic</option>
-      <option>Adaptacja prawa</option>
-    </select>
-    <button onclick="finishCouncil()">Zapisz Decyzję</button>
-  </div>
-  <!-- 7. Certyfikat -->
-  <div id="certificate" class="screen">
-    <h2>🎖️ Certyfikat Dziedzictwa Żelaza</h2>
-    <img src="certyfikat1.png" alt="Certyfikat" />
-    <p>Dziękujemy za udział w grze! Twoja decyzja wpłynęła na przyszłość Grodu.</p>
-  </div>
-</div>
-
-<!-- Chat pomocników -->
-<div id="chat">
-  <h3>Pomoc Mędrców</h3>
-  <div id="chatBox"></div>
-  <input id="chatInput" placeholder="Zadaj pytanie..."/><button id="chatSend" onclick="sendChat()">Wyślij</button>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-<script>
-// Dane
-const roles = [
-  {id:'Zwiadowca',bonus:'+15% zasięgu'},
-  {id:'Tkaczka',bonus:'+1 hint'},
-  {id:'Zielarka',bonus:'+10% czasu'},
-  {id:'Kupiec',bonus:'+2 podpowiedzi'},
-  {id:'Rzemieślnik',bonus:'-10% trudności'},
-  {id:'Starszy',bonus:'+1 decyzja'}
-];
-const points = [
-  {id:1,name:'Brama Grodu',lat:54.44,lng:18.56,desc:'Odkryj systemy obrony',img:'task1.png'},
-  {id:2,name:'Warsztat Kowala',lat:54.441,lng:18.561,desc:'Poznaj narzędzia i techniki',img:'task2.png'},
-  {id:3,name:'Zagroda',lat:54.442,lng:18.562,desc:'Zbadaj rolnictwo',img:'task3.png'},
-  {id:4,name:'Chata Tkaczki',lat:54.443,lng:18.563,desc:'Odszyfruj wzory',img:'task4.png'},
-  {id:5,name:'Chata Zielarki',lat:54.444,lng:18.564,desc:'Zbadaj zioła',img:'task5.png'},
-  {id:6,name:'Kamień Decyzji',lat:54.445,lng:18.565,desc:'Ostatnia Rada',img:'task6.png'}
-];
-let selectedRole=null, sideTask=null, completed=0, visited=[];
-let map, marker, currentIndex=0;
-
-// Inicjalizacja
-window.onload=()=>{
-  document.getElementById('audioIntro').play();
-  // Roles
-  const rdiv=document.getElementById('roles');
-  roles.forEach(r=>{
-    const btn=document.createElement('button'); btn.innerText=r.id;
-    btn.onclick=()=>{
-      selectedRole=r.id; sideTask=roles.find(x=>x.id===r.id).bonus;
-      document.getElementById('roleBonus').innerText=`Bonus: ${r.bonus}`;
-      document.getElementById('toMap').disabled=false;
-      document.getElementById('dashBonus').innerText=r.bonus;
-    };
-    rdiv.appendChild(btn);
-  });
-  // Map
-  map=L.map('map').setView([points[0].lat,points[0].lng],15);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-  points.forEach(p=>{
-    L.marker([p.lat,p.lng]).addTo(map).bindPopup(p.name);
-  });
-  map.on('locationfound',locate);
-  map.locate({watch:true,enableHighAccuracy:true});
-};
-
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-
-function complete(id){if(visited.includes(id)) return;visited.push(id);completed++;document.getElementById('progressBar').style.width=((visited.length/6)*100)+'%';document.getElementById('doneCount').innerText=completed; if(visited.length>=4) document.getElementById('toCouncil').disabled=false;}
-
-function locate(e){
-  if(marker) marker.remove();
-  marker=L.circleMarker(e.latlng,{color:'#e0b869'}).addTo(map);
-  // Oblicz najbliższy nieodwiedzony
-  const dists=points.filter(p=>!visited.includes(p.id)).map(p=>({p,dist:map.distance(e.latlng,[p.lat,p.lng])}));
-  if(dists.length){
-    dists.sort((a,b)=>a.dist-b.dist);
-    const next=dists[0];
-    document.getElementById('nextPoint').innerText=`Następny: ${next.p.name} – ${(next.dist|0)}m`;
-    if(next.dist<50){document.getElementById('taskDetail').disabled=false;document.getElementById('taskDetail').onclick=()=>showTask(next.p);}    
-  }
+  );
 }
 
-function showTask(point){
-  document.getElementById('taskTitle').innerText=point.name;
-  document.getElementById('taskDesc').innerText=point.desc;
-  document.getElementById('taskImg').src=point.img;
-  showScreen('taskScreen');
+// 3. Seal Stamp Animation
+export function SealStamp({ show }) {
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center"
+          initial={{ scale: 0, rotate: -45, opacity: 0 }}
+          animate={{ scale: 1, rotate: 0, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        >
+          <img src="/stamp.png" alt="Seal" className="w-40 h-40" />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
 
-function completeTask(){
-  const title=document.getElementById('taskTitle').innerText;
-  const p=points.find(x=>x.name===title);
-  complete(p.id);
-  showScreen('mapView');
+// 4. Button Reveal for Task Details
+export function RevealButton({ active, onClick }) {
+  return (
+    <AnimatePresence>
+      {active && (
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 50, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <Button onClick={onClick} className="mt-4">
+            Szczegóły zadania
+          </Button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }
-
-function finishCouncil(){ showScreen('certificate'); }
-
-// Chat
-function sendChat(){ const inp=document.getElementById('chatInput'); const txt=inp.value.trim(); if(!txt) return; const box=document.getElementById('chatBox'); box.innerHTML+=`<div><strong>Ty:</strong> ${txt}</div>`; setTimeout(()=>{box.innerHTML+=`<div><strong>Mędrzec:</strong> Sprawdź punkt ${points[currentIndex%6].name}.</div>`; box.scrollTop=box.scrollHeight;},500); inp.value=''; }
-</script>
-</body>
-</html>
