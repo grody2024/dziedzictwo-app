@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: 'MedievalSharp', cursive;
-      background: url('assets/tlo.png') center center / cover no-repeat fixed;
+      background: url('tlo.png') center center / cover no-repeat fixed;
       color: #3e2f1c;
     }
     .screen {
@@ -85,6 +85,10 @@
   </style>
 </head>
 <body>
-  <!-- wszystkie ekrany aplikacji w jednym pliku będą dokładnie tak jak wcześniej -->
+  <div class="screen active" id="intro">
+    <h1>Dziedzictwo Żelaza</h1>
+    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw...</p>
+    <button class="btn" onclick="alert('To miejsce na dalszy rozwój gry!')">Start</button>
+  </div>
 </body>
 </html>
