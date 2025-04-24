@@ -5,11 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dziedzictwo Żelaza</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-  <audio id="bgMusic" src="celtic-festival-307626.mp3" loop hidden></audio>
+  <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay></audio>
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes sparkle {
+      0% { box-shadow: 0 0 10px gold; }
+      50% { box-shadow: 0 0 30px gold; }
+      100% { box-shadow: 0 0 10px gold; }
     }
     body {
       margin: 0;
@@ -69,15 +74,14 @@
       font-size: 20px;
       margin-top: 15px;
     }
-    img#roleImage {
-      max-width: 140px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    img.roleIcon {
+      width: 100px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
     }
-    @keyframes sparkle {
-      0% { box-shadow: 0 0 10px gold; }
-      50% { box-shadow: 0 0 30px gold; }
-      100% { box-shadow: 0 0 10px gold; }
+    img.roleIcon:hover {
+      transform: scale(1.1);
     }
     .glow {
       animation: sparkle 1.5s infinite;
@@ -87,7 +91,7 @@
   </style>
 </head>
 <body>
-  <div id="intro" class="screen active" style="display: block;">
+  <div id="intro" class="screen active">
     <h1>Dziedzictwo Żelaza</h1>
     <p style="max-width:700px; margin:0 auto 20px;">Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian. Imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary. Wasza drużyna, Strażnicy Pamięci, musi zebrać dziedzictwo i zadecydować o przyszłości Grodu.</p>
     <p><strong>Instrukcja gry:</strong></p>
@@ -105,12 +109,86 @@
     </div>
     <h2>Wybierz swoją postać:</h2>
     <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:20px;">
-      <img src="zwiadowca.png" onclick="highlightSelected(this); setTimeout(() => goToSideQuest(), 400);" style="width:100px; border-radius:50%; cursor:pointer;">
-      <img src="zielarka (2).png" onclick="highlightSelected(this); setTimeout(() => goToSideQuest(), 400);" style="width:100px; border-radius:50%; cursor:pointer;">
-      <img src="tkaczka.png" onclick="highlightSelected(this); setTimeout(() => goToSideQuest(), 400);" style="width:100px; border-radius:50%; cursor:pointer;">
-      <img src="kupiec.png" onclick="highlightSelected(this); setTimeout(() => goToSideQuest(), 400);" style="width:100px; border-radius:50%; cursor:pointer;">
-      <img src="rzemieslnik.png" onclick="highlightSelected(this); setTimeout(() => goToSideQuest(), 400);" style="width:100px; border-radius:50%; cursor:pointer;">
-      <img src="starszy.png" onclick="highlightSelected(this); setTimeout(() => goToSideQuest(), 400);" style="width:100px; border-radius:50%; cursor:pointer;">
+      <img class="roleIcon" src="zwiadowca.png" onclick="selectRole(this)">
+      <img class="roleIcon" src="zielarka (2).png" onclick="selectRole(this)">
+      <img class="roleIcon" src="tkaczka.png" onclick="selectRole(this)">
+      <img class="roleIcon" src="kupiec.png" onclick="selectRole(this)">
+      <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole(this)">
+      <img class="roleIcon" src="starszy.png" onclick="selectRole(this)">
     </div>
+    <button class="btn" onclick="continueFromIntro()">Dalej</button>
   </div>
-<!-- Reszta pozostaje bez zmian -->
+
+  <div id="quiz" class="screen">
+    <h2>Quiz: Co wiesz o Grodzisku w Sopocie?</h2>
+    <p>Wybierz poprawną odpowiedź:</p>
+    <ul>
+      <li onclick="checkAnswer(this, true)">b) IX–X wiek</li>
+      <li onclick="checkAnswer(this, false)">a) VIII–IX wiek</li>
+      <li onclick="checkAnswer(this, false)">c) X–XI wiek</li>
+      <li onclick="checkAnswer(this, false)">d) XI–XII wiek</li>
+    </ul>
+    <button class="btn" onclick="goToCouncil()">Przejdź do Rady Grodu</button>
+  </div>
+
+  <div id="council" class="screen">
+    <h2>Rada Grodu</h2>
+    <p>Wybierz decyzję dotyczącą przyszłości Grodu:</p>
+    <ul>
+      <li onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</li>
+      <li onclick="finishCouncil('Izolacja granic')">Izolacja granic</li>
+      <li onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</li>
+    </ul>
+  </div>
+
+  <div id="certificate" class="screen">
+    <h2>Certyfikat Drużyny</h2>
+    <p><strong>Drużyna:</strong> <span id="certTeam"></span></p>
+    <p><strong>Decyzja:</strong> <span id="certDecision"></span></p>
+    <p><strong>Misja poboczna:</strong> <span id="certMission"></span></p>
+    <p>Dziękujemy za udział w Dziedzictwie Żelaza!</p>
+  </div>
+
+  <script>
+    let selectedRole = null;
+    let teamName = '';
+    let missionText = 'Misja: odkryj coś niezwykłego!';
+    let decision = '';
+
+    function selectRole(img) {
+      document.querySelectorAll('img.roleIcon').forEach(i => i.classList.remove('glow'));
+      img.classList.add('glow');
+      selectedRole = img.src;
+    }
+
+    function continueFromIntro() {
+      teamName = document.getElementById('teamName').value.trim();
+      if (!selectedRole || !teamName) {
+        alert("Wpisz nazwę drużyny i wybierz postać!");
+        return;
+      }
+      localStorage.setItem('team', teamName);
+      document.getElementById("intro").classList.remove("active");
+      document.getElementById("quiz").classList.add("active");
+    }
+
+    function checkAnswer(element, isCorrect) {
+      element.classList.add(isCorrect ? 'correct' : 'incorrect');
+    }
+
+    function goToCouncil() {
+      document.getElementById("quiz").classList.remove("active");
+      document.getElementById("council").classList.add("active");
+    }
+
+    function finishCouncil(choice) {
+      decision = choice;
+      document.getElementById("council").classList.remove("active");
+      document.getElementById("certificate").classList.add("active");
+      document.getElementById("certTeam").innerText = localStorage.getItem('team');
+      document.getElementById("certDecision").innerText = decision;
+      document.getElementById("certMission").innerText = missionText;
+    }
+  </script>
+</body>
+</html>
