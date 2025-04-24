@@ -2,236 +2,220 @@
 <html lang="pl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dziedzictwo Żelaza</title>
-    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-    <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay></audio>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'MedievalSharp', cursive;
-            background: url('tło.png') center center / cover no-repeat fixed;
-            background-color: #1d1b16;
-            color: #f4f1e6;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dziedzictwo Żelaza</title>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'MedievalSharp', cursive;
+      background: url('tło.png') center center / cover no-repeat fixed;
+      background-color: #1d1b16;
+      color: #f4f1e6;
+      text-align: center;
+    }
 
-        .screen {
-            animation: fadeIn 0.6s ease-out;
-            display: none;
-            padding: 20px;
-            background-color: rgba(35, 32, 28, 0.88);
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 12px;
-            margin: 20px auto;
-            max-width: 800px;
-        }
+    .screen {
+      animation: fadeIn 0.6s ease-out;
+      display: none;
+      padding: 20px;
+      background-color: rgba(35, 32, 28, 0.88);
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      border-radius: 12px;
+      margin: 20px auto;
+      max-width: 800px;
+    }
 
-        .active {
-            display: block;
-        }
+    .active {
+      display: block;
+    }
 
-        .btn {
-            background: linear-gradient(to bottom, #a07d52, #5e4226);
-            color: #fff9e6;
-            padding: 12px 28px;
-            border: none;
-            border-radius: 10px;
-            margin: 15px auto;
-            cursor: pointer;
-            font-size: 17px;
-            display: inline-block;
-            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s;
-        }
+    .btn {
+      background: linear-gradient(to bottom, #a07d52, #5e4226);
+      color: #fff9e6;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 10px;
+      margin: 15px auto;
+      cursor: pointer;
+      font-size: 17px;
+      display: inline-block;
+      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
 
-        .btn:hover {
-            transform: scale(1.05);
-        }
+    .btn:hover {
+      transform: scale(1.05);
+    }
 
-        h1, h2, p {
-            text-align: center;
-        }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+    li {
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #8d744a;
+      border-radius: 8px;
+      background: rgba(255, 248, 230, 0.1);
+      color: #f4f1e6;
+    }
 
-        li {
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #8d744a;
-            border-radius: 8px;
-            background: rgba(255, 248, 230, 0.1);
-            cursor: pointer;
-            color: #f4f1e6;
-            transition: background 0.3s;
-        }
+    .roleIcon {
+      width: 100px;
+      max-width: 90px;
+      height: auto;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
 
-        li:hover {
-            background: rgba(255, 248, 230, 0.2);
-        }
+    .roleIcon:hover {
+      transform: scale(1.1);
+    }
 
-        .roleIcon {
-            width: 100px;
-            max-width: 90px;
-            height: auto;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+    .instruction-box {
+      background-color: rgba(255, 248, 230, 0.08);
+      border: 2px solid #8d744a;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 700px;
+      margin: 20px auto;
+    }
 
-        .roleIcon:hover {
-            transform: scale(1.1);
-        }
+    .correct {
+      background-color: green !important;
+    }
 
-        .instruction-box {
-            background-color: rgba(255, 248, 230, 0.08);
-            border: 2px solid #8d744a;
-            border-radius: 12px;
-            padding: 20px;
-            max-width: 700px;
-            margin: 20px auto;
-        }
-
-        .correct {
-            background-color: green !important;
-        }
-
-        .incorrect {
-            background-color: darkred !important;
-        }
-    </style>
+    .incorrect {
+      background-color: darkred !important;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="screen active" id="start">
-        <h1>Dziedzictwo Żelaza</h1>
-        <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian...</p>
-        <div class="instruction-box">
-            <h2>Instrukcja gry:</h2>
-            <ul>
-                <li>Załóż drużynę i wybierz postać.</li>
-                <li>Rozwiąż zadanie z minimum 4 punktami.</li>
-                <li>Sprawdzaj postępy w panelu gry.</li>
-                <li>Na koniec zdecyduj o losie Grodu.</li>
-            </ul>
-        </div>
-        <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" style="padding:10px; font-size:16px; border-radius:8px; border:none; width:250px;">
-        <button type="button" class="btn" onclick="startGame()">Rozpocznij grę</button>
+  <div class="screen active" id="start">
+    <h1>Dziedzictwo Żelaza</h1>
+    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian...</p>
+    <div class="instruction-box">
+      <h2>Instrukcja gry:</h2>
+      <p>Załóż drużynę i wybierz postać.</p>
+      <p>Rozwiąż zadanie z minimum 4 punktami.</p>
+      <p>Sprawdzaj postępy w panelu gry.</p>
+      <p>Na koniec zdecyduj o losie Grodu.</p>
     </div>
+    <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" style="padding:10px; font-size:16px; border-radius:8px; border:none; width:250px;" />
+    <button type="button" class="btn" onclick="startGame()">Rozpocznij grę</button>
+  </div>
 
-    <div class="screen" id="selectRole">
-        <h2>Wybierz swoją postać:</h2>
-        <div>
-            <img class="roleIcon" src="zwiadowca.png" onclick="selectRole('Zwiadowca')" alt="Zwiadowca">
-            <img class="roleIcon" src="tkaczka.png" onclick="selectRole('Tkaczka')" alt="Tkaczka">
-            <img class="roleIcon" src="zielarka (2).png" onclick="selectRole('Zielarka')" alt="Zielarka">
-            <img class="roleIcon" src="kupiec.png" onclick="selectRole('Kupiec')" alt="Kupiec">
-            <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik">
-            <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy">
-        </div>
-        <button type="button" class="btn" onclick="showScreen('taskSelection')">Dalej</button>
+  <div class="screen" id="selectRole">
+    <h2>Wybierz swoją postać:</h2>
+    <div>
+      <img class="roleIcon" src="zwiadowca.png" onclick="selectRole('Zwiadowca')" alt="Zwiadowca" />
+      <img class="roleIcon" src="tkaczka.png" onclick="selectRole('Tkaczka')" alt="Tkaczka" />
+      <img class="roleIcon" src="zielarka (2).png" onclick="selectRole('Zielarka')" alt="Zielarka" />
+      <img class="roleIcon" src="kupiec.png" onclick="selectRole('Kupiec')" alt="Kupiec" />
+      <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik" />
+      <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy" />
     </div>
+    <button type="button" class="btn" onclick="showScreen('taskSelection')">Dalej</button>
+  </div>
 
-    <div class="screen" id="taskSelection">
-        <h2>Misja poboczna:</h2>
-        <p>Zrób zdjęcie miejsca, które przypomina przeszłość...</p>
-        <h3>Zadania główne:</h3>
-        <ul>
-            <li>Chata Zielarki</li>
-            <li>Zbrojownia</li>
-            <li>Chata Garncarza</li>
-            <li>Kozy</li>
-            <li>Wiata</li>
-            <li>Namiestnik</li>
-        </ul>
-        <button type="button" class="btn" onclick="showScreen('quiz')">Przejdź do Quizu</button>
-    </div>
+  <div class="screen" id="taskSelection">
+    <h2>Misja poboczna:</h2>
+    <p>Zrób zdjęcie miejsca, które przypomina przeszłość...</p>
+    <h3>Zadania główne:</h3>
+    <ul>
+      <li>Chata Zielarki</li>
+      <li>Zbrojownia</li>
+      <li>Chata Garncarza</li>
+      <li>Kozy</li>
+      <li>Wiata</li>
+      <li>Namiestnik</li>
+    </ul>
+    <button type="button" class="btn" onclick="showScreen('quiz')">Przejdź do Quizu</button>
+  </div>
 
-    <div class="screen" id="quiz">
-        <h2>Quiz</h2>
-        <ul>
-            <li onclick="checkAnswer(this, true)">b) IX–X wiek</li>
-            <li onclick="checkAnswer(this, false)">a) VIII–IX wiek</li>
-            <li onclick="checkAnswer(this, false)">c) X–XI wiek</li>
-            <li onclick="checkAnswer(this, false)">d) XI–XII wiek</li>
-        </ul>
-    </div>
+  <div class="screen" id="quiz">
+    <h2>Quiz</h2>
+    <ul>
+      <li onclick="checkAnswer(this, true)">b) IX–X wiek</li>
+      <li onclick="checkAnswer(this, false)">a) VIII–IX wiek</li>
+      <li onclick="checkAnswer(this, false)">c) X–XI wiek</li>
+      <li onclick="checkAnswer(this, false)">d) XI–XII wiek</li>
+    </ul>
+  </div>
 
-    <div class="screen" id="council">
-        <h2>Rada Grodu</h2>
-        <ul>
-            <li onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</li>
-            <li onclick="finishCouncil('Izolacja granic')">Izolacja granic</li>
-            <li onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</li>
-        </ul>
-    </div>
+  <div class="screen" id="council">
+    <h2>Rada Grodu</h2>
+    <ul>
+      <li onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</li>
+      <li onclick="finishCouncil('Izolacja granic')">Izolacja granic</li>
+      <li onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</li>
+    </ul>
+  </div>
 
-    <div class="screen" id="certificate">
-        <h2>Certyfikat</h2>
-        <p>Drużyna: <span id="certTeam"></span></p>
-        <p>Misja poboczna: <span id="certMission"></span></p>
-        <p>Decyzja: <span id="certDecision"></span></p>
-        <p>Zdobyte punkty: <span id="certPoints"></span></p>
-        <button type="button" class="btn" onclick="restartGame()">Zagraj ponownie</button>
-    </div>
+  <div class="screen" id="certificate">
+    <h2>Certyfikat</h2>
+    <p>Drużyna: <span id="certTeam"></span></p>
+    <p>Misja poboczna: <span id="certMission">Zdjęcie miejsca z przeszłości</span></p>
+    <p>Decyzja: <span id="certDecision"></span></p>
+    <p>Zdobyte punkty: <span id="certPoints"></span></p>
+    <button type="button" class="btn" onclick="restartGame()">Zagraj ponownie</button>
+  </div>
 
-    <script>
-        let teamName = "";
-        let selectedRole = "";
-        let points = 0;
+  <script>
+    let teamName = "";
+    let selectedRole = "";
+    let points = 0;
 
-        function startGame() {
-            teamName = document.getElementById("teamName").value.trim();
-            if (!teamName) {
-                alert("Proszę wprowadzić nazwę drużyny.");
-                return;
-            }
-            showScreen('selectRole');
-        }
+    function startGame() {
+      teamName = document.getElementById("teamName").value.trim();
+      if (!teamName) {
+        alert("Proszę wprowadzić nazwę drużyny.");
+        return;
+      }
+      showScreen('selectRole');
+    }
 
-        function selectRole(role) {
-            selectedRole = role;
-            alert(`Wybrałeś postać: ${role}`);
-        }
+    function selectRole(role) {
+      selectedRole = role;
+      alert(`Wybrałeś postać: ${role}`);
+    }
 
-        function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
 
-        function checkAnswer(element, isCorrect) {
-            const items = document.querySelectorAll('#quiz li');
-            items.forEach(item => item.style.pointerEvents = 'none');
-            if (isCorrect) points++;
-            element.classList.add(isCorrect ? 'correct' : 'incorrect');
-            setTimeout(() => {
-                showScreen('council');
-            }, 1000);
-        }
+    function checkAnswer(element, isCorrect) {
+      const items = document.querySelectorAll('#quiz li');
+      items.forEach(item => item.style.pointerEvents = 'none');
+      if (isCorrect) points++;
+      element.classList.add(isCorrect ? 'correct' : 'incorrect');
+      setTimeout(() => showScreen('council'), 1000);
+    }
 
-        function finishCouncil(decision) {
-            document.getElementById('certTeam').innerText = teamName;
-            document.getElementById('certDecision').innerText = decision;
-            document.getElementById('certMission').innerText = "Zdjęcie miejsca z przeszłości";
-            document.getElementById('certPoints').innerText = points;
-            showScreen('certificate');
-        }
+    function finishCouncil(decision) {
+      document.getElementById('certTeam').innerText = teamName;
+      document.getElementById('certDecision').innerText = decision;
+      document.getElementById('certPoints').innerText = points;
+      showScreen('certificate');
+    }
 
-        function restartGame() {
-            teamName = '';
-            selectedRole = '';
-            points = 0;
-            showScreen('start');
-        }
-    </script>
+    function restartGame() {
+      teamName = '';
+      selectedRole = '';
+      points = 0;
+      showScreen('start');
+    }
+  </script>
 </body>
 
 </html>
