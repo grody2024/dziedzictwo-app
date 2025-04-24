@@ -198,7 +198,7 @@ function resetSideQuest() {
 <div class="screen" id="role">
   <h2>Wybierz swoją rolę</h2>
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Zwiadowca')">
+    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%; cursor: pointer; transition: 0.3s; border: 3px solid transparent; box-shadow: 0 0 0 transparent;" onmouseover="this.style.border='3px solid gold'; this.style.boxShadow='0 0 20px gold'" onmouseout="this.style.border='3px solid transparent'; this.style.boxShadow='0 0 0 transparent'"" onclick="manualRole('Zwiadowca')">
     <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Tkaczka')">
     <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Zielarka')">
     <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Kupiec')">
