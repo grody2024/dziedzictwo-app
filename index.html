@@ -81,62 +81,6 @@
       text-align: center;
     }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    li {
-      padding: 10px;
-      margin: 10px 0;
-      border: 2px solid #8d744a;
-      border-radius: 8px;
-      background: rgba(255, 248, 230, 0.1);
-      cursor: pointer;
-      color: #f4f1e6;
-      transition: background 0.3s;
-    }
-
-    li:hover {
-      background: rgba(255, 248, 230, 0.2);
-    }
-
-    .correct {
-      background-color: #3b763f;
-      color: #fff;
-    }
-
-    .incorrect {
-      background-color: #b03a3a;
-      color: #fff;
-    }
-
-    #pointsDisplay, #finalPoints {
-      font-weight: bold;
-      text-align: center;
-      font-size: 20px;
-      margin-top: 15px;
-    }
-
-    img.roleIcon {
-      width: 100px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    img.roleIcon:hover {
-      transform: scale(1.1);
-    }
-
-    .glow {
-      animation: sparkle 1.5s infinite;
-      border: 3px solid gold !important;
-      border-radius: 50%;
-    }
-
     .instruction-box {
       background-color: rgba(255, 248, 230, 0.08);
       border: 2px solid #8d744a;
@@ -144,6 +88,23 @@
       padding: 20px;
       max-width: 700px;
       margin: 20px auto;
+    }
+
+    .roleIcon {
+      width: 100px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .roleIcon:hover {
+      transform: scale(1.1);
+    }
+
+    .glow {
+      animation: sparkle 1.5s infinite;
+      border: 3px solid gold !important;
+      border-radius: 50%;
     }
   </style>
 </head>
@@ -159,10 +120,16 @@
 
     let selectedRole = null;
     let teamName = '';
-    let sideMissionInput = '';
-    let sideMissionSubmitted = false;
     let currentTaskInputs = Array(6).fill('');
     let submittedTasks = Array(6).fill(false);
+    const sideMissions = [
+      "Zrób zdjęcie czegoś, co przypomina przeszłość.",
+      "Zbierz trzy różne liście i zrób z nich kompozycję.",
+      "Narysuj symbol, który kojarzy Ci się z siłą.",
+      "Zapisz jedno zdanie, które mogłoby być przysięgą drużyny.",
+      "Ułóż krótką rymowankę o Grodzie.",
+      "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
+    ];
     const tasks = [
       "Chata Zielarki",
       "Zbrojownia",
@@ -172,19 +139,10 @@
       "Chata Namiestnika"
     ];
 
-    const sideMissions = [
-      "Zrób zdjęcie czegoś, co przypomina przeszłość.",
-      "Zbierz trzy różne liście i zrób z nich kompozycję.",
-      "Narysuj symbol, który kojarzy Ci się z siłą.",
-      "Zapisz jedno zdanie, które mogłoby być przysięgą drużyny.",
-      "Ułóż krótką rymowankę o Grodzie.",
-      "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
-    ];
-
     const showScreen = (id) => {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-    }
+    };
 
     function handleRegister() {
       if (teamName.trim()) {
@@ -223,7 +181,7 @@
   <!-- Start screen -->
   <div class="screen active" id="intro">
     <h1>Dziedzictwo Żelaza</h1>
-    <p>Rok 972... [Opowiedz fabułę]</p>
+    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian... </p>
     <div class="instruction-box">
       <h2>Instrukcja gry:</h2>
       <ul>
@@ -242,7 +200,7 @@
     <div>
       <img class="roleIcon" src="zwiadowca.png" onclick="handleSelectRole('Zwiadowca')" />
       <img class="roleIcon" src="tkaczka.png" onclick="handleSelectRole('Tkaczka')" />
-      <img class="roleIcon" src="zielarka.png" onclick="handleSelectRole('Zielarka')" />
+      <img class="roleIcon" src="zielarka (2).png" onclick="handleSelectRole('Zielarka')" />
       <img class="roleIcon" src="kupiec.png" onclick="handleSelectRole('Kupiec')" />
       <img class="roleIcon" src="rzemieslnik.png" onclick="handleSelectRole('Rzemieślnik')" />
       <img class="roleIcon" src="starszy.png" onclick="handleSelectRole('Starszy')" />
