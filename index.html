@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dziedzictwo Żelaza</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-  <audio id="bgMusic" src="muzyka.mp3" loop autoplay hidden></audio>
+  <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay hidden></audio>
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -79,6 +79,15 @@
 </head>
 <body>
 <script>
+  // Upewnij się, że muzyka gra cały czas po zmianie ekranu
+  let bgMusic;
+  document.addEventListener('DOMContentLoaded', () => {
+    bgMusic = document.getElementById('bgMusic');
+    bgMusic.volume = 0.3;
+    bgMusic.play().catch(() => {
+      document.body.addEventListener('click', () => bgMusic.play(), { once: true });
+    });
+  });
   let teamName = '';
   function registerTeam() {
     const input = document.getElementById('teamName');
@@ -96,9 +105,23 @@
       document.body.addEventListener('click', () => music.play(), { once: true });
     });
   });
+function markComplete(input) {
+  if (input.value.trim().length > 0 && !input.dataset.done) {
+    points += 10;
+    input.dataset.done = true;
+    document.getElementById('pointsDisplay').innerText = 'Punkty: ' + points;
+    input.style.backgroundColor = '#d4edda';
+    input.disabled = true;
+  }
+}
+
 </script>
 <div class="screen active" id="intro">
-  <h1>Dziedzictwo Żelaza – Rejestracja Drużyny</h1>
+  <h1>Dziedzictwo Żelaza</h1>
+  <p style="font-size: 16px; max-width: 700px; margin: 0 auto 30px auto; text-align: center;">
+    Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw. To tutaj, na wzgórzu pełnym mchu i starych kamieni, waszej drużynie przypadła rola Strażników Pamięci. Musicie odnaleźć sześć fragmentów zapomnianych dziedzictw, rozwiązać zagadki przeszłości i wspólnie zdecydować, czy Grodzisko otworzy bramy na handel, czy zamknie się na sto lat.
+  </p>
+  <h2>Rejestracja Drużyny</h2>
   <p>Wprowadź nazwę drużyny (3–6 osób):</p>
   <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding: 8px; font-size: 16px;">
   <br><br>
@@ -150,12 +173,12 @@
 <div class="screen" id="tasks">
   <h2>Zadania Lokalności</h2>
   <ul>
-    <li onclick="addPoints(10)">Chata Zielarki</li>
-    <li onclick="addPoints(10)">Zbrojownia Wojów</li>
-    <li onclick="addPoints(10)">Chata Garcarza</li>
-    <li onclick="addPoints(10)">Kozy i Rolnictwo</li>
-    <li onclick="addPoints(10)">Wiata Przetrwania</li>
-    <li onclick="addPoints(10)">Brama Grodu</li>
+    <li>Chata Zielarki – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
+    <li>Zbrojownia Wojów – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
+    <li>Chata Garcarza – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
+    <li>Kozy i Rolnictwo – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
+    <li>Wiata Przetrwania – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
+    <li>Brama Grodu – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
   </ul>
   <p id="pointsDisplay">Punkty: 0</p>
   <button class="btn" onclick="checkQuizAccess()">Quiz historyczny</button>
@@ -219,6 +242,7 @@
     ];
     const role = roles[Math.floor(Math.random() * roles.length)];
     const quest = quests[Math.floor(Math.random() * quests.length)];
+    localStorage.setItem('questInfo', quest);
     document.getElementById('randomRole').innerText = 'Wylosowano: ' + role;
     document.getElementById('roleDescription').innerText = roleDescriptions[role];
     document.getElementById('sideQuest').innerText = 'Misja poboczna: ' + quest;
@@ -283,6 +307,12 @@
   function finishCouncil(decision) {
     document.getElementById("decisionText").innerText = decision;
     document.getElementById("finalPoints").innerText = points;
+    const questInfo = localStorage.getItem('questInfo');
+    if (questInfo) {
+      const p = document.createElement('p');
+      p.innerText = `Twoja misja poboczna: ${questInfo}`;
+      document.getElementById("certificate").appendChild(p);
+    }
     showScreen("certificate");
   }
 
