@@ -129,15 +129,6 @@
       border-radius: 50%;
     }
 
-    .instruction-box {
-      background-color: rgba(255, 248, 230, 0.08);
-      border: 2px solid #8d744a;
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 700px;
-      margin: 20px auto;
-    }
-
     .roleContainer {
       text-align: center;
       display: flex;
@@ -151,6 +142,15 @@
       font-size: 14px;
       max-width: 120px;
       margin-top: 10px;
+    }
+
+    .instruction-box {
+      background-color: rgba(255, 248, 230, 0.08);
+      border: 2px solid #8d744a;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 700px;
+      margin: 20px auto;
     }
   </style>
 </head>
@@ -178,6 +178,14 @@
       "Utrzymanie społecznej równowagi w grupie"
     ];
 
+    const sideMissions = [
+      "Ślady Przeszłości - Zrób zdjęcie czegoś, co mogło służyć dawniej mieszkańcom grodziska (stare narzędzie, fragment ceramiki).",
+      "Kamienny Strażnik - Znajdź ciekawy kamień, który mógłby symbolizować siłę lub decyzję, i sfotografuj go.",
+      "Dary Lasu - Pozbieraj i sfotografuj dwa różne rodzaje naturalnych darów lasu (np. grzyby, szyszki, żołędzie).",
+      "Tajemnica Kowala - Znajdź dowolny metalowy przedmiot przypominający narzędzie kowalskie i zrób mu zdjęcie.",
+      "Strażnik Grodu - Zrób zdjęcie swojej drużyny na tle głównej bramy grodu."
+    ];
+
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
@@ -200,6 +208,11 @@
       showScreen('taskSelection');
     }
 
+    function generateSideTask() {
+      let randomIndex = Math.floor(Math.random() * sideMissions.length);
+      document.getElementById('taskDescription').innerText = sideMissions[randomIndex];
+    }
+
     function completeTask() {
       taskCount++;
       if (taskCount === 6) {
@@ -207,6 +220,10 @@
       } else {
         alert("Zadanie ukończone! Przejdź do kolejnego.");
       }
+    }
+
+    function showQuiz() {
+      showScreen('quiz');
     }
 
     function checkAnswer(element, isCorrect) {
@@ -279,6 +296,44 @@
       </div>
     </div>
     <button class="btn" onclick="startGame()">Dalej</button>
+  </div>
+
+  <!-- Task selection -->
+  <div class="screen" id="taskSelection">
+    <h2>Wybierz zadanie poboczne:</h2>
+    <div id="taskDescription"></div>
+    <button class="btn" onclick="completeTask()">Zakończ zadanie</button>
+  </div>
+
+  <!-- Quiz screen -->
+  <div class="screen" id="quiz">
+    <h2>Quiz: Wybierz odpowiedź</h2>
+    <ul>
+      <li onclick="checkAnswer(this, true)">b) IX–X wiek</li>
+      <li onclick="checkAnswer(this, false)">a) VIII–IX wiek</li>
+      <li onclick="checkAnswer(this, false)">c) X–XI wiek</li>
+      <li onclick="checkAnswer(this, false)">d) XI–XII wiek</li>
+    </ul>
+    <button class="btn" onclick="showScreen('council')">Dalej</button>
+  </div>
+
+  <!-- Council decision -->
+  <div class="screen" id="council">
+    <h2>Rada Starszych</h2>
+    <ul>
+      <li onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</li>
+      <li onclick="finishCouncil('Izolacja granic')">Izolacja granic</li>
+      <li onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</li>
+    </ul>
+  </div>
+
+  <!-- Certificate screen -->
+  <div class="screen" id="certificate">
+    <h2>Certyfikat</h2>
+    <p>Drużyna: <span id="certTeam"></span></p>
+    <p>Misja poboczna: <span id="certMission"></span></p>
+    <p>Decyzja: <span id="certDecision"></span></p>
+    <button class="btn" onclick="restartGame()">Zagraj ponownie</button>
   </div>
 
 </body>
