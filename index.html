@@ -87,7 +87,7 @@
   </style>
 </head>
 <body>
-  <div id="intro" class="screen active">
+  <div id="intro" class="screen active" style="display: block;">
   <h1>Dziedzictwo Żelaza</h1>
   <p style="max-width:700px; margin:0 auto 20px;">Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian. Imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary. Wasza drużyna, Strażnicy Pamięci, musi zebrać dziedzictwo i zadecydować o przyszłości Grodu.</p>
   <p><strong>Wpisz nazwę swojej drużyny:</strong></p>
@@ -104,7 +104,7 @@
     <img src="starszy.png" onclick="highlightSelected(this); setTimeout(() => goToSideQuest(), 400);" style="width:100px; border-radius:50%; cursor:pointer;">
   </div>
 </div>
-<div id="sideQuestScreen" class="screen">
+<div id="sideQuestScreen" class="screen" style="display: none;">
     <h2>Twoja misja poboczna</h2>
     <p id="sideQuestText">Kliknij „Dalej”, by rozpocząć zadania.</p>
     <div style="text-align:center">
@@ -112,7 +112,7 @@
       <button class="btn" onclick="goToTasks()">Dalej</button>
     </div>
 </div>
-<div id="tasksScreen" class="screen">
+<div id="tasksScreen" class="screen" style="display: none;">
   <h2>Zadania terenowe</h2>
   <p>Wpisz hasło w każdym zadaniu i kliknij Zatwierdź. Po ukończeniu 4 z 6 zadań przejdziesz do Rady Grodu.</p>
   <ul id="taskList">
@@ -128,7 +128,7 @@
     <button class="btn" onclick="goToCouncil()" id="toCouncilBtn" style="display:none;">Przejdź do Rady Grodu</button>
   </div>
 </div>
-<div id="councilScreen" class="screen">
+<div id="councilScreen" class="screen" style="display: none;">
   <h2>Rada Grodu</h2>
   <p>Wybierz decyzję dla przyszłości Grodu:</p>
   <ul style="text-align:center;">
@@ -138,7 +138,7 @@
   </ul>
 </div>
 
-<div id="certificateScreen" class="screen">
+<div id="certificateScreen" class="screen" style="display: none;">
   <h2>Certyfikat Drużyny</h2>
   <p>Drużyna: <span id="certTeam"></span></p>
   <p>Decyzja: <strong><span id="certDecision"></span></strong></p>
