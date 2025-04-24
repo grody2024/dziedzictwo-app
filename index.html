@@ -8,16 +8,113 @@
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
   <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay></audio>
   <style>
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
+    body {
+      margin: 0;
+      font-family: 'MedievalSharp', cursive;
+      background: url('tlo.png') center center / cover no-repeat fixed;
+      background-color: #1d1b16;
+      color: #f4f1e6;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-blur: 5px;
+    }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    h1, h2 {
+      text-align: center;
+      color: #f4f1e6;
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .screen {
+      animation: fadeIn 1s ease-out;
+      display: none;
+      padding: 30px;
+      max-width: 900px;
+      background-color: rgba(35, 32, 28, 0.9);
+      border-radius: 15px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+    }
+
+    .active {
+      display: block;
+    }
+
+    .instruction-box {
+      background-color: rgba(255, 248, 230, 0.1);
+      border: 2px solid #8d744a;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 700px;
+    }
+
+    .input-team-name {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 2px solid #8d744a;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      width: 100%;
+      color: #1d1b16;
+      background-color: rgba(255, 248, 230, 0.8);
+    }
+
+    .btn {
+      background: linear-gradient(to bottom, #a07d52, #5e4226);
+      color: #fff9e6;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 10px;
+      margin: 15px auto;
+      cursor: pointer;
+      font-size: 20px;
+      display: inline-block;
+      box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .roleContainer {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .roleIcon {
+      cursor: pointer;
+      transition: transform 0.2s;
+      border-radius: 50%;
+      width: 130px;
+    }
+
+    .roleIcon:hover {
+      transform: scale(1.2);
+    }
+
+    .roleDescription {
+      text-align: center;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .glow {
+      animation: sparkle 1.5s infinite;
+      border: 3px solid gold !important;
+      border-radius: 50%;
     }
 
     @keyframes sparkle {
@@ -34,52 +131,16 @@
       }
     }
 
-    body {
-      margin: 0;
-      font-family: 'MedievalSharp', cursive;
-      background: url('tlo.png') center center / cover no-repeat fixed;
-      background-color: #1d1b16;
-      color: #f4f1e6;
-    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
 
-    .screen {
-      animation: fadeIn 0.6s ease-out;
-      display: none;
-      padding: 20px;
-      background-color: rgba(35, 32, 28, 0.88);
-      min-height: 100vh;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      border-radius: 12px;
-      margin: 20px;
-    }
-
-    .active {
-      display: block;
-    }
-
-    .btn {
-      background: linear-gradient(to bottom, #a07d52, #5e4226);
-      color: #fff9e6;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 10px;
-      margin: 15px auto;
-      cursor: pointer;
-      font-size: 17px;
-      display: inline-block;
-      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.5);
-      transition: transform 0.2s;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-    }
-
-    h1,
-    h2,
-    p {
-      text-align: center;
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     ul {
@@ -104,53 +165,23 @@
       background: rgba(255, 248, 230, 0.2);
     }
 
-    #pointsDisplay,
-    #finalPoints {
-      font-weight: bold;
-      text-align: center;
-      font-size: 20px;
-      margin-top: 15px;
-    }
-
-    img.roleIcon {
-      width: 100px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    img.roleIcon:hover {
-      transform: scale(1.1);
-    }
-
-    .glow {
-      animation: sparkle 1.5s infinite;
-      border: 3px solid gold !important;
-      border-radius: 50%;
-    }
-
-    .roleContainer {
-      text-align: center;
+    #taskSelection {
       display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .roleDescription {
-      text-align: center;
-      font-size: 14px;
-      max-width: 120px;
+      flex-direction: column;
+      justify-content: center;
       margin-top: 10px;
     }
 
-    .instruction-box {
-      background-color: rgba(255, 248, 230, 0.08);
-      border: 2px solid #8d744a;
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 700px;
-      margin: 20px auto;
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .task-item input {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -160,43 +191,39 @@
     window.addEventListener("DOMContentLoaded", () => {
       const music = document.getElementById("bgMusic");
       music.play().catch(() => {
-        document.body.addEventListener("click", () => music.play(), {
-          once: true
-        });
+        document.body.addEventListener("click", () => music.play(), { once: true });
       });
     });
 
+    // Game variables
     let selectedRole = null;
     let teamName = '';
     let missionText = '';
     let taskCount = 0;
+    let completedTasks = [];
+
     const missions = [
-      "Znalezienie ukrytego symbolu",
-      "Ułożenie fragmentów mapy",
-      "Odszyfrowanie runicznej wiadomości",
-      "Zadanie logiczne na spostrzegawczość",
-      "Utrzymanie społecznej równowagi w grupie"
+      "Ślady Przeszłości - Zrób zdjęcie czegoś, co mogło służyć dawniej mieszkańcom grodziska.",
+      "Kamienny Strażnik - Znajdź kamień symbolizujący siłę i sfotografuj go.",
+      "Dary Lasu - Zbieraj i fotografuj różne naturalne dary lasu.",
+      "Tajemnica Kowala - Znajdź przedmiot przypominający narzędzie kowalskie.",
+      "Strażnik Grodu - Zrób zdjęcie swojej drużyny na tle bramy grodu."
     ];
 
-    const sideMissions = [
-      "Ślady Przeszłości - Zrób zdjęcie czegoś, co mogło służyć dawniej mieszkańcom grodziska (stare narzędzie, fragment ceramiki).",
-      "Kamienny Strażnik - Znajdź ciekawy kamień, który mógłby symbolizować siłę lub decyzję, i sfotografuj go.",
-      "Dary Lasu - Pozbieraj i sfotografuj dwa różne rodzaje naturalnych darów lasu (np. grzyby, szyszki, żołędzie).",
-      "Tajemnica Kowala - Znajdź dowolny metalowy przedmiot przypominający narzędzie kowalskie i zrób mu zdjęcie.",
-      "Strażnik Grodu - Zrób zdjęcie swojej drużyny na tle głównej bramy grodu."
-    ];
-
+    // Function to show screens
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
+    // Select role function
     function selectRole(role) {
       selectedRole = role;
       document.querySelectorAll('.roleIcon').forEach(img => img.classList.remove('glow'));
       event.target.classList.add('glow');
     }
 
+    // Start the game and move to next screen
     function startGame() {
       teamName = document.getElementById("teamName").value.trim();
       if (!selectedRole || !teamName) {
@@ -204,33 +231,34 @@
         return;
       }
       missionText = missions[Math.floor(Math.random() * missions.length)];
-      document.getElementById('missionText').innerText = missionText;
+      document.getElementById('taskSelection').innerText = missionText;
       showScreen('taskSelection');
     }
 
-    function generateSideTask() {
-      let randomIndex = Math.floor(Math.random() * sideMissions.length);
-      document.getElementById('taskDescription').innerText = sideMissions[randomIndex];
-    }
-
-    function completeTask() {
-      taskCount++;
-      if (taskCount === 6) {
+    // Add task completion
+    function completeTask(task) {
+      if (!completedTasks.includes(task)) {
+        completedTasks.push(task);
+      }
+      if (completedTasks.length >= 4) {
         showScreen('quiz');
       } else {
-        alert("Zadanie ukończone! Przejdź do kolejnego.");
+        alert("Wykonałeś zadanie! Przejdź do kolejnego.");
       }
     }
 
+    // Show quiz screen
     function showQuiz() {
       showScreen('quiz');
     }
 
+    // Check answer in quiz
     function checkAnswer(element, isCorrect) {
       element.classList.add(isCorrect ? 'correct' : 'incorrect');
       showScreen('council');
     }
 
+    // Finish council and show certificate
     function finishCouncil(decision) {
       document.getElementById('certTeam').innerText = teamName;
       document.getElementById('certMission').innerText = missionText;
@@ -238,9 +266,11 @@
       showScreen('certificate');
     }
 
+    // Restart the game
     function restartGame() {
       selectedRole = null;
       teamName = '';
+      completedTasks = [];
       missionText = '';
       taskCount = 0;
       showScreen('intro');
@@ -262,7 +292,7 @@
         <li>Na koniec zdecyduj o losie Grodu.</li>
       </ul>
     </div>
-    <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" style="padding:10px; font-size:16px; border-radius:8px; border:none; width:250px;">
+    <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" class="input-team-name">
     <button class="btn" onclick="showScreen('selectRole')">Dalej</button>
   </div>
 
@@ -295,14 +325,41 @@
         <div class="roleDescription">Starszy - Przewodnik z głęboką mądrością, podejmujący decyzje.</div>
       </div>
     </div>
-    <button class="btn" onclick="startGame()">Dalej</button>
+    <button class="btn" onclick="showScreen('taskSelection')">Dalej</button>
   </div>
 
-  <!-- Task selection -->
+  <!-- Task selection screen -->
   <div class="screen" id="taskSelection">
     <h2>Wybierz zadanie poboczne:</h2>
-    <div id="taskDescription"></div>
+    <p id="taskDescription"></p>
+    <div id="taskSelectionContent">
+      <div class="task-item">
+        <span>Chata Zielarki</span>
+        <input type="text" id="task1" placeholder="Wpisz zadanie">
+      </div>
+      <div class="task-item">
+        <span>Zbrojownia</span>
+        <input type="text" id="task2" placeholder="Wpisz zadanie">
+      </div>
+      <div class="task-item">
+        <span>Chata Garncarza</span>
+        <input type="text" id="task3" placeholder="Wpisz zadanie">
+      </div>
+      <div class="task-item">
+        <span>Wiata Przeznaczenia</span>
+        <input type="text" id="task4" placeholder="Wpisz zadanie">
+      </div>
+      <div class="task-item">
+        <span>Chata Namiestnika</span>
+        <input type="text" id="task5" placeholder="Wpisz zadanie">
+      </div>
+      <div class="task-item">
+        <span>Koziarnia</span>
+        <input type="text" id="task6" placeholder="Wpisz zadanie">
+      </div>
+    </div>
     <button class="btn" onclick="completeTask()">Zakończ zadanie</button>
+    <button class="btn" onclick="showScreen('quiz')">Dalej</button>
   </div>
 
   <!-- Quiz screen -->
@@ -317,7 +374,7 @@
     <button class="btn" onclick="showScreen('council')">Dalej</button>
   </div>
 
-  <!-- Council decision -->
+  <!-- Council decision screen -->
   <div class="screen" id="council">
     <h2>Rada Starszych</h2>
     <ul>
