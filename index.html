@@ -80,6 +80,8 @@
 
         .roleIcon {
             width: 100px;
+            max-width: 90px;
+            height: auto;
             border-radius: 50%;
             cursor: pointer;
             transition: transform 0.2s;
@@ -97,48 +99,18 @@
             max-width: 700px;
             margin: 20px auto;
         }
+
+        .correct {
+            background-color: green !important;
+        }
+
+        .incorrect {
+            background-color: darkred !important;
+        }
     </style>
 </head>
 
 <body>
-    <script>
-        // Rejestracja drużyny
-        let teamName = "";
-        let selectedRole = "";
-
-        function startGame() {
-            teamName = document.getElementById("teamName").value.trim();
-            if (!teamName) {
-                alert("Proszę wprowadzić nazwę drużyny.");
-                return;
-            }
-            showScreen('intro');
-        }
-
-        function selectRole(role) {
-            selectedRole = role;
-            alert(`Wybrałeś postać: ${role}`);
-        }
-
-        function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        function finishCouncil(decision) {
-            document.getElementById('certTeam').innerText = teamName;
-            document.getElementById('certDecision').innerText = decision;
-            showScreen('certificate');
-        }
-
-        function restartGame() {
-            teamName = '';
-            selectedRole = '';
-            showScreen('start');
-        }
-    </script>
-
-    <!-- Strona startowa -->
     <div class="screen active" id="start">
         <h1>Dziedzictwo Żelaza</h1>
         <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian...</p>
@@ -152,10 +124,9 @@
             </ul>
         </div>
         <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" style="padding:10px; font-size:16px; border-radius:8px; border:none; width:250px;">
-        <button class="btn" onclick="startGame()">Rozpocznij grę</button>
+        <button type="button" class="btn" onclick="startGame()">Rozpocznij grę</button>
     </div>
 
-    <!-- Wybór postaci -->
     <div class="screen" id="selectRole">
         <h2>Wybierz swoją postać:</h2>
         <div>
@@ -166,29 +137,24 @@
             <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik">
             <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy">
         </div>
-        <button class="btn" onclick="showScreen('taskSelection')">Dalej</button>
+        <button type="button" class="btn" onclick="showScreen('taskSelection')">Dalej</button>
     </div>
 
-    <!-- Zadania poboczne i główne -->
     <div class="screen" id="taskSelection">
         <h2>Misja poboczna:</h2>
         <p>Zrób zdjęcie miejsca, które przypomina przeszłość...</p>
-
         <h3>Zadania główne:</h3>
-        <div>
-            <ul>
-                <li>Chata Zielarki</li>
-                <li>Zbrojownia</li>
-                <li>Chata Garncarza</li>
-                <li>Kozy</li>
-                <li>Wiata</li>
-                <li>Namiestnik</li>
-            </ul>
-        </div>
-        <button class="btn" onclick="showScreen('quiz')">Przejdź do Quizu</button>
+        <ul>
+            <li>Chata Zielarki</li>
+            <li>Zbrojownia</li>
+            <li>Chata Garncarza</li>
+            <li>Kozy</li>
+            <li>Wiata</li>
+            <li>Namiestnik</li>
+        </ul>
+        <button type="button" class="btn" onclick="showScreen('quiz')">Przejdź do Quizu</button>
     </div>
 
-    <!-- Quiz -->
     <div class="screen" id="quiz">
         <h2>Quiz</h2>
         <ul>
@@ -197,10 +163,8 @@
             <li onclick="checkAnswer(this, false)">c) X–XI wiek</li>
             <li onclick="checkAnswer(this, false)">d) XI–XII wiek</li>
         </ul>
-        <button class="btn" onclick="showScreen('council')">Dalej</button>
     </div>
 
-    <!-- Rada -->
     <div class="screen" id="council">
         <h2>Rada Grodu</h2>
         <ul>
@@ -210,30 +174,61 @@
         </ul>
     </div>
 
-    <!-- Certyfikat -->
     <div class="screen" id="certificate">
         <h2>Certyfikat</h2>
         <p>Drużyna: <span id="certTeam"></span></p>
         <p>Misja poboczna: <span id="certMission"></span></p>
         <p>Decyzja: <span id="certDecision"></span></p>
-        <button class="btn" onclick="restartGame()">Zagraj ponownie</button>
+        <p>Zdobyte punkty: <span id="certPoints"></span></p>
+        <button type="button" class="btn" onclick="restartGame()">Zagraj ponownie</button>
     </div>
 
     <script>
+        let teamName = "";
+        let selectedRole = "";
+        let points = 0;
+
+        function startGame() {
+            teamName = document.getElementById("teamName").value.trim();
+            if (!teamName) {
+                alert("Proszę wprowadzić nazwę drużyny.");
+                return;
+            }
+            showScreen('selectRole');
+        }
+
+        function selectRole(role) {
+            selectedRole = role;
+            alert(`Wybrałeś postać: ${role}`);
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
         function checkAnswer(element, isCorrect) {
+            const items = document.querySelectorAll('#quiz li');
+            items.forEach(item => item.style.pointerEvents = 'none');
+            if (isCorrect) points++;
             element.classList.add(isCorrect ? 'correct' : 'incorrect');
-            showScreen('council');
+            setTimeout(() => {
+                showScreen('council');
+            }, 1000);
         }
 
         function finishCouncil(decision) {
             document.getElementById('certTeam').innerText = teamName;
             document.getElementById('certDecision').innerText = decision;
+            document.getElementById('certMission').innerText = "Zdjęcie miejsca z przeszłości";
+            document.getElementById('certPoints').innerText = points;
             showScreen('certificate');
         }
 
         function restartGame() {
             teamName = '';
             selectedRole = '';
+            points = 0;
             showScreen('start');
         }
     </script>
