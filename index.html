@@ -8,12 +8,12 @@
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
   <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay></audio>
   <style>
+    /* Keyframes for animation */
     @keyframes fadeIn {
       from {
         opacity: 0;
         transform: translateY(20px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
@@ -24,16 +24,15 @@
       0% {
         box-shadow: 0 0 10px gold;
       }
-
       50% {
         box-shadow: 0 0 30px gold;
       }
-
       100% {
         box-shadow: 0 0 10px gold;
       }
     }
 
+    /* General body styling */
     body {
       margin: 0;
       font-family: 'MedievalSharp', cursive;
@@ -43,6 +42,7 @@
       text-align: center;
     }
 
+    /* Style for the active screen */
     .screen {
       animation: fadeIn 0.6s ease-out;
       display: none;
@@ -59,6 +59,7 @@
       display: block;
     }
 
+    /* Button styling */
     .btn {
       background: linear-gradient(to bottom, #a07d52, #5e4226);
       color: #fff9e6;
@@ -77,10 +78,12 @@
       transform: scale(1.05);
     }
 
+    /* Headings and Paragraphs */
     h1, h2, p {
       text-align: center;
     }
 
+    /* Instruction box styling */
     .instruction-box {
       background-color: rgba(255, 248, 230, 0.08);
       border: 2px solid #8d744a;
@@ -90,6 +93,7 @@
       margin: 20px auto;
     }
 
+    /* Role icon hover effect */
     .roleIcon {
       width: 100px;
       border-radius: 50%;
@@ -101,6 +105,7 @@
       transform: scale(1.1);
     }
 
+    /* Glowing effect */
     .glow {
       animation: sparkle 1.5s infinite;
       border: 3px solid gold !important;
@@ -111,6 +116,7 @@
 
 <body>
   <script>
+    // Play music when the page loads
     window.addEventListener("DOMContentLoaded", () => {
       const music = document.getElementById("bgMusic");
       music.play().catch(() => {
@@ -118,6 +124,7 @@
       });
     });
 
+    // Global variables
     let selectedRole = null;
     let teamName = '';
     let sideMissionInput = '';
@@ -141,23 +148,27 @@
       "Chata Namiestnika"
     ];
 
+    // Function to show different screens
     const showScreen = (id) => {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     };
 
+    // Handle team registration
     function handleRegister() {
       if (teamName.trim()) {
         showScreen('selectRole');
       }
     }
 
+    // Handle role selection
     function handleSelectRole(role) {
       selectedRole = role;
       document.querySelectorAll('.roleIcon').forEach(img => img.classList.remove('glow'));
       event.target.classList.add('glow');
     }
 
+    // Handle task submission
     function handleTaskSubmit(index) {
       if (currentTaskInputs[index].trim()) {
         submittedTasks[index] = true;
@@ -165,6 +176,7 @@
       }
     }
 
+    // Handle side mission submission
     function handleSideMissionSubmit() {
       if (sideMissionInput.trim()) {
         sideMissionSubmitted = true;
@@ -172,6 +184,7 @@
       }
     }
 
+    // Handle council decision
     function handleCouncilDecision(decision) {
       document.getElementById('certTeam').innerText = teamName;
       document.getElementById('certMission').innerText = sideMissionInput;
@@ -183,7 +196,7 @@
   <!-- Start screen -->
   <div class="screen active" id="intro">
     <h1>Dziedzictwo Żelaza</h1>
-    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian... </p>
+    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian...</p>
     <div class="instruction-box">
       <h2>Instrukcja gry:</h2>
       <ul>
