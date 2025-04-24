@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,9 +49,7 @@
       transform: scale(1.05);
     }
 
-    h1,
-    h2,
-    p {
+    h1, h2, p {
       text-align: center;
     }
 
@@ -113,27 +110,16 @@
       max-width: 700px;
       margin: 20px auto;
     }
-
-    .card {
-      background: rgba(0, 0, 0, 0.4);
-      border: 2px solid #8d744a;
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 20px;
-    }
   </style>
 </head>
-
 <body>
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const music = document.getElementById("bgMusic");
-      music.play().catch(() => {
-        document.body.addEventListener("click", () => music.play(), {
-          once: true
-        });
-      });
-    });
+    // Initialize states
+    let currentStep = 1;
+    let teamName = '';
+    let selectedRole = '';
+    let sideMissionInput = "";
+    let sideMissionSubmitted = false;
 
     const tasks = [
       "Chata Zielarki",
@@ -153,18 +139,13 @@
       "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
     ];
 
-    let currentStep = 1;
-    let teamName = '';
-    let selectedRole = '';
-    let currentTaskInputs = Array(tasks.length).fill("");
-    let sideMissionInput = "";
-    let sideMissionSubmitted = false;
-
+    // Show screen function
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
+    // Function for Register Step
     function handleRegister() {
       if (teamName.trim()) {
         currentStep = 2;
@@ -172,12 +153,14 @@
       }
     }
 
+    // Function for Role Selection
     function handleRoleSelect(role) {
       selectedRole = role;
       currentStep = 3;
       showScreen('sideMission');
     }
 
+    // Side Mission Submit Function
     function handleSideMissionSubmit() {
       if (sideMissionInput.trim()) {
         sideMissionSubmitted = true;
@@ -186,24 +169,27 @@
       }
     }
 
+    // Task Submit Function
     function handleTaskSubmit(index) {
-      currentTaskInputs[index] = document.getElementById('task' + index).value.trim();
-      if (currentTaskInputs[index]) {
-        // Mark task as completed (can be shown in the game progress)
-      }
+      currentStep = 5;
+      showScreen('taskSelection');
     }
 
+    // Handle Game Complete
     function handleCompleteGame() {
-      if (currentTaskInputs.filter(task => task !== "").length >= 4) {
+      if (sideMissionSubmitted) {
         showScreen('council');
-      } else {
-        alert("You need to complete at least 4 tasks.");
       }
     }
 
+    // Final Decision
     function handleFinalDecision(decision) {
       alert(`You selected the final decision: ${decision}`);
-      // Show description and certificate
+      showScreen('certificate');
+    }
+
+    // Certificate screen
+    function showCertificate() {
       showScreen('certificate');
     }
 
@@ -302,5 +288,4 @@
     <button class="btn" onclick="window.location.reload()">Zagraj ponownie</button>
   </div>
 </body>
-
 </html>
