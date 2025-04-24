@@ -87,6 +87,28 @@
   </style>
 </head>
 <body>
+  <div id="intro" class="screen active">
+    <h1>Dziedzictwo Żelaza</h1>
+    <p>Wybierz swoją postać:</p>
+    <div style="text-align:center">
+      <img src="zwiadowca.png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; cursor:pointer; margin:10px;">
+      <img src="zielarka (2).png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; cursor:pointer; margin:10px;">
+    </div>
+  </div>
+
+  <div id="sideQuestScreen" class="screen">
+    <h2>Twoja misja poboczna</h2>
+    <p id="sideQuestText">Kliknij „Dalej”, by rozpocząć zadania.</p>
+    <div style="text-align:center">
+      <button class="btn" onclick="assignRandomSideQuest()">Losuj inne zadanie</button>
+      <button class="btn" onclick="goToTasks()">Dalej</button>
+    </div>
+  </div>
+
+  <div id="tasksScreen" class="screen">
+    <h2>Zadania terenowe</h2>
+    <p>Tu pojawią się Twoje główne zadania…</p>
+  </div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const music = document.getElementById('bgMusic');
@@ -94,9 +116,47 @@
     music.play().catch(() => {
       document.body.addEventListener('click', () => music.play(), { once: true });
     });
+
     const last = localStorage.getItem('lastScreen');
     if (last) showScreen(last);
   });
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const screen = document.getElementById(id);
+    if (screen) screen.classList.add('active');
+    localStorage.setItem('lastScreen', id);
+  }
+
+  function highlightSelected(selectedImg) {
+    document.querySelectorAll('#intro img').forEach(img => {
+      img.classList.remove('glow');
+    });
+    selectedImg.classList.add('glow');
+  }
+  function assignRandomSideQuest() {
+    const quests = [
+      '🔍 Ślady Przeszłości – odnajdź ślad dawnego życia.',
+      '🌿 Kształty Natury – znajdź różne formy w otoczeniu.',
+      '🧘 Cisza Testowa – usiądź w ciszy przez 3 minuty.',
+      '📍 Obiekt numer 7 – policz 7 elementów i zareaguj.',
+      '🧾 Kod z Przeszłości – zapamiętaj ciekawostkę.',
+      '👁️ Obserwator Ruchu – notuj poruszające się istoty.',
+      '🚶‍♂️ Rytm Terenu – przejdź tę samą trasę różnie.'
+    ];
+    const quest = quests[Math.floor(Math.random() * quests.length)];
+    localStorage.setItem('sideQuest', quest);
+    document.getElementById('sideQuestText').innerText = quest;
+  }
+
+  function goToSideQuest() {
+    assignRandomSideQuest();
+    showScreen('sideQuestScreen');
+  }
+
+  function goToTasks() {
+    showScreen('tasksScreen');
+  }
 </script>
 <!-- The rest of your HTML content remains unchanged -->
 </body>
