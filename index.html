@@ -1,3 +1,4 @@
+<!-- pełny kod z systemem punktów, quizem i amuletem, quiz jako punkt przed radą -->
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -34,74 +35,125 @@
       box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
     }
     h1, h2, p { text-align: center; }
-    .roles {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-    .role {
-      text-align: center;
-      width: 160px;
-      border: 2px solid #8b5e3c;
-      border-radius: 12px;
-      background: #f9f5e3;
-      padding: 10px;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-    }
-    .role img { max-width: 80px; height: auto; }
-    ul.task-list {
-      list-style: none;
-      padding: 0;
-      max-width: 600px;
-      margin: auto;
-    }
-    .task-list li {
-      background: #fffdf5;
-      border: 1px solid #bda77b;
-      margin: 8px 0;
-      padding: 10px;
-      border-radius: 6px;
-    }
-    .task-list li.done {
-      background: #e1f8dc;
-      color: #2f6627;
-      text-decoration: line-through;
-    }
-    .mission-card {
-      background: #fff8dc;
-      border: 2px dashed #b8860b;
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 600px;
-      border-radius: 8px;
-      font-style: italic;
-    }
-    img {
-      display: block;
-      margin: 20px auto;
-      max-width: 90%;
-    }
+    ul { list-style-type: none; padding: 0; }
+    li { padding: 5px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; background: #f9f5e3; cursor: pointer; }
+    .correct { background-color: #d4edda; color: #155724; }
+    .incorrect { background-color: #f8d7da; color: #721c24; }
   </style>
 </head>
 <body>
-  <div class="screen active" id="intro">
-    <h1>Dziedzictwo Żelaza</h1>
-    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw...</p>
-    <button class="btn" onclick="showScreen('selectRole')">Start</button>
+
+  <div class="screen active" id="quiz">
+    <h1>🏰 Quiz: Co wiesz o Grodzisku w Sopocie?</h1>
+    <div id="questionContainer"></div>
+    <button class="btn" onclick="nextQuestion()">Dalej</button>
   </div>
 
-  <div class="screen" id="selectRole">
-    <h2>Wybierz swoją postać</h2>
-    <p>(Ten ekran jest przygotowany do dalszej rozbudowy)</p>
-    <button class="btn" onclick="showScreen('intro')">Wróć</button>
+  <div class="screen" id="thanks">
+    <h2>Dziękujemy za udział!</h2>
+    <p>Zdobywasz +10 punktów za wiedzę historyczną!</p>
+    <button class="btn" onclick="proceedAfterQuiz()">Do Rady Starszych</button>
+  </div>
+
+  <div class="screen" id="council">
+    <h2>Rada Starszych</h2>
+    <p>Wybierz przyszłość Grodziska:</p>
+    <button class="btn" onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</button>
+    <button class="btn" onclick="finishCouncil('Izolacja granic')">Izolacja granic</button>
+    <button class="btn" onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</button>
+  </div>
+
+  <div class="screen" id="certificate">
+    <h2>Gratulacje!</h2>
+    <p>Twoja decyzja: <span id="decisionText"></span></p>
+    <p>Łączna liczba punktów: <span id="finalPoints">0</span></p>
+    <img src="certyfikat1.png" alt="Certyfikat">
   </div>
 
   <script>
-    function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    const quizQuestions = [
+      {
+        question: "1. W jakim okresie funkcjonowało Grodzisko w Sopocie?",
+        options: ["a) VIII–IX wiek", "b) IX–X wiek", "c) X–XI wiek", "d) XI–XII wiek"],
+        answer: "b) IX–X wiek"
+      },
+      {
+        question: "2. Jaką funkcję pełniło Grodzisko w Sopocie?",
+        options: ["a) Centrum handlowe", "b) Świątynia pogańska", "c) Strażnica kontrolująca pas nadmorski", "d) Siedziba książęca"],
+        answer: "c) Strażnica kontrolująca pas nadmorski"
+      },
+      {
+        question: "3. Co można zobaczyć w zrekonstruowanym grodzie?",
+        options: ["a) Kamienne mury obronne", "b) Drewniane chaty, bramę i palisadę", "c) Ruiny zamku krzyżackiego", "d) Nowoczesne budynki muzealne"],
+        answer: "b) Drewniane chaty, bramę i palisadę"
+      },
+      {
+        question: "4. Jakie wydarzenia organizowane są na Grodzisku?",
+        options: ["a) Festyny archeologiczno-historyczne", "b) Pokazy filmowe", "c) Konkursy kulinarne", "d) Wystawy sztuki nowoczesnej"],
+        answer: "a) Festyny archeologiczno-historyczne"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let answeredCorrectly = 0;
+    let points = Number(localStorage.getItem("points")) || 0;
+
+    function loadQuestion() {
+      const container = document.getElementById("questionContainer");
+      container.innerHTML = "";
+      const q = quizQuestions[currentQuestion];
+      const title = document.createElement("h3");
+      title.textContent = q.question;
+      container.appendChild(title);
+      q.options.forEach(opt => {
+        const li = document.createElement("li");
+        li.textContent = opt;
+        li.onclick = () => checkAnswer(li, q.answer);
+        container.appendChild(li);
+      });
     }
+
+    function checkAnswer(el, correct) {
+      const selected = el.textContent;
+      const all = el.parentElement.querySelectorAll("li");
+      all.forEach(li => li.onclick = null);
+      if (selected === correct) {
+        el.classList.add("correct");
+        answeredCorrectly++;
+      } else {
+        el.classList.add("incorrect");
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizQuestions.length) {
+        loadQuestion();
+      } else {
+        points += 10;
+        localStorage.setItem("points", points);
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById("thanks").classList.add("active");
+      }
+    }
+
+    function proceedAfterQuiz() {
+      showScreen("council");
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    function finishCouncil(decision) {
+      document.getElementById("decisionText").innerText = decision;
+      document.getElementById("finalPoints").innerText = points;
+      showScreen("certificate");
+    }
+
+    loadQuestion();
   </script>
+
 </body>
 </html>
