@@ -1,4 +1,3 @@
-<!-- pełny kod z systemem punktów, quizem i amuletem, quiz jako punkt przed radą -->
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -39,11 +38,45 @@
     li { padding: 5px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; background: #f9f5e3; cursor: pointer; }
     .correct { background-color: #d4edda; color: #155724; }
     .incorrect { background-color: #f8d7da; color: #721c24; }
+    #pointsDisplay, #finalPoints { font-weight: bold; text-align: center; font-size: 18px; }
+    #amulet { display: none; text-align: center; margin-top: 20px; }
+    #amulet img { max-width: 150px; }
   </style>
 </head>
 <body>
+  <div class="screen active" id="intro">
+    <h1>Dziedzictwo Żelaza</h1>
+    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw...</p>
+    <button class="btn" onclick="showScreen('role')">Start</button>
+  </div>
 
-  <div class="screen active" id="quiz">
+  <div class="screen" id="role">
+    <h2>Wybierz swoją postać</h2>
+    <ul>
+      <li onclick="selectRole('Zwiadowca')">Zwiadowca</li>
+      <li onclick="selectRole('Tkaczka')">Tkaczka</li>
+      <li onclick="selectRole('Zielarka')">Zielarka</li>
+      <li onclick="selectRole('Kupiec')">Kupiec</li>
+      <li onclick="selectRole('Rzemieślnik')">Rzemieślnik</li>
+      <li onclick="selectRole('Starszy')">Starszy</li>
+    </ul>
+  </div>
+
+  <div class="screen" id="tasks">
+    <h2>Zadania Lokalności</h2>
+    <ul>
+      <li onclick="addPoints(10)">Chata Zielarki</li>
+      <li onclick="addPoints(10)">Zbrojownia Wojów</li>
+      <li onclick="addPoints(10)">Chata Garcarza</li>
+      <li onclick="addPoints(10)">Kozy i Rolnictwo</li>
+      <li onclick="addPoints(10)">Wiata Przetrwania</li>
+      <li onclick="addPoints(10)">Brama Grodu</li>
+    </ul>
+    <p id="pointsDisplay">Punkty: 0</p>
+    <button class="btn" onclick="showScreen('quiz')">Quiz historyczny</button>
+  </div>
+
+  <div class="screen" id="quiz">
     <h1>🏰 Quiz: Co wiesz o Grodzisku w Sopocie?</h1>
     <div id="questionContainer"></div>
     <button class="btn" onclick="nextQuestion()">Dalej</button>
@@ -52,7 +85,7 @@
   <div class="screen" id="thanks">
     <h2>Dziękujemy za udział!</h2>
     <p>Zdobywasz +10 punktów za wiedzę historyczną!</p>
-    <button class="btn" onclick="proceedAfterQuiz()">Do Rady Starszych</button>
+    <button class="btn" onclick="proceedToCouncil()">Do Rady Starszych</button>
   </div>
 
   <div class="screen" id="council">
@@ -66,37 +99,37 @@
   <div class="screen" id="certificate">
     <h2>Gratulacje!</h2>
     <p>Twoja decyzja: <span id="decisionText"></span></p>
-    <p>Łączna liczba punktów: <span id="finalPoints">0</span></p>
-    <img src="certyfikat1.png" alt="Certyfikat">
+    <p>Łączna liczba punktów: <span id="finalPoints"></span></p>
+    
   </div>
 
   <script>
+    function proceedToCouncil() {
+      showScreen('council');
+    }
+    let points = 0;
+    let currentQuestion = 0;
     const quizQuestions = [
-      {
-        question: "1. W jakim okresie funkcjonowało Grodzisko w Sopocie?",
-        options: ["a) VIII–IX wiek", "b) IX–X wiek", "c) X–XI wiek", "d) XI–XII wiek"],
-        answer: "b) IX–X wiek"
-      },
-      {
-        question: "2. Jaką funkcję pełniło Grodzisko w Sopocie?",
-        options: ["a) Centrum handlowe", "b) Świątynia pogańska", "c) Strażnica kontrolująca pas nadmorski", "d) Siedziba książęca"],
-        answer: "c) Strażnica kontrolująca pas nadmorski"
-      },
-      {
-        question: "3. Co można zobaczyć w zrekonstruowanym grodzie?",
-        options: ["a) Kamienne mury obronne", "b) Drewniane chaty, bramę i palisadę", "c) Ruiny zamku krzyżackiego", "d) Nowoczesne budynki muzealne"],
-        answer: "b) Drewniane chaty, bramę i palisadę"
-      },
-      {
-        question: "4. Jakie wydarzenia organizowane są na Grodzisku?",
-        options: ["a) Festyny archeologiczno-historyczne", "b) Pokazy filmowe", "c) Konkursy kulinarne", "d) Wystawy sztuki nowoczesnej"],
-        answer: "a) Festyny archeologiczno-historyczne"
-      }
+      { question: "1. W jakim okresie funkcjonowało Grodzisko w Sopocie?", options: ["a) VIII–IX wiek", "b) IX–X wiek", "c) X–XI wiek", "d) XI–XII wiek"], answer: "b) IX–X wiek" },
+      { question: "2. Jaką funkcję pełniło Grodzisko w Sopocie?", options: ["a) Centrum handlowe", "b) Świątynia pogańska", "c) Strażnica kontrolująca pas nadmorski", "d) Siedziba książęca"], answer: "c) Strażnica kontrolująca pas nadmorski" },
+      { question: "3. Co można zobaczyć w zrekonstruowanym grodzie?", options: ["a) Kamienne mury obronne", "b) Drewniane chaty, bramę i palisadę", "c) Ruiny zamku krzyżackiego", "d) Nowoczesne budynki muzealne"], answer: "b) Drewniane chaty, bramę i palisadę" },
+      { question: "4. Jakie wydarzenia organizowane są na Grodzisku?", options: ["a) Festyny archeologiczno-historyczne", "b) Pokazy filmowe", "c) Konkursy kulinarne", "d) Wystawy sztuki nowoczesnej"], answer: "a) Festyny archeologiczno-historyczne" }
     ];
 
-    let currentQuestion = 0;
-    let answeredCorrectly = 0;
-    let points = Number(localStorage.getItem("points")) || 0;
+    function selectRole(role) {
+      localStorage.setItem('role', role);
+      showScreen('tasks');
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function addPoints(val) {
+      points += val;
+      document.getElementById('pointsDisplay').innerText = 'Punkty: ' + points;
+    }
 
     function loadQuestion() {
       const container = document.getElementById("questionContainer");
@@ -119,7 +152,6 @@
       all.forEach(li => li.onclick = null);
       if (selected === correct) {
         el.classList.add("correct");
-        answeredCorrectly++;
       } else {
         el.classList.add("incorrect");
       }
@@ -131,29 +163,19 @@
         loadQuestion();
       } else {
         points += 10;
-        localStorage.setItem("points", points);
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById("thanks").classList.add("active");
+        document.getElementById("pointsDisplay").innerText = 'Punkty: ' + points;
+        showScreen("thanks");
       }
-    }
-
-    function proceedAfterQuiz() {
-      showScreen("council");
-    }
-
-    function showScreen(id) {
-      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
     }
 
     function finishCouncil(decision) {
       document.getElementById("decisionText").innerText = decision;
       document.getElementById("finalPoints").innerText = points;
+      
       showScreen("certificate");
     }
 
     loadQuestion();
   </script>
-
 </body>
 </html>
