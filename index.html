@@ -104,16 +104,6 @@
       background: rgba(255, 248, 230, 0.2);
     }
 
-    .correct {
-      background-color: #3b763f;
-      color: #fff;
-    }
-
-    .incorrect {
-      background-color: #b03a3a;
-      color: #fff;
-    }
-
     #pointsDisplay,
     #finalPoints {
       font-weight: bold;
@@ -148,11 +138,19 @@
       margin: 20px auto;
     }
 
-    .roleDescription {
-      font-size: 16px;
+    .roleContainer {
       text-align: center;
-      color: #f4f1e6;
-      padding-top: 10px;
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .roleDescription {
+      text-align: center;
+      font-size: 14px;
+      max-width: 120px;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -168,7 +166,6 @@
       });
     });
 
-    // Game variables
     let selectedRole = null;
     let teamName = '';
     let missionText = '';
@@ -181,20 +178,17 @@
       "Utrzymanie społecznej równowagi w grupie"
     ];
 
-    // Function to show screens
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
-    // Select role function
     function selectRole(role) {
       selectedRole = role;
       document.querySelectorAll('.roleIcon').forEach(img => img.classList.remove('glow'));
       event.target.classList.add('glow');
     }
 
-    // Start the game and move to next screen
     function startGame() {
       teamName = document.getElementById("teamName").value.trim();
       if (!selectedRole || !teamName) {
@@ -203,10 +197,9 @@
       }
       missionText = missions[Math.floor(Math.random() * missions.length)];
       document.getElementById('missionText').innerText = missionText;
-      showScreen('mission');
+      showScreen('taskSelection');
     }
 
-    // Complete task
     function completeTask() {
       taskCount++;
       if (taskCount === 6) {
@@ -216,18 +209,11 @@
       }
     }
 
-    // Show quiz
-    function showQuiz() {
-      showScreen('quiz');
-    }
-
-    // Check answer in quiz
     function checkAnswer(element, isCorrect) {
       element.classList.add(isCorrect ? 'correct' : 'incorrect');
       showScreen('council');
     }
 
-    // Finish council and show certificate
     function finishCouncil(decision) {
       document.getElementById('certTeam').innerText = teamName;
       document.getElementById('certMission').innerText = missionText;
@@ -235,7 +221,6 @@
       showScreen('certificate');
     }
 
-    // Restart the game
     function restartGame() {
       selectedRole = null;
       teamName = '';
@@ -267,24 +252,36 @@
   <!-- Select role screen -->
   <div class="screen" id="selectRole">
     <h2>Wybierz swoją postać:</h2>
-    <div>
-      <img class="roleIcon" src="zwiadowca.png" onclick="selectRole('Zwiadowca')" alt="Zwiadowca">
-      <div class="roleDescription">Zwiadowca – ekspert w odkrywaniu tajemnic i nieznanych ścieżek.</div>
-      <img class="roleIcon" src="tkaczka.png" onclick="selectRole('Tkaczka')" alt="Tkaczka">
-      <div class="roleDescription">Tkaczka – mistrzyni w tworzeniu wzorów i tkanin z symbolami.</div>
-      <img class="roleIcon" src="zielarka (2).png" onclick="selectRole('Zielarka')" alt="Zielarka">
-      <div class="roleDescription">Zielarka – specjalistka w wykorzystywaniu roślin do leczenia i magii.</div>
-      <img class="roleIcon" src="kupiec.png" onclick="selectRole('Kupiec')" alt="Kupiec">
-      <div class="roleDescription">Kupiec – mistrz handlu i negocjacji, znajdź drogę do zysków.</div>
-      <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik">
-      <div class="roleDescription">Rzemieślnik – zna się na pracy z metalem i drewnem.</div>
-      <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy">
-      <div class="roleDescription">Starszy – przewodnik z mądrością, podejmujący decyzje.</div>
+    <div class="roleContainer">
+      <div>
+        <img class="roleIcon" src="zwiadowca.png" onclick="selectRole('Zwiadowca')" alt="Zwiadowca">
+        <div class="roleDescription">Zwiadowca - Ekspert od eksploracji i zbierania informacji.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="tkaczka.png" onclick="selectRole('Tkaczka')" alt="Tkaczka">
+        <div class="roleDescription">Tkaczka - Mistrzyni w tworzeniu wzorów i tkanin z symbolami.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="zielarka (2).png" onclick="selectRole('Zielarka')" alt="Zielarka">
+        <div class="roleDescription">Zielarka - Specjalistka w wykorzystywaniu roślin do leczenia i magii.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="kupiec.png" onclick="selectRole('Kupiec')" alt="Kupiec">
+        <div class="roleDescription">Kupiec - Mistrz handlu i negocjacji, znajdź drogę do zysków.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik">
+        <div class="roleDescription">Rzemieślnik - Twórca narzędzi i przedmiotów codziennego użytku.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy">
+        <div class="roleDescription">Starszy - Przewodnik, który z głęboką mądrością przewodzi swoją drużyną.</div>
+      </div>
     </div>
     <button class="btn" onclick="startGame()">Dalej</button>
   </div>
-  
-  <!-- Additional screens and game mechanics follow ... -->
+
+  <!-- Additional screens (task selection, quiz, council, certificate) will follow -->
 
 </body>
 
