@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dziedzictwo Żelaza</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-  <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay hidden></audio>
+  <audio id="bgMusic" src="celtic-festival-307626.mp3" loop hidden></audio>
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -104,7 +104,7 @@
     <img src="starszy.png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; border-radius:50%; cursor:pointer;">
   </div>
 </div>
-<div id="sideQuestScreen" class="screen active">
+<div id="sideQuestScreen" class="screen">
     <h2>Twoja misja poboczna</h2>
     <p id="sideQuestText">Kliknij „Dalej”, by rozpocząć zadania.</p>
     <div style="text-align:center">
@@ -126,7 +126,7 @@
   <div style="text-align:center">
     <button class="btn" onclick="goToCouncil()" id="toCouncilBtn" style="display:none;">Przejdź do Rady Grodu</button>
   </div>
-
+</div>
 <div id="councilScreen" class="screen">
   <h2>Rada Grodu</h2>
   <p>Wybierz decyzję dla przyszłości Grodu:</p>
@@ -197,7 +197,7 @@
 
   function completeTask(id) {
     const input = document.getElementById('task' + id);
-    if (input.value.trim() !== '') {
+    if (input.value.trim().length >= 3) {
       input.disabled = true;
       input.nextElementSibling.disabled = true;
       input.parentElement.style.background = '#3b763f';
