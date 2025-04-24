@@ -1,247 +1,252 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dziedzictwo Żelaza</title>
-  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-  <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay></audio>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'MedievalSharp', cursive;
-      background: url('tło.png') center center / cover no-repeat fixed;
-      background-color: #1d1b16;
-      color: #f4f1e6;
-    }
-    .screen {
-      display: none;
-      padding: 20px;
-      background-color: rgba(35, 32, 28, 0.88);
-      min-height: 100vh;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-      border-radius: 12px;
-      margin: 20px;
-    }
-    .active { display: block; }
-    .btn {
-      background: linear-gradient(to bottom, #a07d52, #5e4226);
-      color: #fff9e6;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 10px;
-      margin: 15px auto;
-      cursor: pointer;
-      font-size: 17px;
-      display: inline-block;
-      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.5);
-      transition: transform 0.2s;
-    }
-    .btn:hover {
-      transform: scale(1.05);
-    }
-    h1, h2, p { text-align: center; }
-    ul { list-style-type: none; padding: 0; max-width: 700px; margin: 0 auto; }
-    li {
-      padding: 10px;
-      margin: 10px 0;
-      border: 2px solid #8d744a;
-      border-radius: 8px;
-      background: rgba(255, 248, 230, 0.1);
-      cursor: pointer;
-      color: #f4f1e6;
-      transition: background 0.3s;
-    }
-    li:hover { background: rgba(255, 248, 230, 0.2); }
-    img.roleIcon {
-      width: 100px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    img.roleIcon:hover { transform: scale(1.1); }
-    .instruction-box {
-      background-color: rgba(255, 248, 230, 0.08);
-      border: 2px solid #8d744a;
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 700px;
-      margin: 20px auto;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dziedzictwo Żelaza</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay></audio>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes sparkle {
+            0% { box-shadow: 0 0 10px gold; }
+            50% { box-shadow: 0 0 30px gold; }
+            100% { box-shadow: 0 0 10px gold; }
+        }
+
+        body {
+            margin: 0;
+            font-family: 'MedievalSharp', cursive;
+            background: url('tło.png') center center / cover no-repeat fixed;
+            background-color: #1d1b16;
+            color: #f4f1e6;
+        }
+
+        .screen {
+            animation: fadeIn 0.6s ease-out;
+            display: none;
+            padding: 20px;
+            background-color: rgba(35, 32, 28, 0.88);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 12px;
+            margin: 20px;
+        }
+
+        .active { display: block; }
+
+        .btn {
+            background: linear-gradient(to bottom, #a07d52, #5e4226);
+            color: #fff9e6;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            margin: 15px auto;
+            cursor: pointer;
+            font-size: 17px;
+            display: inline-block;
+            box-shadow: 3px 3px 12px rgba(0,0,0,0.5);
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        h1, h2, p { text-align: center; }
+        ul { list-style-type: none; padding: 0; max-width: 700px; margin: 0 auto; }
+        li { padding: 10px; margin: 10px 0; border: 2px solid #8d744a; border-radius: 8px; background: rgba(255, 248, 230, 0.1); cursor: pointer; color: #f4f1e6; transition: background 0.3s; }
+        li:hover { background: rgba(255, 248, 230, 0.2); }
+
+        .correct { background-color: #3b763f; color: #fff; }
+        .incorrect { background-color: #b03a3a; color: #fff; }
+
+        #pointsDisplay, #finalPoints {
+            font-weight: bold;
+            text-align: center;
+            font-size: 20px;
+            margin-top: 15px;
+        }
+
+        img.roleIcon {
+            width: 100px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        img.roleIcon:hover {
+            transform: scale(1.1);
+        }
+
+        .glow {
+            animation: sparkle 1.5s infinite;
+            border: 3px solid gold !important;
+            border-radius: 50%;
+        }
+
+        .instruction-box {
+            background-color: rgba(255, 248, 230, 0.08);
+            border: 2px solid #8d744a;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body>
-  <script>
-    let selectedRole = null;
-    let teamName = '';
-    let sideMissionInput = "";
-    let sideMissionSubmitted = false;
-    let completedTasks = Array(6).fill(false);
-    const sideMissions = [
-      "Zrób zdjęcie czegoś, co przypomina przeszłość.",
-      "Zbierz trzy różne liście i zrób z nich kompozycję.",
-      "Narysuj symbol, który kojarzy Ci się z siłą.",
-      "Zapisz jedno zdanie, które mogłoby być przysięgą drużyny.",
-      "Ułóż krótką rymowankę o Grodzie.",
-      "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
-    ];
+    <script>
+        window.addEventListener("DOMContentLoaded", () => {
+            const music = document.getElementById("bgMusic");
+            music.play().catch(() => {
+                document.body.addEventListener("click", () => music.play(), { once: true });
+            });
+        });
 
-    const tasks = [
-      "Chata Zielarki",
-      "Zbrojownia",
-      "Chata Garncarza",
-      "Kozy",
-      "Wiata",
-      "Namiestnik"
-    ];
+        let selectedRole = null;
+        let teamName = '';
+        let missionText = '';
+        let taskCount = 0;
+        const missions = [
+            "Zrób zdjęcie czegoś, co przypomina przeszłość.",
+            "Zbierz trzy różne liście i zrób z nich kompozycję.",
+            "Narysuj symbol, który kojarzy Ci się z siłą.",
+            "Zapisz jedno zdanie, które mogłoby być przysięgą drużyny.",
+            "Ułóż krótką rymowankę o Grodzie.",
+            "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
+        ];
 
-    function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
 
-    function handleRegister() {
-      teamName = document.getElementById("teamName").value.trim();
-      if (!teamName) {
-        alert("Wpisz nazwę drużyny!");
-        return;
-      }
-      showScreen('fabula');
-    }
+        function selectRole(role) {
+            selectedRole = role;
+            document.querySelectorAll('.roleIcon').forEach(img => img.classList.remove('glow'));
+            event.target.classList.add('glow');
+        }
 
-    function handleRoleSelect(role) {
-      selectedRole = role;
-      showScreen('sideMission');
-    }
+        function startGame() {
+            teamName = document.getElementById("teamName").value.trim();
+            if (!selectedRole || !teamName) {
+                alert("Wpisz nazwę drużyny i wybierz postać!");
+                return;
+            }
+            missionText = missions[Math.floor(Math.random() * missions.length)];
+            document.getElementById('missionText').innerText = missionText;
+            showScreen('taskSelection');
+        }
 
-    function handleSideMissionSubmit() {
-      if (sideMissionInput.trim()) {
-        sideMissionSubmitted = true;
-        showScreen('taskSelection');
-      }
-    }
+        function completeTask() {
+            taskCount++;
+            if (taskCount === 6) {
+                showScreen('quiz');
+            } else {
+                alert("Zadanie ukończone! Przejdź do kolejnego.");
+            }
+        }
 
-    function handleTaskSubmit(index) {
-      completedTasks[index] = true;
-      alert(`Zadanie ${tasks[index]} ukończone!`);
-      if (completedTasks.filter(Boolean).length >= 4) {
-        showScreen('quiz');
-      }
-    }
+        function showQuiz() {
+            showScreen('quiz');
+        }
 
-    function handleQuizSubmit() {
-      showScreen('council');
-    }
+        function checkAnswer(element, isCorrect) {
+            element.classList.add(isCorrect ? 'correct' : 'incorrect');
+            showScreen('council');
+        }
 
-    function handleFinalDecision(decision) {
-      alert(`Twoja decyzja: ${decision}`);
-      showScreen('certificate');
-    }
+        function finishCouncil(decision) {
+            document.getElementById('certTeam').innerText = teamName;
+            document.getElementById('certMission').innerText = missionText;
+            document.getElementById('certDecision').innerText = decision;
+            showScreen('certificate');
+        }
 
-    function showCertificate() {
-      alert("Certyfikat z zapisanym wyborem!");
-    }
+        function restartGame() {
+            selectedRole = null;
+            teamName = '';
+            missionText = '';
+            taskCount = 0;
+            showScreen('intro');
+        }
+    </script>
 
-  </script>
-
-  <!-- Start screen -->
-  <div class="screen active" id="start">
-    <h1>Dziedzictwo Żelaza</h1>
-    <p>Witamy w grze! Kliknij 'Dalej', aby rozpocząć przygodę.</p>
-    <div style="display: flex; justify-content: center; align-items: center; height: 100%; margin-top: 20px;">
-      <button class="btn" onclick="showScreen('register')">Dalej</button>
+    <!-- Start screen -->
+    <div class="screen active" id="intro">
+        <h1>Dziedzictwo Żelaza</h1>
+        <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw. To tutaj, na wzgórzu pełnym mchu i starych kamieni, waszej drużynie przypadła rola Strażników Pamięci. Musicie odnaleźć sześć fragmentów zapomnianych dziedzictw, rozwiązać zagadki przeszłości i wspólnie zdecydować, czy Grodzisko otworzy bramy na handel, czy zamknie się na sto lat.</p>
+        <div class="instruction-box">
+            <h2>Instrukcja gry:</h2>
+            <ul>
+                <li>Wejdź na stronę i załóż drużynę (wymyśl nazwę).</li>
+                <li>Poznaj historię i cel gry.</li>
+                <li>Wybierz postać – każda ma unikalne umiejętności.</li>
+                <li>Rozwiązuj zadania w minimum 4 punktach.</li>
+                <li>Sprawdzaj postępy w panelu gry.</li>
+                <li>Na koniec zdecyduj o losie Grodu.</li>
+            </ul>
+        </div>
+        <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" style="padding:10px; font-size:16px; border-radius:8px; border:none; width:250px;">
+        <button class="btn" onclick="startGame()">Rozpocznij grę</button>
     </div>
-  </div>
 
-  <!-- Register screen -->
-  <div class="screen" id="register">
-    <h2>Rejestracja Drużyny</h2>
-    <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" />
-    <button class="btn" onclick="handleRegister()">Zarejestruj drużynę</button>
-  </div>
-
-  <!-- Fabula screen -->
-  <div class="screen" id="fabula">
-    <h2>Fabularne Wprowadzenie</h2>
-    <p>
-      Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian… (Wklej pełny tekst fabuły)
-    </p>
-    <button class="btn" onclick="showScreen('chooseRole')">Dalej</button>
-  </div>
-
-  <!-- Choose role -->
-  <div class="screen" id="chooseRole">
-    <h2>Wybierz swoją postać</h2>
-    <div>
-      <img class="roleIcon" src="zwiadowca.png" onclick="handleRoleSelect('Zwiadowca')" alt="Zwiadowca">
-      <img class="roleIcon" src="tkaczka.png" onclick="handleRoleSelect('Tkaczka')" alt="Tkaczka">
-      <img class="roleIcon" src="zielarka.png" onclick="handleRoleSelect('Zielarka')" alt="Zielarka">
-      <img class="roleIcon" src="kupiec.png" onclick="handleRoleSelect('Kupiec')" alt="Kupiec">
-      <img class="roleIcon" src="rzemieslnik.png" onclick="handleRoleSelect('Rzemieślnik')" alt="Rzemieślnik">
-      <img class="roleIcon" src="starszy.png" onclick="handleRoleSelect('Starszy')" alt="Starszy">
+    <!-- Select role screen -->
+    <div class="screen" id="selectRole">
+        <h2>Wybierz swoją postać:</h2>
+        <div>
+            <img class="roleIcon" src="zwiadowca.png" onclick="selectRole('Zwiadowca')" alt="Zwiadowca">
+            <img class="roleIcon" src="tkaczka.png" onclick="selectRole('Tkaczka')" alt="Tkaczka">
+            <img class="roleIcon" src="zielarka (2).png" onclick="selectRole('Zielarka')" alt="Zielarka">
+            <img class="roleIcon" src="kupiec.png" onclick="selectRole('Kupiec')" alt="Kupiec">
+            <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik">
+            <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy">
+        </div>
+        <button class="btn" onclick="showScreen('taskSelection')">Dalej</button>
     </div>
-    <button class="btn" onclick="showScreen('sideMission')">Dalej</button>
-  </div>
 
-  <!-- Side Mission -->
-  <div class="screen" id="sideMission">
-    <h2>Misja Poboczna</h2>
-    <p>Wykonaj zadanie poboczne! <em>Przykład: Zrób zdjęcie czegoś, co przypomina przeszłość.</em></p>
-    <input type="text" id="sideMissionInput" />
-    <button class="btn" onclick="handleSideMissionSubmit()">Zatwierdź</button>
-  </div>
-
-  <!-- Task selection -->
-  <div class="screen" id="taskSelection">
-    <h2>Zadania główne:</h2>
-    <div class="task-section">
-      <div class="task-card">
-        <h3>Chata Zielarki</h3>
-        <input type="text" id="task1Input" placeholder="Wpisz słowo rozwiązania" />
-        <button class="btn" onclick="handleTaskSubmit(0)">Zatwierdź</button>
-      </div>
-      <div class="task-card">
-        <h3>Zbrojownia</h3>
-        <input type="text" id="task2Input" placeholder="Wpisz słowo rozwiązania" />
-        <button class="btn" onclick="handleTaskSubmit(1)">Zatwierdź</button>
-      </div>
-      <div class="task-card">
-        <h3>Chata Garncarza</h3>
-        <input type="text" id="task3Input" placeholder="Wpisz słowo rozwiązania" />
-        <button class="btn" onclick="handleTaskSubmit(2)">Zatwierdź</button>
-      </div>
+    <!-- Mission selection -->
+    <div class="screen" id="taskSelection">
+        <h2>Wybierz zadanie poboczne:</h2>
+        <div id="taskDescription"></div>
+        <button class="btn" onclick="completeTask()">Zakończ zadanie</button>
     </div>
-    <button class="btn" onclick="showScreen('quiz')">Dalej</button>
-  </div>
 
-  <!-- Quiz screen -->
-  <div class="screen" id="quiz">
-    <h2>Quiz: Wybierz odpowiedź</h2>
-    <ul>
-      <li onclick="handleQuizSubmit()">Odpowiedź 1</li>
-      <li onclick="handleQuizSubmit()">Odpowiedź 2</li>
-      <li onclick="handleQuizSubmit()">Odpowiedź 3</li>
-    </ul>
-    <button class="btn" onclick="showScreen('council')">Dalej</button>
-  </div>
+    <!-- Quiz screen -->
+    <div class="screen" id="quiz">
+        <h2>Quiz: Wybierz odpowiedź</h2>
+        <ul>
+            <li onclick="checkAnswer(this, true)">b) IX–X wiek</li>
+            <li onclick="checkAnswer(this, false)">a) VIII–IX wiek</li>
+            <li onclick="checkAnswer(this, false)">c) X–XI wiek</li>
+            <li onclick="checkAnswer(this, false)">d) XI–XII wiek</li>
+        </ul>
+        <button class="btn" onclick="showScreen('council')">Dalej</button>
+    </div>
 
-  <!-- Council screen -->
-  <div class="screen" id="council">
-    <h2>Rada Starszych</h2>
-    <ul>
-      <li onclick="handleFinalDecision('Otwarcie na handel')">Otwarcie na handel</li>
-      <li onclick="handleFinalDecision('Adaptacja prawa')">Adaptacja prawa</li>
-      <li onclick="handleFinalDecision('Zamknięcie granic')">Zamknięcie granic</li>
-    </ul>
-  </div>
+    <!-- Council decision -->
+    <div class="screen" id="council">
+        <h2>Rada Starszych</h2>
+        <ul>
+            <li onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</li>
+            <li onclick="finishCouncil('Izolacja granic')">Izolacja granic</li>
+            <li onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</li>
+        </ul>
+    </div>
 
-  <!-- Certificate screen -->
-  <div class="screen" id="certificate">
-    <h2>Certyfikat</h2>
-    <p>Twoja decyzja: <span id="finalDecision"></span></p>
-    <button class="btn" onclick="showScreen('start')">Zagraj ponownie</button>
-  </div>
+    <!-- Certificate screen -->
+    <div class="screen" id="certificate">
+        <h2>Certyfikat</h2>
+        <p>Drużyna: <span id="certTeam"></span></p>
+        <p>Misja poboczna: <span id="certMission"></span></p>
+        <p>Decyzja: <span id="certDecision"></span></p>
+        <button class="btn" onclick="restartGame()">Zagraj ponownie</button>
+    </div>
 
 </body>
 </html>
