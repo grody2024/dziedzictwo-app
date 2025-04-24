@@ -8,29 +8,15 @@
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
   <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay></audio>
   <style>
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     body {
       margin: 0;
       font-family: 'MedievalSharp', cursive;
       background: url('tło.png') center center / cover no-repeat fixed;
       background-color: #1d1b16;
       color: #f4f1e6;
-      text-align: center;
     }
 
     .screen {
-      animation: fadeIn 0.6s ease-out;
       display: none;
       padding: 20px;
       background-color: rgba(35, 32, 28, 0.88);
@@ -39,16 +25,11 @@
       backdrop-filter: blur(4px);
       border-radius: 12px;
       margin: 20px;
+      color: #f4f1e6;
     }
 
     .active {
       display: block;
-    }
-
-    h1,
-    p,
-    .instruction-box {
-      margin: 20px 0;
     }
 
     .btn {
@@ -69,21 +50,10 @@
       transform: scale(1.05);
     }
 
-    .instruction-box {
-      background-color: rgba(255, 248, 230, 0.08);
-      border: 2px solid #8d744a;
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 700px;
-      margin: 20px auto;
-    }
-
-    input {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      width: 250px;
+    h1,
+    h2,
+    p {
+      text-align: center;
     }
 
     ul {
@@ -107,137 +77,228 @@
     li:hover {
       background: rgba(255, 248, 230, 0.2);
     }
+
+    .correct {
+      background-color: #3b763f;
+      color: #fff;
+    }
+
+    .incorrect {
+      background-color: #b03a3a;
+      color: #fff;
+    }
+
+    img.roleIcon {
+      width: 100px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    img.roleIcon:hover {
+      transform: scale(1.1);
+    }
+
+    .glow {
+      animation: sparkle 1.5s infinite;
+      border: 3px solid gold !important;
+      border-radius: 50%;
+    }
+
+    .instruction-box {
+      background-color: rgba(255, 248, 230, 0.08);
+      border: 2px solid #8d744a;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 700px;
+      margin: 20px auto;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 2px solid #8d744a;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 
 <body>
   <script>
-    // JavaScript to handle the game flow
     window.addEventListener("DOMContentLoaded", () => {
       const music = document.getElementById("bgMusic");
       music.play().catch(() => {
-        document.body.addEventListener("click", () => music.play(), { once: true });
+        document.body.addEventListener("click", () => music.play(), {
+          once: true
+        });
       });
     });
 
-    let currentScreen = 'intro'; // track the current screen
+    const tasks = [
+      "Chata Zielarki",
+      "Zbrojownia",
+      "Chata Garncarza",
+      "Kozy",
+      "Wiata",
+      "Namiestnik"
+    ];
 
-    function showScreen(screenId) {
-      // hide current screen and show the selected screen
-      document.querySelector(`#${currentScreen}`).classList.remove('active');
-      currentScreen = screenId;
-      document.querySelector(`#${currentScreen}`).classList.add('active');
+    const sideMissions = [
+      "Zrób zdjęcie czegoś, co przypomina przeszłość.",
+      "Zbierz trzy różne liście i zrób z nich kompozycję.",
+      "Narysuj symbol, który kojarzy Ci się z siłą.",
+      "Zapisz jedno zdanie, które mogłoby być przysięgą drużyny.",
+      "Ułóż krótką rymowankę o Grodzie.",
+      "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
+    ];
+
+    let currentStep = 1;
+    let teamName = '';
+    let selectedRole = '';
+    let currentTaskInputs = Array(tasks.length).fill("");
+    let sideMissionInput = "";
+    let sideMissionSubmitted = false;
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
 
-    function startGame() {
-      const teamName = document.getElementById('teamName').value.trim();
-      if (teamName) {
-        showScreen('story');
-      } else {
-        alert("Proszę wpisać nazwę drużyny!");
+    function handleRegister() {
+      if (teamName.trim()) {
+        currentStep = 2;
+        showScreen('fabula');
       }
     }
 
-    function nextPage() {
-      // Example of transitioning to the next page in the game flow
-      showScreen('characterSelection');
-    }
-
-    function nextPageAfterSelection() {
+    function handleRoleSelect(role) {
+      selectedRole = role;
+      currentStep = 3;
       showScreen('sideMission');
     }
 
-    function finishTasks() {
-      showScreen('quiz');
+    function handleSideMissionSubmit() {
+      if (sideMissionInput.trim()) {
+        sideMissionSubmitted = true;
+        currentStep = 4;
+        showScreen('taskSelection');
+      }
     }
 
-    function finishCouncil() {
+    function handleTaskSubmit(index) {
+      currentTaskInputs[index] = document.getElementById('task' + index).value.trim();
+      if (currentTaskInputs[index]) {
+        // Mark task as completed (can be shown in the game progress)
+      }
+    }
+
+    function handleCompleteGame() {
+      if (currentTaskInputs.filter(task => task !== "").length >= 4) {
+        showScreen('council');
+      } else {
+        alert("You need to complete at least 4 tasks.");
+      }
+    }
+
+    function handleFinalDecision(decision) {
+      alert(`You selected the final decision: ${decision}`);
+      // Show description and certificate
       showScreen('certificate');
     }
+
   </script>
 
   <!-- Start screen -->
-  <div class="screen active" id="intro">
+  <div class="screen active" id="start">
     <h1>Dziedzictwo Żelaza</h1>
-    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian...</p>
-
-    <div class="instruction-box">
-      <h2>Instrukcja gry:</h2>
-      <ul>
-        <li>Załóż drużynę i wybierz postać.</li>
-        <li>Rozwiązuj zadania w minimum 4 punktach.</li>
-        <li>Sprawdzaj postępy w panelu gry.</li>
-        <li>Na koniec zdecyduj o losie Grodu.</li>
-      </ul>
-    </div>
-
-    <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny">
-    <button class="btn" onclick="startGame()">Dalej</button>
+    <p>Witamy w grze! Kliknij 'Dalej', aby rozpocząć przygodę.</p>
+    <button class="btn" onclick="showScreen('register')">Dalej</button>
   </div>
 
-  <!-- Story screen -->
-  <div class="screen" id="story">
+  <!-- Register screen -->
+  <div class="screen" id="register">
+    <h2>Rejestracja Drużyny</h2>
+    <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" />
+    <button class="btn" onclick="handleRegister()">Zarejestruj drużynę</button>
+  </div>
+
+  <!-- Fabula screen -->
+  <div class="screen" id="fabula">
     <h2>Fabularne Wprowadzenie</h2>
-    <p>W roku 972, Grodzisko Sopockie stoi na skraju wielkich zmian...</p>
-    <button class="btn" onclick="nextPage()">Dalej</button>
+    <p>
+      Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian… (Wklej pełny tekst fabuły)
+    </p>
+    <button class="btn" onclick="showScreen('chooseRole')">Dalej</button>
   </div>
 
-  <!-- Character Selection -->
-  <div class="screen" id="characterSelection">
-    <h2>Wybierz postać</h2>
-    <button class="btn" onclick="nextPageAfterSelection()">Zwiadowca</button>
-    <button class="btn" onclick="nextPageAfterSelection()">Tkaczka</button>
-    <button class="btn" onclick="nextPageAfterSelection()">Zielarka</button>
-    <button class="btn" onclick="nextPageAfterSelection()">Kupiec</button>
-    <button class="btn" onclick="nextPageAfterSelection()">Rzemieślnik</button>
-    <button class="btn" onclick="nextPageAfterSelection()">Starszy</button>
+  <!-- Choose role -->
+  <div class="screen" id="chooseRole">
+    <h2>Wybierz swoją postać</h2>
+    <div>
+      <button class="btn" onclick="handleRoleSelect('Zwiadowca')">Zwiadowca</button>
+      <button class="btn" onclick="handleRoleSelect('Tkaczka')">Tkaczka</button>
+      <button class="btn" onclick="handleRoleSelect('Zielarka')">Zielarka</button>
+      <button class="btn" onclick="handleRoleSelect('Kupiec')">Kupiec</button>
+      <button class="btn" onclick="handleRoleSelect('Rzemieślnik')">Rzemieślnik</button>
+      <button class="btn" onclick="handleRoleSelect('Starszy')">Starszy</button>
+    </div>
   </div>
 
   <!-- Side Mission -->
   <div class="screen" id="sideMission">
-    <h2>Misja poboczna:</h2>
-    <p>Wykonaj zadanie poboczne! Przykład: "Zrób zdjęcie czegoś, co przypomina przeszłość".</p>
-    <textarea placeholder="Opisz wykonanie zadania pobocznego..."></textarea>
-    <button class="btn" onclick="finishTasks()">Zakończ misję poboczną i przejdź do zadań</button>
+    <h2>Misja Poboczna</h2>
+    <p>Wykonaj zadanie poboczne! <em>Przykład: Zrób zdjęcie czegoś, co przypomina przeszłość.</em></p>
+    <input type="text" id="sideMissionInput" />
+    <button class="btn" onclick="handleSideMissionSubmit()">Zakończ misję poboczną</button>
   </div>
 
   <!-- Task Selection -->
   <div class="screen" id="taskSelection">
-    <h2>Wybierz zadanie:</h2>
-    <ul>
-      <li><input type="text" placeholder="Chata Zielarki"><button class="btn">Zatwierdź</button></li>
-      <li><input type="text" placeholder="Zbrojownia"><button class="btn">Zatwierdź</button></li>
-      <li><input type="text" placeholder="Chata Garncarza"><button class="btn">Zatwierdź</button></li>
-      <li><input type="text" placeholder="Kozy"><button class="btn">Zatwierdź</button></li>
-      <li><input type="text" placeholder="Wiata"><button class="btn">Zatwierdź</button></li>
-      <li><input type="text" placeholder="Namiestnik"><button class="btn">Zatwierdź</button></li>
-    </ul>
-    <button class="btn" onclick="finishTasks()">Zakończ zadania i przejdź do quizu</button>
+    <h2>Wybierz zadanie</h2>
+    <div>
+      <label for="task0">Chata Zielarki</label>
+      <input type="text" id="task0" />
+      <button class="btn" onclick="handleTaskSubmit(0)">Zatwierdź</button>
+
+      <label for="task1">Zbrojownia</label>
+      <input type="text" id="task1" />
+      <button class="btn" onclick="handleTaskSubmit(1)">Zatwierdź</button>
+
+      <label for="task2">Chata Garncarza</label>
+      <input type="text" id="task2" />
+      <button class="btn" onclick="handleTaskSubmit(2)">Zatwierdź</button>
+
+      <label for="task3">Kozy</label>
+      <input type="text" id="task3" />
+      <button class="btn" onclick="handleTaskSubmit(3)">Zatwierdź</button>
+
+      <label for="task4">Wiata</label>
+      <input type="text" id="task4" />
+      <button class="btn" onclick="handleTaskSubmit(4)">Zatwierdź</button>
+
+      <label for="task5">Namiestnik</label>
+      <input type="text" id="task5" />
+      <button class="btn" onclick="handleTaskSubmit(5)">Zatwierdź</button>
+    </div>
+    <button class="btn" onclick="handleCompleteGame()">Przejdź do Rady</button>
   </div>
 
-  <!-- Quiz -->
-  <div class="screen" id="quiz">
-    <h2>Quiz</h2>
-    <ul>
-      <li><button class="btn" onclick="finishCouncil()">Pytanie 1</button></li>
-      <li><button class="btn" onclick="finishCouncil()">Pytanie 2</button></li>
-    </ul>
-  </div>
-
-  <!-- Council Decision -->
+  <!-- Council screen -->
   <div class="screen" id="council">
-    <h2>Rada Starszych - Wybór zakończenia</h2>
-    <button class="btn" onclick="finishCouncil()">Otwarcie na handel</button>
-    <button class="btn" onclick="finishCouncil()">Izolacja granic</button>
-    <button class="btn" onclick="finishCouncil()">Adaptacja prawa</button>
+    <h2>Wielka Rada</h2>
+    <p>Wybierz zakończenie:</p>
+    <button class="btn" onclick="handleFinalDecision('Otwarcie na handel')">Otwarcie na handel</button>
+    <button class="btn" onclick="handleFinalDecision('Adaptacja prawa')">Adaptacja prawa</button>
+    <button class="btn" onclick="handleFinalDecision('Zamknięcie granic')">Zamknięcie granic</button>
   </div>
 
-  <!-- Certificate -->
+  <!-- Certificate screen -->
   <div class="screen" id="certificate">
     <h2>Certyfikat</h2>
-    <p>Drużyna: <span id="certTeam">example</span></p>
-    <p>Misja poboczna: <span id="certMission">example mission</span></p>
-    <p>Decyzja: <span id="certDecision">example decision</span></p>
+    <p>Gratulacje! Zakończyłeś grę.</p>
+    <p>Drużyna: <span id="certTeamName"></span></p>
+    <p>Wybrana misja poboczna: <span id="certMission"></span></p>
     <button class="btn" onclick="window.location.reload()">Zagraj ponownie</button>
   </div>
 </body>
