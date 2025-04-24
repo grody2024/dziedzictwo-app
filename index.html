@@ -88,7 +88,20 @@
   <div class="screen active" id="intro">
     <h1>Dziedzictwo Żelaza</h1>
     <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw...</p>
-    <button class="btn" onclick="alert('To miejsce na dalszy rozwój gry!')">Start</button>
+    <button class="btn" onclick="showScreen('selectRole')">Start</button>
   </div>
+
+  <div class="screen" id="selectRole">
+    <h2>Wybierz swoją postać</h2>
+    <p>(Ten ekran jest przygotowany do dalszej rozbudowy)</p>
+    <button class="btn" onclick="showScreen('intro')">Wróć</button>
+  </div>
+
+  <script>
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
 </body>
 </html>
