@@ -174,6 +174,8 @@ function highlightSelected(selectedImg) {
     img.classList.remove('glow');
   });
   selectedImg.classList.add('glow');
+});
+  selectedImg.classList.add('glow');
   setTimeout(() => showScreen('tasks'), 500);
 }
 
@@ -199,19 +201,19 @@ function toggleMusic() {
   <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding: 8px; font-size: 16px;">
 
   <h2>Jak grać – Krok po Kroku</h2>
-  <ol style="max-width: 700px; margin: 0 auto; font-size: 16px; text-align: left;">
-    <li><strong>Wejście i rejestracja:</strong> Wpisz nazwę drużyny.</li>
-    <li><strong>Fabuła:</strong> Przeczytaj wstęp do świata roku 972.</li>
-    <li><strong>Wybór postaci:</strong> Kliknij w postać, by ją wybrać. Otrzymasz też zadanie poboczne.</li>
-    <li><strong>Gra terenowa:</strong> Odwiedźcie min. 4 punkty, zeskanujcie QR i rozwiążcie zagadki.</li>
-    <li><strong>Panel postępu:</strong> Śledźcie wykonane zadania i misję poboczną.</li>
-    <li><strong>Rada Grodu:</strong> Podejmijcie wspólną decyzję – zapiszcie ją w historii.</li>
-    <li><strong>Zakończenie gry:</strong> Zdobywacie punkty, tytuły i medalion Grodu!</li>
-  </ol>
+  <ul style="max-width: 700px; margin: 0 auto; font-size: 16px; text-align: left;">
+  <li><strong>Wejście i rejestracja:</strong> Wpisz nazwę drużyny.</li>
+  <li><strong>Fabuła:</strong> Przeczytaj wstęp do świata roku 972.</li>
+  <li><strong>Wybór postaci:</strong> Kliknij w postać, by ją wybrać. Otrzymasz też zadanie poboczne.</li>
+  <li><strong>Gra terenowa:</strong> Odwiedźcie min. 4 punkty, zeskanujcie QR i rozwiążcie zagadki.</li>
+  <li><strong>Panel postępu:</strong> Śledźcie wykonane zadania i misję poboczną.</li>
+  <li><strong>Rada Grodu:</strong> Podejmijcie wspólną decyzję – zapiszcie ją w historii.</li>
+  <li><strong>Zakończenie gry:</strong> Zdobywacie punkty, tytuły i medalion Grodu!</li>
+</ul>
 
   <h2>Wybierz swoją rolę</h2>
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Zwiadowca')">
+    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); assignRandomRole();">
     <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Tkaczka')">
     <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Zielarka')">
     <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Kupiec')">
