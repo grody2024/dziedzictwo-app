@@ -6,7 +6,7 @@
   <title>Dziedzictwo Żelaza</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
   <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay hidden></audio>
-<button onclick="toggleMusic()" style="position: fixed; top: 15px; right: 15px; z-index: 1000; background: rgba(255,255,255,0.1); color: white; border: 1px solid #fff; border-radius: 8px; padding: 8px; font-size: 14px; cursor: pointer;">🔊 Wycisz</button>
+
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -94,10 +94,15 @@
   // Upewnij się, że muzyka gra cały czas po zmianie ekranu
   let bgMusic;
   document.addEventListener('DOMContentLoaded', () => {
-    bgMusic = document.getElementById('bgMusic');
-    bgMusic.volume = 0.3;
-    bgMusic.play().catch(() => {
-      document.body.addEventListener('click', () => bgMusic.play(), { once: true });
+  bgMusic = document.getElementById('bgMusic');
+  bgMusic.volume = 0.3;
+  bgMusic.play().catch(() => {
+    document.body.addEventListener('click', () => bgMusic.play(), { once: true });
+  });
+
+  const last = localStorage.getItem('lastScreen');
+  if (last) showScreen(last);
+});
     });
   });
   let teamName = '';
@@ -165,14 +170,11 @@ function resetSideQuest() {
 }
 
 function highlightSelected(selectedImg) {
-  document.querySelectorAll('#role img').forEach(img => {
+  document.querySelectorAll('#intro img').forEach(img => {
     img.classList.remove('glow');
   });
   selectedImg.classList.add('glow');
   setTimeout(() => showScreen('tasks'), 500);
-};
-  selectedImg.style.border = '3px solid gold';
-  selectedImg.style.boxShadow = '0 0 20px gold';
 }
 
 function toggleMusic() {
@@ -193,7 +195,7 @@ function toggleMusic() {
     Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw. To tutaj, na wzgórzu pełnym mchu i starych kamieni, waszej drużynie przypadła rola Strażników Pamięci. Musicie odnaleźć sześć fragmentów zapomnianych dziedzictw, rozwiązać zagadki przeszłości i wspólnie zdecydować, czy Grodzisko otworzy bramy na handel, czy zamknie się na sto lat.
   </p>
   <h2>Rejestracja Drużyny</h2>
-  <p>Wprowadź nazwę drużyny (3–6 osób):</p>
+  <p>Wprowadź nazwę drużyny:</p>
   <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding: 8px; font-size: 16px;">
 
   <h2>Jak grać – Krok po Kroku</h2>
@@ -218,7 +220,7 @@ function toggleMusic() {
   </div>
   <p id="randomRole" style="font-weight: bold; font-size: 20px; text-align: center;"></p>
   <p id="roleDescription" style="margin: 10px auto; max-width: 500px; font-style: italic; text-align: center;"></p>
-  <p id="sideQuest" style="font-style: italic; color: #ddd; text-align: center;"></p>
+  <p id="sideQuest" style="font-style: italic; color: #fff9e6; text-align: center; font-weight: bold; font-size: 18px;"></p>
   <div style="text-align:center">
     <button class="btn" onclick="resetSideQuest()">Wylosuj inne zadanie poboczne</button>
   </div>">Wylosuj postać i zadanie poboczne</button>
@@ -311,13 +313,15 @@ function toggleMusic() {
   }
 
   function showScreen(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    const liveQuest = localStorage.getItem('questInfo');
-    if (id === 'tasks' && liveQuest) {
-      const live = document.getElementById('liveSideQuest');
-      if (live) live.innerText = liveQuest;
-    }
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  localStorage.setItem('lastScreen', id);
+  const liveQuest = localStorage.getItem('questInfo');
+  if (id === 'tasks' && liveQuest) {
+    const live = document.getElementById('liveSideQuest');
+    if (live) live.innerText = liveQuest;
+  }
+}
 }
 
   function addPoints(val) {
