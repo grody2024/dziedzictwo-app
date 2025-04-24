@@ -79,6 +79,16 @@
 </head>
 <body>
 <script>
+  let teamName = '';
+  function registerTeam() {
+    const input = document.getElementById('teamName');
+    if (!input.value.trim()) {
+      alert('Podaj nazwę drużyny.');
+      return;
+    }
+    teamName = input.value.trim();
+    showScreen('role');
+  }
   document.addEventListener('DOMContentLoaded', () => {
     const music = document.getElementById('bgMusic');
     music.volume = 0.3;
@@ -88,9 +98,42 @@
   });
 </script>
 <div class="screen active" id="intro">
-  <h1>Dziedzictwo Żelaza</h1>
-  <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw...</p>
-  <button class="btn" onclick="showScreen('role')">Start</button>
+  <h1>Dziedzictwo Żelaza – Rejestracja Drużyny</h1>
+  <p>Wprowadź nazwę drużyny (3–6 osób):</p>
+  <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding: 8px; font-size: 16px;">
+  <br><br>
+  <h2>Postacie do odkrycia</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+    <div style="text-align: center; max-width: 120px;">
+      <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%;"><br>
+      <strong>Zwiadowca</strong><br><small>Odkrywca punktów, podejmuje ryzyko</small>
+    </div>
+    <div style="text-align: center; max-width: 120px;">
+      <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%;"><br>
+      <strong>Tkaczka</strong><br><small>Ekspertka od wzorów i symboli</small>
+    </div>
+    <div style="text-align: center; max-width: 120px;">
+      <img src="zielarka.png" alt="Zielarka" style="width: 100px; border-radius: 50%;"><br>
+      <strong>Zielarka</strong><br><small>Wiedza o roślinach i ziołach</small>
+    </div>
+    <div style="text-align: center; max-width: 120px;">
+      <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%;"><br>
+      <strong>Kupiec</strong><br><small>Negocjator i mistrz komunikacji</small>
+    </div>
+    <div style="text-align: center; max-width: 120px;">
+      <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%;"><br>
+      <strong>Rzemieślnik</strong><br><small>Zadania techniczne i logika</small>
+    </div>
+    <div style="text-align: center; max-width: 120px;">
+      <img src="starszy.png" alt="Starszy" style="width: 100px; border-radius: 50%;"><br>
+      <strong>Starszy</strong><br><small>Decyduje o losie Grodziska</small>
+    </div>
+  </div>
+  <br>
+  <button class="btn" onclick="registerTeam()">Zarejestruj i rozpocznij</button>
+  <p style="margin-top: 30px; font-style: italic; font-size: 14px; max-width: 600px; margin-left: auto; margin-right: auto;">
+    <strong>Instrukcja gry:</strong> Zarejestruj nazwę drużyny, poznaj swoją postać i misję. Wykonaj 4–6 zadań w terenie, zdobądź punkty, ukończ quiz, a następnie podejmij decyzję w Radzie Starszych. Gra kończy się otrzymaniem certyfikatu i oceną Twojej drużyny!
+  </p>
 </div>
 
 <div class="screen" id="role">
