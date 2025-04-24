@@ -114,83 +114,57 @@
 </head>
 <body>
   <script>
-    // Initialize states
-    let currentStep = 1;
+    // Game variables
+    let selectedRole = null;
     let teamName = '';
-    let selectedRole = '';
     let sideMissionInput = "";
     let sideMissionSubmitted = false;
 
-    const tasks = [
-      "Chata Zielarki",
-      "Zbrojownia",
-      "Chata Garncarza",
-      "Kozy",
-      "Wiata",
-      "Namiestnik"
-    ];
-
-    const sideMissions = [
-      "Zrób zdjęcie czegoś, co przypomina przeszłość.",
-      "Zbierz trzy różne liście i zrób z nich kompozycję.",
-      "Narysuj symbol, który kojarzy Ci się z siłą.",
-      "Zapisz jedno zdanie, które mogłoby być przysięgą drużyny.",
-      "Ułóż krótką rymowankę o Grodzie.",
-      "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
-    ];
-
-    // Show screen function
+    // Function to show screens
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
-    // Function for Register Step
+    // Register team and move to the next screen
     function handleRegister() {
-      if (teamName.trim()) {
-        currentStep = 2;
-        showScreen('fabula');
+      teamName = document.getElementById("teamName").value.trim();
+      if (!teamName) {
+        alert("Wpisz nazwę drużyny!");
+        return;
       }
+      showScreen('fabula'); // przejście do fabuły po rejestracji
     }
 
-    // Function for Role Selection
+    // Handle role selection and move to next screen
     function handleRoleSelect(role) {
       selectedRole = role;
-      currentStep = 3;
       showScreen('sideMission');
     }
 
-    // Side Mission Submit Function
+    // Handle side mission submit
     function handleSideMissionSubmit() {
       if (sideMissionInput.trim()) {
         sideMissionSubmitted = true;
-        currentStep = 4;
         showScreen('taskSelection');
       }
     }
 
-    // Task Submit Function
+    // Handle task submit
     function handleTaskSubmit(index) {
-      currentStep = 5;
+      alert(`Zadanie ${index + 1} ukończone!`);
       showScreen('taskSelection');
     }
 
-    // Handle Game Complete
-    function handleCompleteGame() {
-      if (sideMissionSubmitted) {
-        showScreen('council');
-      }
-    }
-
-    // Final Decision
+    // Show the final decision screen
     function handleFinalDecision(decision) {
-      alert(`You selected the final decision: ${decision}`);
+      alert(`Twoja decyzja: ${decision}`);
       showScreen('certificate');
     }
 
-    // Certificate screen
+    // Show certificate
     function showCertificate() {
-      showScreen('certificate');
+      alert("Certyfikat z zapisanym wyborem!");
     }
 
   </script>
@@ -199,7 +173,9 @@
   <div class="screen active" id="start">
     <h1>Dziedzictwo Żelaza</h1>
     <p>Witamy w grze! Kliknij 'Dalej', aby rozpocząć przygodę.</p>
-    <button class="btn" onclick="showScreen('register')">Dalej</button>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100%; margin-top: 20px;">
+      <button class="btn" onclick="showScreen('register')">Dalej</button>
+    </div>
   </div>
 
   <!-- Register screen -->
@@ -287,5 +263,6 @@
     <p>Wybrana misja poboczna: <span id="certMission"></span></p>
     <button class="btn" onclick="window.location.reload()">Zagraj ponownie</button>
   </div>
+
 </body>
 </html>
