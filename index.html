@@ -115,6 +115,42 @@ function markComplete(input) {
   }
 }
 
+function manualRole(role) {
+  const roleDescriptions = {
+    'Zwiadowca': 'Odwaga i ciekawość prowadzą Zwiadowcę przez nieznane ścieżki.',
+    'Tkaczka': 'Tkaczka widzi to, co niewidzialne – symbole i wzory.',
+    'Zielarka': 'Zna zioła, rośliny i sekrety lasów. Zielarka potrafi pomóc innym.',
+    'Kupiec': 'Słowo to jego miecz. Negocjuje, słucha i zdobywa.',
+    'Rzemieślnik': 'Dłonie Rzemieślnika tworzą i naprawiają.',
+    'Starszy': 'To lider i doradca – ostatnie słowo często należy do niego.'
+  };
+  const quests = [
+    '🔍 Ślady Przeszłości – odnajdź ślad dawnego życia.',
+    '🌿 Kształty Natury – znajdź różne formy w otoczeniu.',
+    '🧘 Cisza Testowa – usiądź w ciszy przez 3 minuty.',
+    '📍 Obiekt numer 7 – policz 7 elementów i zareaguj.',
+    '🧾 Kod z Przeszłości – zapamiętaj ciekawostkę.',
+    '👁️ Obserwator Ruchu – notuj poruszające się istoty.',
+    '🚶‍♂️ Rytm Terenu – przejdź tę samą trasę różnie.'
+  ];
+  const quest = quests[Math.floor(Math.random() * quests.length)];
+  document.getElementById('randomRole').innerText = 'Wybierasz: ' + role;
+  document.getElementById('roleDescription').innerText = roleDescriptions[role];
+  document.getElementById('sideQuest').innerText = 'Misja poboczna: ' + quest;
+  let roleImg = role.toLowerCase();
+  if (role === 'Zielarka') roleImg = 'zielarka (2)';
+  document.getElementById('roleImage').src = roleImg + '.png';
+  document.getElementById('roleImage').style.display = 'block';
+  localStorage.setItem('role', role);
+  localStorage.setItem('questInfo', quest);
+}
+
+function resetSideQuest() {
+  const role = localStorage.getItem('role');
+  if (!role) return alert('Wybierz najpierw rolę.');
+  manualRole(role);
+}
+
 </script>
 <div class="screen active" id="intro">
   <h1>Dziedzictwo Żelaza</h1>
@@ -160,17 +196,26 @@ function markComplete(input) {
 </div>
 
 <div class="screen" id="role">
-  <h2>Twoja rola</h2>
+  <h2>Wybierz swoją rolę</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Zwiadowca')">
+    <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Tkaczka')">
+    <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Zielarka')">
+    <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Kupiec')">
+    <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Rzemieślnik')">
+    <img src="starszy.png" alt="Starszy" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Starszy')">
+  </div>
+  <p id="randomRole" style="font-weight: bold; font-size: 20px; text-align: center;"></p>
+  <p id="roleDescription" style="margin: 10px auto; max-width: 500px; font-style: italic; text-align: center;"></p>
+  <p id="sideQuest" style="font-style: italic; color: #ddd; text-align: center;"></p>
   <div style="text-align:center">
-    <img id="roleImage" src="" alt="Postać" style="max-width:120px; display:none; margin: 10px auto">
-    <p id="randomRole" style="font-weight: bold; font-size: 20px;"></p>
-    <p id="roleDescription" style="margin: 10px auto; max-width: 500px; font-style: italic;"></p>
-    <p id="sideQuest" style="font-style: italic; color: #444;"></p>
-    <button class="btn" onclick="assignRandomRole()">Wylosuj postać i zadanie poboczne</button>
+    <button class="btn" onclick="resetSideQuest()">Wylosuj inne zadanie poboczne</button>
+  </div>">Wylosuj postać i zadanie poboczne</button>
   </div>
 </div>
 
 <div class="screen" id="tasks">
+  <p style="text-align:center; font-style: italic; margin-bottom: 20px; color: #ccc;">Misja poboczna: <span id="liveSideQuest"></span></p>
   <h2>Zadania Lokalności</h2>
   <ul>
     <li>Chata Zielarki – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
@@ -257,7 +302,12 @@ function markComplete(input) {
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-  }
+    const liveQuest = localStorage.getItem('questInfo');
+    if (id === 'tasks' && liveQuest) {
+      const live = document.getElementById('liveSideQuest');
+      if (live) live.innerText = liveQuest;
+    }
+}
 
   function addPoints(val) {
     points += val;
