@@ -20,20 +20,6 @@
       }
     }
 
-    @keyframes sparkle {
-      0% {
-        box-shadow: 0 0 10px gold;
-      }
-
-      50% {
-        box-shadow: 0 0 30px gold;
-      }
-
-      100% {
-        box-shadow: 0 0 10px gold;
-      }
-    }
-
     body {
       margin: 0;
       font-family: 'MedievalSharp', cursive;
@@ -104,16 +90,6 @@
       background: rgba(255, 248, 230, 0.2);
     }
 
-    .correct {
-      background-color: #3b763f;
-      color: #fff;
-    }
-
-    .incorrect {
-      background-color: #b03a3a;
-      color: #fff;
-    }
-
     #pointsDisplay,
     #finalPoints {
       font-weight: bold;
@@ -133,12 +109,6 @@
       transform: scale(1.1);
     }
 
-    .glow {
-      animation: sparkle 1.5s infinite;
-      border: 3px solid gold !important;
-      border-radius: 50%;
-    }
-
     .instruction-box {
       background-color: rgba(255, 248, 230, 0.08);
       border: 2px solid #8d744a;
@@ -155,13 +125,10 @@
     window.addEventListener("DOMContentLoaded", () => {
       const music = document.getElementById("bgMusic");
       music.play().catch(() => {
-        document.body.addEventListener("click", () => music.play(), {
-          once: true
-        });
+        document.body.addEventListener("click", () => music.play(), { once: true });
       });
     });
 
-    // Game variables
     let selectedRole = null;
     let teamName = '';
     let missionText = '';
@@ -174,20 +141,17 @@
       "Utrzymanie społecznej równowagi w grupie"
     ];
 
-    // Function to show screens
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
-    // Select role function
     function selectRole(role) {
       selectedRole = role;
       document.querySelectorAll('.roleIcon').forEach(img => img.classList.remove('glow'));
       event.target.classList.add('glow');
     }
 
-    // Start the game and move to next screen
     function startGame() {
       teamName = document.getElementById("teamName").value.trim();
       if (!selectedRole || !teamName) {
@@ -199,7 +163,6 @@
       showScreen('mission');
     }
 
-    // Complete task
     function completeTask() {
       taskCount++;
       if (taskCount === 6) {
@@ -209,18 +172,11 @@
       }
     }
 
-    // Show quiz
-    function showQuiz() {
-      showScreen('quiz');
-    }
-
-    // Check answer in quiz
     function checkAnswer(element, isCorrect) {
       element.classList.add(isCorrect ? 'correct' : 'incorrect');
       showScreen('council');
     }
 
-    // Finish council and show certificate
     function finishCouncil(decision) {
       document.getElementById('certTeam').innerText = teamName;
       document.getElementById('certMission').innerText = missionText;
@@ -228,7 +184,6 @@
       showScreen('certificate');
     }
 
-    // Restart the game
     function restartGame() {
       selectedRole = null;
       teamName = '';
@@ -238,7 +193,6 @@
     }
   </script>
 
-  <!-- Start screen -->
   <div class="screen active" id="intro">
     <h1>Dziedzictwo Żelaza</h1>
     <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw. To tutaj, na wzgórzu pełnym mchu i starych kamieni, waszej drużynie przypadła rola Strażników Pamięci. Musicie odnaleźć sześć fragmentów zapomnianych dziedzictw, rozwiązać zagadki przeszłości i wspólnie zdecydować, czy Grodzisko otworzy bramy na handel, czy zamknie się na sto lat.</p>
@@ -257,7 +211,6 @@
     <button class="btn" onclick="startGame()">Dalej</button>
   </div>
 
-  <!-- Select role screen -->
   <div class="screen" id="selectRole">
     <h2>Wybierz swoją postać:</h2>
     <div>
@@ -271,14 +224,12 @@
     <button class="btn" onclick="showScreen('taskSelection')">Dalej</button>
   </div>
 
-  <!-- Mission selection -->
   <div class="screen" id="taskSelection">
     <h2>Wybierz zadanie poboczne:</h2>
     <div id="taskDescription"></div>
     <button class="btn" onclick="completeTask()">Zakończ zadanie</button>
   </div>
 
-  <!-- Quiz screen -->
   <div class="screen" id="quiz">
     <h2>Quiz: Wybierz odpowiedź</h2>
     <ul>
@@ -290,7 +241,6 @@
     <button class="btn" onclick="showScreen('council')">Dalej</button>
   </div>
 
-  <!-- Council decision -->
   <div class="screen" id="council">
     <h2>Rada Starszych</h2>
     <ul>
@@ -300,7 +250,6 @@
     </ul>
   </div>
 
-  <!-- Certificate screen -->
   <div class="screen" id="certificate">
     <h2>Certyfikat</h2>
     <p>Drużyna: <span id="certTeam"></span></p>
