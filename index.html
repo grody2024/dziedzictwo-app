@@ -1,77 +1,182 @@
-# Program do gry terenowej RPG: Dziedzictwo Żelaza
-# Autor: ChatGPT <3
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dziedzictwo Żelaza</title>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'MedievalSharp', cursive;
+      background: url('assets/tlo.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #3e2f1c;
+    }
+    .screen { display: none; padding: 20px; background-color: rgba(255, 248, 220, 0.95); min-height: 100vh; }
+    .active { display: block; }
+    .btn {
+      background: #8b5e3c;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .roles { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .role {
+      text-align: center;
+      width: 200px;
+      border: 2px solid #6b4c2b;
+      border-radius: 10px;
+      padding: 10px;
+      background-color: #f3efe2;
+    }
+    .role img { max-width: 100px; display: block; margin: 0 auto; }
+    .task-list li.done { text-decoration: line-through; color: green; }
+    .mission-card {
+      border: 2px dashed #6b4c2b;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 600px;
+      background-color: #fefae0;
+    }
+  </style>
+</head>
+<body>
 
-from flask import Flask, request, redirect, render_template_string
-import random
+<!-- Intro -->
+<div id="intro" class="screen active">
+  <h1>Dziedzictwo Żelaza</h1>
+  <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw. To tutaj, na wzgórzu pełnym mchu i starych kamieni, waszej drużynie przypadła rola Strażników Pamięci...</p>
+  <button class="btn" onclick="showScreen('selectRole')">Start</button>
+</div>
 
-app = Flask(__name__)
+<!-- Role Selection -->
+<div id="selectRole" class="screen">
+  <h2>Wybierz swoją rolę</h2>
+  <div class="roles" id="roleContainer"></div>
+  <div id="roleInfo"></div>
+</div>
 
-# Baza danych drużyn (tymczasowa - do testów)
-teams = {}
+<!-- Mission Assignment -->
+<div id="mission" class="screen">
+  <h2>Twoja Misja Poboczna</h2>
+  <div class="mission-card" id="missionText"></div>
+  <button class="btn" onclick="showScreen('tasks')">Zaczynam grę</button>
+</div>
 
-# Dostępne role z opisami
-roles = {
-    "Zwiadowca": "Nieustraszony tropiciel, który przeczesuje teren w poszukiwaniu śladów przeszłości. Jego instynkt i spryt pomagają drużynie unikać niebezpieczeństw.",
-    "Tkaczka": "Mistrzyni wzorów i symboli. Potrafi odczytywać ukryte znaczenia i szyfry ukryte w dawnych tkaninach i ornamentach.",
-    "Zielarka": "Znawczyni ziół i natury. Leczy, rozpoznaje rośliny i zna tajniki przyrody, które mogą przynieść przewagę w trudnych chwilach.",
-    "Kupiec": "Negocjator i handlarz. Potrafi przekonać każdego do swojej racji i zdobyć potrzebne informacje nawet w najbardziej napiętych sytuacjach.",
-    "Rzemieślnik": "Złota rączka Grodu. Rozwiązuje zagadki techniczne, naprawia urządzenia i buduje to, co niezbędne do przetrwania.",
-    "Starszy": "Duchowy przywódca drużyny. Jego słowo często decyduje o kierunku wyprawy i ostatecznych wyborach Grodu. Mądrość ponad wszystko."
+<!-- Tasks -->
+<div id="tasks" class="screen">
+  <h2>Zadania Lokalności</h2>
+  <ul id="taskList" class="task-list"></ul>
+  <p>Ukończono: <span id="taskCounter">0</span>/6</p>
+</div>
+
+<!-- Council -->
+<div id="council" class="screen">
+  <h2>Rada Starszych</h2>
+  <p>Wybierz przyszłość Grodziska:</p>
+  <button class="btn" onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</button>
+  <button class="btn" onclick="finishCouncil('Izolacja granic')">Izolacja granic</button>
+  <button class="btn" onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</button>
+</div>
+
+<!-- Certificate -->
+<div id="certificate" class="screen">
+  <h2>Gratulacje!</h2>
+  <p>Twoja decyzja: <span id="decisionText"></span></p>
+  <img src="assets/certyfikat1.png" alt="Certyfikat" style="width: 100%; max-width: 500px;">
+</div>
+
+<script>
+const roles = [
+  { name: 'Zwiadowca', bonus: '+15% zasięgu wykrywania', img: 'assets/zwiadowca.png' },
+  { name: 'Tkaczka', bonus: 'Odczytywanie symboli i wzorów', img: 'assets/tkaczka.png' },
+  { name: 'Zielarka', bonus: 'Wiedza o ziołach i leczeniu', img: 'assets/zielarka.png' },
+  { name: 'Kupiec', bonus: 'Negocjacje i zdobywanie informacji', img: 'assets/kupiec.png' },
+  { name: 'Rzemieślnik', bonus: 'Rozwiązywanie problemów technicznych', img: 'assets/rzemieslnik.png' },
+  { name: 'Starszy', bonus: 'Podejmowanie kluczowych decyzji', img: 'assets/starszy.png' },
+];
+
+const tasks = [
+  'Chata Zielarki',
+  'Zbrojownia Wojów',
+  'Chata Garcarza',
+  'Kozy i Rolnictwo',
+  'Wiata Przetrwania',
+  'Brama Grodu'
+];
+
+const missions = [
+  'Ślady Przeszłości – znajdź dawny ślad, zapisz jego możliwe znaczenie.',
+  'Kształty Natury – znajdź: okrągłe, ostre, długie, nieregularne, płaskie.',
+  'Cisza Testowa – usiądź w ciszy 3 minuty. Co przyszło ci do głowy?',
+  'Misja: Obiekt numer 7 – policz 7 rzeczy na trasie i zmień coś przy 7.',
+  'Kod z Przeszłości – zapamiętaj ciekawostkę z tablicy, opowiedz ją jak przewodnik.',
+  'Obserwator Ruchu – obserwuj przez 5 minut kto/co się porusza.',
+  'Rytm Terenu – przejdź trasę w dwóch różnych rytmach.'
+];
+
+let completed = 0;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'selectRole') renderRoles();
+  if (id === 'tasks') renderTasks();
 }
 
-# Lista zadań pobocznych
-side_quests = [
-    "Znalezienie ukrytego symbolu",
-    "Ułożenie fragmentów mapy",
-    "Odszyfrowanie runicznej wiadomości",
-    "Zadanie logiczne na spostrzegawczość",
-    "Utrzymanie społecznej równowagi w grupie"
-]
+function renderRoles() {
+  const container = document.getElementById('roleContainer');
+  container.innerHTML = '';
+  roles.forEach(role => {
+    const el = document.createElement('div');
+    el.className = 'role';
+    el.innerHTML = `<img src="${role.img}" alt="${role.name}"><h3>${role.name}</h3><p>${role.bonus}</p><button class='btn' onclick="selectRole('${role.name}', '${role.bonus}')">Wybierz</button>`;
+    container.appendChild(el);
+  });
+}
 
-# Strona rejestracji
-template_register = '''
-<!DOCTYPE html>
-<html>
-<head><title>Rejestracja drużyny</title></head>
-<body>
-  <h1>Dziedzictwo Żelaza – Rejestracja Drużyny</h1>
-  <form action="/register" method="post">
-    Nazwa drużyny: <input type="text" name="team_name" required><br><br>
-    Ilość członków (3-6): <input type="number" name="members" min="3" max="6" required><br><br>
-    <input type="submit" value="Zarejestruj">
-  </form>
+function selectRole(name, bonus) {
+  const info = document.getElementById('roleInfo');
+  const randomMission = missions[Math.floor(Math.random() * missions.length)];
+  info.innerHTML = `<p>Wybrałeś: <strong>${name}</strong> – ${bonus}</p><button class='btn' onclick="assignMission('${randomMission}')">Dalej</button>`;
+}
+
+function assignMission(mission) {
+  document.getElementById('missionText').innerText = mission;
+  showScreen('mission');
+}
+
+function renderTasks() {
+  const list = document.getElementById('taskList');
+  list.innerHTML = '';
+  tasks.forEach((task, index) => {
+    const li = document.createElement('li');
+    li.id = 'task' + index;
+    li.innerHTML = `${task} <button class='btn' onclick='complete(${index})'>Zatwierdź</button>`;
+    list.appendChild(li);
+  });
+}
+
+function complete(id) {
+  const li = document.getElementById('task' + id);
+  if (!li.classList.contains('done')) {
+    li.classList.add('done');
+    completed++;
+    document.getElementById('taskCounter').innerText = completed;
+    if (completed === tasks.length) showScreen('council');
+  }
+}
+
+function finishCouncil(decision) {
+  document.getElementById('decisionText').innerText = decision;
+  showScreen('certificate');
+}
+</script>
+
 </body>
 </html>
-'''
-
-# Ekran z wprowadzeniem i przydzieleniem ról
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        team_name = request.form["team_name"]
-        members = int(request.form["members"])
-        if team_name in teams:
-            return f"Drużyna o nazwie {team_name} już istnieje. Wybierz inną nazwę."
-        if len(teams) >= 50:
-            return "Limit drużyn został osiągnięty."
-
-        assigned_roles = random.sample(list(roles.items()), members)
-        side_missions = random.sample(side_quests, members)
-        team_data = [{"rola": role, "opis": desc, "misja": mission} for (role, desc), mission in zip(assigned_roles, side_missions)]
-        teams[team_name] = team_data
-
-        # Wyświetlenie wyników rejestracji
-        result_html = f"<h2>Drużyna: {team_name}</h2><ul>"
-        for i, member in enumerate(team_data):
-            result_html += f"<li><strong>Gracz {i+1}:</strong> {member['rola']} – {member['opis']}<br>Misja poboczna: {member['misja']}</li><br>"
-        result_html += "</ul><a href='/'>Powrót</a>"
-        return result_html
-    return render_template_string(template_register)
-
-# Strona główna
-@app.route("/")
-def index():
-    return render_template_string(template_register)
-
-if __name__ == "__main__":
-    app.run(debug=True)
