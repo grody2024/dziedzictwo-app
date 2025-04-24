@@ -6,13 +6,11 @@
   <title>Dziedzictwo Żelaza</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
   <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay hidden></audio>
-
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     body {
       margin: 0;
       font-family: 'MedievalSharp', cursive;
@@ -77,337 +75,29 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
     @keyframes sparkle {
-    0% { box-shadow: 0 0 10px gold; }
-    50% { box-shadow: 0 0 30px gold; }
-    100% { box-shadow: 0 0 10px gold; }
-  }
-
-  .glow {
-    animation: sparkle 1.5s infinite;
-    border: 3px solid gold !important;
-    border-radius: 50%;
-  }
-</style>
+      0% { box-shadow: 0 0 10px gold; }
+      50% { box-shadow: 0 0 30px gold; }
+      100% { box-shadow: 0 0 10px gold; }
+    }
+    .glow {
+      animation: sparkle 1.5s infinite;
+      border: 3px solid gold !important;
+      border-radius: 50%;
+    }
+  </style>
 </head>
 <body>
 <script>
-  // Upewnij się, że muzyka gra cały czas po zmianie ekranu
-  let bgMusic;
-  // Zostawiamy tylko jeden DOMContentLoaded event
-  document.addEventListener('DOMContentLoaded', () => {
-    bgMusic = document.getElementById('bgMusic');
-    bgMusic.volume = 0.3;
-    bgMusic.play().catch(() => {
-      document.body.addEventListener('click', () => bgMusic.play(), { once: true });
-    });
-
-    const last = localStorage.getItem('lastScreen');
-    if (last) showScreen(last);
-  });
-
-  const last = localStorage.getItem('lastScreen');
-  if (last) showScreen(last);
-});
-    });
-  });
-  let teamName = '';
-  function registerTeam() {
-    const input = document.getElementById('teamName');
-    if (!input.value.trim()) {
-      alert('Podaj nazwę drużyny.');
-      return;
-    }
-    teamName = input.value.trim();
-    showScreen('role');
-  }
   document.addEventListener('DOMContentLoaded', () => {
     const music = document.getElementById('bgMusic');
     music.volume = 0.3;
     music.play().catch(() => {
       document.body.addEventListener('click', () => music.play(), { once: true });
     });
+    const last = localStorage.getItem('lastScreen');
+    if (last) showScreen(last);
   });
-function markComplete(input) {
-  if (input.value.trim().length > 0 && !input.dataset.done) {
-    points += 10;
-    input.dataset.done = true;
-    document.getElementById('pointsDisplay').innerText = 'Punkty: ' + points;
-    input.style.backgroundColor = '#d4edda';
-    input.disabled = true;
-  }
-}
-
-function manualRole(role) {
-  const roleDescriptions = {
-    'Zwiadowca': 'Odwaga i ciekawość prowadzą Zwiadowcę przez nieznane ścieżki.',
-    'Tkaczka': 'Tkaczka widzi to, co niewidzialne – symbole i wzory.',
-    'Zielarka': 'Zna zioła, rośliny i sekrety lasów. Zielarka potrafi pomóc innym.',
-    'Kupiec': 'Słowo to jego miecz. Negocjuje, słucha i zdobywa.',
-    'Rzemieślnik': 'Dłonie Rzemieślnika tworzą i naprawiają.',
-    'Starszy': 'To lider i doradca – ostatnie słowo często należy do niego.'
-  };
-  const quests = [
-    '🔍 Ślady Przeszłości – odnajdź ślad dawnego życia.',
-    '🌿 Kształty Natury – znajdź różne formy w otoczeniu.',
-    '🧘 Cisza Testowa – usiądź w ciszy przez 3 minuty.',
-    '📍 Obiekt numer 7 – policz 7 elementów i zareaguj.',
-    '🧾 Kod z Przeszłości – zapamiętaj ciekawostkę.',
-    '👁️ Obserwator Ruchu – notuj poruszające się istoty.',
-    '🚶‍♂️ Rytm Terenu – przejdź tę samą trasę różnie.'
-  ];
-  const quest = quests[Math.floor(Math.random() * quests.length)];
-  document.getElementById('randomRole').innerText = 'Wybierasz: ' + role;
-  document.getElementById('roleDescription').innerText = roleDescriptions[role];
-  document.getElementById('sideQuest').innerText = 'Misja poboczna: ' + quest;
-  let roleImg = role.toLowerCase();
-  if (role === 'Zielarka') roleImg = 'zielarka (2)';
-  document.getElementById('roleImage').src = roleImg + '.png';
-  document.getElementById('roleImage').style.display = 'block';
-  setTimeout(() => showScreen('tasks'), 500);
-  localStorage.setItem('role', role);
-  localStorage.setItem('questInfo', quest);
-}
-
-function resetSideQuest() {
-  const role = localStorage.getItem('role');
-  if (!role) return alert('Wybierz najpierw rolę.');
-  manualRole(role);
-}
-
-function highlightSelected(selectedImg) {
-  document.querySelectorAll('#intro img').forEach(img => {
-    img.classList.remove('glow');
-  });
-  selectedImg.classList.add('glow');
-  assignRandomRole();
-}
-  selectedImg.classList.add('glow');
-  setTimeout(() => showScreen('tasks'), 500);
-}
-
-function toggleMusic() {
-  const music = document.getElementById('bgMusic');
-  if (music.paused) {
-    music.play();
-    event.target.innerText = '🔊 Wycisz';
-  } else {
-    music.pause();
-    event.target.innerText = '🔈 Wznów';
-  }
-}
-
 </script>
-<div class="screen active" id="intro">
-  <h1>Dziedzictwo Żelaza</h1>
-  <p style="font-size: 16px; max-width: 700px; margin: 0 auto 30px auto; text-align: center;">
-    Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw. To tutaj, na wzgórzu pełnym mchu i starych kamieni, waszej drużynie przypadła rola Strażników Pamięci. Musicie odnaleźć sześć fragmentów zapomnianych dziedzictw, rozwiązać zagadki przeszłości i wspólnie zdecydować, czy Grodzisko otworzy bramy na handel, czy zamknie się na sto lat.
-  </p>
-  <h2>Rejestracja Drużyny</h2>
-  <p>Wprowadź nazwę drużyny:</p>
-  <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding: 8px; font-size: 16px;">
-
-  <h2>Jak grać – Krok po Kroku</h2>
-  <ul style="max-width: 700px; margin: 0 auto; font-size: 16px; text-align: left;">
-  <li><strong>Wejście i rejestracja:</strong> Wpisz nazwę drużyny.</li>
-  <li><strong>Fabuła:</strong> Przeczytaj wstęp do świata roku 972.</li>
-  <li><strong>Wybór postaci:</strong> Kliknij w postać, by ją wybrać. Otrzymasz też zadanie poboczne.</li>
-  <li><strong>Gra terenowa:</strong> Odwiedźcie min. 4 punkty, zeskanujcie QR i rozwiążcie zagadki.</li>
-  <li><strong>Panel postępu:</strong> Śledźcie wykonane zadania i misję poboczną.</li>
-  <li><strong>Rada Grodu:</strong> Podejmijcie wspólną decyzję – zapiszcie ją w historii.</li>
-  <li><strong>Zakończenie gry:</strong> Zdobywacie punkty, tytuły i medalion Grodu!</li>
-</ul>
-
-  <h2>Wybierz swoją rolę</h2>
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); assignRandomRole();">
-    <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Tkaczka')">
-    <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Zielarka')">
-    <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Kupiec')">
-    <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Rzemieślnik')">
-    <img src="starszy.png" alt="Starszy" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Starszy')">
-  </div>
-  <p id="randomRole" style="font-weight: bold; font-size: 20px; text-align: center;"></p>
-  <p id="roleDescription" style="margin: 10px auto; max-width: 500px; font-style: italic; text-align: center;"></p>
-  <p id="sideQuest" style="font-style: italic; color: #fff9e6; text-align: center; font-weight: bold; font-size: 18px;"></p>
-  <div style="text-align:center">
-  <button class="btn" onclick="resetSideQuest()">Wylosuj inne zadanie poboczne</button>
-</div>
-  </div>
-</div>
-
-<div class="screen" id="tasks">
-  <p style="text-align:center; font-style: italic; margin-bottom: 20px; color: #ccc;">Misja poboczna: <span id="liveSideQuest"></span></p>
-  <h2>Zadania Lokalności</h2>
-  <ul>
-    <li>Chata Zielarki – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
-    <li>Zbrojownia Wojów – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
-    <li>Chata Garcarza – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
-    <li>Kozy i Rolnictwo – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
-    <li>Wiata Przetrwania – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
-    <li>Brama Grodu – <input type='text' placeholder='Wpisz odpowiedź' onblur="markComplete(this)"></li>
-  </ul>
-  <p id="pointsDisplay">Punkty: 0</p>
-  <button class="btn" onclick="checkQuizAccess()">Quiz historyczny</button>
-</div>
-
-<div class="screen" id="quiz">
-  <h1>🏰 Quiz: Co wiesz o Grodzisku w Sopocie?</h1>
-  <div id="questionContainer"></div>
-  <button class="btn" onclick="nextQuestion()">Dalej</button>
-</div>
-
-<div class="screen" id="thanks">
-  <h2>Dziękujemy za udział!</h2>
-  <p>Zdobywasz +10 punktów za wiedzę historyczną!</p>
-  <button class="btn" onclick="proceedToCouncil()">Do Rady Starszych</button>
-</div>
-
-<div class="screen" id="council">
-  <h2>Rada Starszych</h2>
-  <p>Wybierz przyszłość Grodziska:</p>
-  <button class="btn" onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</button>
-  <button class="btn" onclick="finishCouncil('Izolacja granic')">Izolacja granic</button>
-  <button class="btn" onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</button>
-  <button class="btn" onclick="resetGame()">Zacznij od nowa</button>
-</div>
-
-<div class="screen" id="certificate">
-  <h2>Gratulacje!</h2>
-  <p>Twoja decyzja: <span id="decisionText"></span></p>
-  <p>Łączna liczba punktów: <span id="finalPoints"></span></p>
-</div>
-
-<script>
-  let points = 0;
-  let currentQuestion = 0;
-  const quizQuestions = [
-    { question: "1. W jakim okresie funkcjonowało Grodzisko w Sopocie?", options: ["a) VIII–IX wiek", "b) IX–X wiek", "c) X–XI wiek", "d) XI–XII wiek"], answer: "b) IX–X wiek" },
-    { question: "2. Jaką funkcję pełniło Grodzisko w Sopocie?", options: ["a) Centrum handlowe", "b) Świątynia pogańska", "c) Strażnica kontrolująca pas nadmorski", "d) Siedziba książęca"], answer: "c) Strażnica kontrolująca pas nadmorski" },
-    { question: "3. Co można zobaczyć w zrekonstruowanym grodzie?", options: ["a) Kamienne mury obronne", "b) Drewniane chaty, bramę i palisadę", "c) Ruiny zamku krzyżackiego", "d) Nowoczesne budynki muzealne"], answer: "b) Drewniane chaty, bramę i palisadę" },
-    { question: "4. Jakie wydarzenia organizowane są na Grodzisku?", options: ["a) Festyny archeologiczno-historyczne", "b) Pokazy filmowe", "c) Konkursy kulinarne", "d) Wystawy sztuki nowoczesnej"], answer: "a) Festyny archeologiczno-historyczne" }
-  ];
-
-  function assignRandomRole() {
-    const roles = ['Zwiadowca', 'Tkaczka', 'Zielarka', 'Kupiec', 'Rzemieślnik', 'Starszy'];
-    const roleDescriptions = {
-      'Zwiadowca': 'Odwaga i ciekawość prowadzą Zwiadowcę przez nieznane ścieżki. Wyczuwa zagrożenia i odkrywa ukryte miejsca.',
-      'Tkaczka': 'Tkaczka widzi to, co niewidzialne – symbole, wzory i opowieści zapisane w tkaninie rzeczywistości.',
-      'Zielarka': 'Zna zioła, rośliny i sekrety lasów. Zielarka potrafi pomóc innym dzięki swojej przyrodniczej wiedzy.',
-      'Kupiec': 'Słowo to jego miecz. Kupiec negocjuje, słucha i wie, jak zdobyć to, co inni ukrywają.',
-      'Rzemieślnik': 'Dłonie Rzemieślnika tworzą i naprawiają. Umysł techniczny, serce praktyczne.',
-      'Starszy': 'Starszy nosi ciężar decyzji. To lider i doradca – ostatnie słowo często należy do niego.'
-    };
-    const quests = [
-      '🔍 Ślady Przeszłości – odnajdź ślad dawnego życia.',
-      '🌿 Kształty Natury – znajdź różne formy w otoczeniu.',
-      '🧘 Cisza Testowa – usiądź w ciszy przez 3 minuty.',
-      '📍 Obiekt numer 7 – policz 7 elementów i zareaguj.',
-      '🧾 Kod z Przeszłości – zapamiętaj ciekawostkę.',
-      '👁️ Obserwator Ruchu – notuj poruszające się istoty.',
-      '🚶‍♂️ Rytm Terenu – przejdź tę samą trasę różnie.'
-    ];
-    const role = roles[Math.floor(Math.random() * roles.length)];
-    const quest = quests[Math.floor(Math.random() * quests.length)];
-    localStorage.setItem('questInfo', quest);
-    document.getElementById('randomRole').innerText = 'Wylosowano: ' + role;
-    document.getElementById('roleDescription').innerText = roleDescriptions[role];
-    document.getElementById('sideQuest').innerText = 'Misja poboczna: ' + quest;
-    let roleImg = role.toLowerCase();
-    if (role === 'Zielarka') roleImg = 'zielarka (2)';
-    document.getElementById('roleImage').src = roleImg + '.png';
-    document.getElementById('roleImage').style.display = 'block';
-    localStorage.setItem('role', role);
-    showScreen('tasks');
-  }
-
-  function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  localStorage.setItem('lastScreen', id);
-  const liveQuest = localStorage.getItem('questInfo');
-  if (id === 'tasks' && liveQuest) {
-    const live = document.getElementById('liveSideQuest');
-    if (live) live.innerText = liveQuest;
-  }
-}
-}
-
-  function addPoints(val) {
-    points += val;
-    document.getElementById('pointsDisplay').innerText = 'Punkty: ' + points;
-  }
-
-  function loadQuestion() {
-    const container = document.getElementById("questionContainer");
-    container.innerHTML = "";
-    const q = quizQuestions[currentQuestion];
-    const title = document.createElement("h3");
-    title.textContent = q.question;
-    container.appendChild(title);
-    q.options.forEach(opt => {
-      const li = document.createElement("li");
-      li.textContent = opt;
-      li.onclick = () => checkAnswer(li, q.answer);
-      container.appendChild(li);
-    });
-  }
-
-  function checkAnswer(el, correct) {
-    const selected = el.textContent;
-    const all = el.parentElement.querySelectorAll("li");
-    all.forEach(li => li.onclick = null);
-    if (selected === correct) {
-      el.classList.add("correct");
-    } else {
-      el.classList.add("incorrect");
-    }
-  }
-
-  function nextQuestion() {
-    currentQuestion++;
-    if (currentQuestion < quizQuestions.length) {
-      loadQuestion();
-    } else {
-      points += 10;
-      localStorage.setItem('quizCompleted', 'true');
-      document.getElementById("pointsDisplay").innerText = 'Punkty: ' + points;
-      showScreen("thanks");
-    }
-  }
-
-  function proceedToCouncil() {
-    showScreen('council');
-  }
-
-  function finishCouncil(decision) {
-    document.getElementById("decisionText").innerText = decision;
-    document.getElementById("finalPoints").innerText = points;
-    const questInfo = localStorage.getItem('questInfo');
-    if (questInfo) {
-      const p = document.createElement('p');
-      p.innerText = `Twoja misja poboczna: ${questInfo}`;
-      document.getElementById("certificate").appendChild(p);
-    }
-    showScreen("certificate");
-  }
-
-  function checkQuizAccess() {
-    if (points >= 60) {
-      showScreen('quiz');
-    } else {
-      alert('Ukończ wszystkie zadania, zanim przejdziesz do quizu!');
-    }
-  }
-
-  function resetGame() {
-    localStorage.clear();
-    points = 0;
-    currentQuestion = 0;
-    document.getElementById('pointsDisplay').innerText = 'Punkty: 0';
-    showScreen('intro');
-  }
-
-  loadQuestion();
-</script>
+<!-- The rest of your HTML content remains unchanged -->
 </body>
 </html>
