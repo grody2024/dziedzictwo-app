@@ -88,27 +88,63 @@
 </head>
 <body>
   <div id="intro" class="screen active">
-    <h1>Dziedzictwo Żelaza</h1>
-    <p>Wybierz swoją postać:</p>
-    <div style="text-align:center">
-      <img src="zwiadowca.png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; cursor:pointer; margin:10px;">
-      <img src="zielarka (2).png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; cursor:pointer; margin:10px;">
-    </div>
+  <h1>Dziedzictwo Żelaza</h1>
+  <p style="max-width:700px; margin:0 auto 20px;">Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian. Imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary. Wasza drużyna, Strażnicy Pamięci, musi zebrać dziedzictwo i zadecydować o przyszłości Grodu.</p>
+  <p><strong>Wpisz nazwę swojej drużyny:</strong></p>
+  <div style="text-align: center;">
+    <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding:10px; font-size:16px; border-radius:10px; border:none;">
   </div>
-
-  <div id="sideQuestScreen" class="screen">
+  <h2>Wybierz swoją postać:</h2>
+  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:20px;">
+    <img src="zwiadowca.png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; border-radius:50%; cursor:pointer;">
+    <img src="zielarka (2).png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; border-radius:50%; cursor:pointer;">
+    <img src="tkaczka.png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; border-radius:50%; cursor:pointer;">
+    <img src="kupiec.png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; border-radius:50%; cursor:pointer;">
+    <img src="rzemieslnik.png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; border-radius:50%; cursor:pointer;">
+    <img src="starszy.png" onclick="highlightSelected(this); goToSideQuest();" style="width:100px; border-radius:50%; cursor:pointer;">
+  </div>
+</div>
+<div id="sideQuestScreen" class="screen active">
     <h2>Twoja misja poboczna</h2>
     <p id="sideQuestText">Kliknij „Dalej”, by rozpocząć zadania.</p>
     <div style="text-align:center">
       <button class="btn" onclick="assignRandomSideQuest()">Losuj inne zadanie</button>
       <button class="btn" onclick="goToTasks()">Dalej</button>
     </div>
+<div id="tasksScreen" class="screen">
+  <h2>Zadania terenowe</h2>
+  <p>Wpisz hasło w każdym zadaniu i kliknij Zatwierdź. Po ukończeniu 4 z 6 zadań przejdziesz do Rady Grodu.</p>
+  <ul id="taskList">
+    <li><input type="text" id="task1"><button onclick="completeTask(1)">Zatwierdź</button></li>
+    <li><input type="text" id="task2"><button onclick="completeTask(2)">Zatwierdź</button></li>
+    <li><input type="text" id="task3"><button onclick="completeTask(3)">Zatwierdź</button></li>
+    <li><input type="text" id="task4"><button onclick="completeTask(4)">Zatwierdź</button></li>
+    <li><input type="text" id="task5"><button onclick="completeTask(5)">Zatwierdź</button></li>
+    <li><input type="text" id="task6"><button onclick="completeTask(6)">Zatwierdź</button></li>
+  </ul>
+  <p id="progress">Ukończone: 0/6</p>
+  <div style="text-align:center">
+    <button class="btn" onclick="goToCouncil()" id="toCouncilBtn" style="display:none;">Przejdź do Rady Grodu</button>
   </div>
 
-  <div id="tasksScreen" class="screen">
-    <h2>Zadania terenowe</h2>
-    <p>Tu pojawią się Twoje główne zadania…</p>
-  </div>
+<div id="councilScreen" class="screen">
+  <h2>Rada Grodu</h2>
+  <p>Wybierz decyzję dla przyszłości Grodu:</p>
+  <ul style="text-align:center;">
+    <li onclick="chooseCouncilOption('Otwarcie na handel')">🏛️ Otwarcie na handel</li>
+    <li onclick="chooseCouncilOption('Izolacja granic')">🛡️ Izolacja granic</li>
+    <li onclick="chooseCouncilOption('Adaptacja nowego prawa')">📜 Adaptacja nowego prawa</li>
+  </ul>
+</div>
+
+<div id="certificateScreen" class="screen">
+  <h2>Certyfikat Drużyny</h2>
+  <p>Drużyna: <span id="certTeam"></span></p>
+  <p>Decyzja: <strong><span id="certDecision"></span></strong></p>
+  <p>Misja poboczna: <em><span id="certQuest"></span></em></p>
+  <p>Dziękujemy za udział w Dziedzictwie Żelaza!</p>
+</div>
+
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const music = document.getElementById('bgMusic');
@@ -157,6 +193,34 @@
   function goToTasks() {
     showScreen('tasksScreen');
   }
+  let completedTasks = 0;
+
+  function completeTask(id) {
+    const input = document.getElementById('task' + id);
+    if (input.value.trim() !== '') {
+      input.disabled = true;
+      input.nextElementSibling.disabled = true;
+      input.parentElement.style.background = '#3b763f';
+      completedTasks++;
+      document.getElementById('progress').innerText = `Ukończone: ${completedTasks}/6`;
+      if (completedTasks >= 4) {
+        document.getElementById('toCouncilBtn').style.display = 'inline-block';
+      }
+    }
+  }
+
+  function goToCouncil() {
+  showScreen('councilScreen');
+}
+
+function chooseCouncilOption(option) {
+  const team = document.getElementById('teamName').value || 'Nieznana Drużyna';
+  const quest = localStorage.getItem('sideQuest') || 'Brak danych';
+  document.getElementById('certTeam').innerText = team;
+  document.getElementById('certDecision').innerText = option;
+  document.getElementById('certQuest').innerText = quest;
+  showScreen('certificateScreen');
+}
 </script>
 <!-- The rest of your HTML content remains unchanged -->
 </body>
