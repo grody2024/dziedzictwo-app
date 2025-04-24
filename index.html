@@ -52,7 +52,7 @@
       transform: scale(1.05);
     }
     h1, h2, p { text-align: center; }
-    ul { list-style-type: none; padding: 0; max-width: 600px; margin: 0 auto; }
+    ul { list-style-type: none; padding: 0; max-width: 700px; margin: 0 auto; }
     li {
       padding: 10px;
       margin: 10px 0;
@@ -88,6 +88,14 @@
       border: 3px solid gold !important;
       border-radius: 50%;
     }
+    .instruction-box {
+      background-color: rgba(255, 248, 230, 0.08);
+      border: 2px solid #8d744a;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 700px;
+      margin: 20px auto;
+    }
   </style>
 </head>
 <body>
@@ -100,10 +108,77 @@
     });
   </script>
 
-<!-- Ekrany aplikacji będą zarządzane dynamicznie przez JS -->
-<!-- Kod funkcjonalności pozostaje jak w Twoim obecnym kodzie -->
+  <!-- Ekran 1: Fabula + Instrukcja -->
+  <div class="screen active" id="intro">
+    <h1>Dziedzictwo Żelaza</h1>
+    <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw. To tutaj, na wzgórzu pełnym mchu i starych kamieni, waszej drużynie przypadła rola Strażników Pamięci. Musicie odnaleźć sześć fragmentów zapomnianych dziedzictw, rozwiązać zagadki przeszłości i wspólnie zdecydować, czy Grodzisko otworzy bramy na handel, czy zamknie się na sto lat.</p>
+    <div class="instruction-box">
+      <h2>Instrukcja gry:</h2>
+      <ul>
+        <li>Wejdź na stronę i załóż drużynę (wymyśl nazwę).</li>
+        <li>Poznaj krótką historię i cel gry.</li>
+        <li>Wybierz postać – każda ma unikalne umiejętności.</li>
+        <li>Rozwiązuj zadania w minimum 4 punktach.</li>
+        <li>Sprawdzaj postępy w panelu gry.</li>
+        <li>Na koniec zdecyduj o losie Grodu.</li>
+      </ul>
+    </div>
+    <button class="btn" onclick="showScreen('selectRole')">Dalej</button>
+  </div>
 
-<!-- Tu kontynuacja... -->
+  <!-- Ekran 2: Wybór postaci -->
+  <div class="screen" id="selectRole">
+    <h2>Wybierz swoją postać:</h2>
+    <div class="roles">
+      <img src="zwiadowca.png" class="roleIcon" alt="Zwiadowca" onclick="selectRole('Zwiadowca')">
+      <img src="tkaczka.png" class="roleIcon" alt="Tkaczka" onclick="selectRole('Tkaczka')">
+      <img src="zielarka.png" class="roleIcon" alt="Zielarka" onclick="selectRole('Zielarka')">
+      <img src="kupiec.png" class="roleIcon" alt="Kupiec" onclick="selectRole('Kupiec')">
+      <img src="rzemieslnik.png" class="roleIcon" alt="Rzemieślnik" onclick="selectRole('Rzemieślnik')">
+      <img src="starszy.png" class="roleIcon" alt="Starszy" onclick="selectRole('Starszy')">
+    </div>
+    <button class="btn" onclick="showScreen('taskSelection')">Dalej</button>
+  </div>
 
+  <!-- Ekran 3: Zadanie poboczne -->
+  <div class="screen" id="taskSelection">
+    <h2>Wybierz zadanie poboczne:</h2>
+    <div id="taskDescription"></div>
+    <button class="btn" onclick="completeTask()">Zakończ zadanie</button>
+  </div>
+
+  <!-- Ekran 4: Zadania -->
+  <div class="screen" id="tasks">
+    <h2>Twoje zadania:</h2>
+    <ul id="taskList"></ul>
+    <button class="btn" onclick="showScreen('quiz')">Dalej</button>
+  </div>
+
+  <!-- Ekran 5: Quiz -->
+  <div class="screen" id="quiz">
+    <h2>Quiz: Wybierz odpowiedź</h2>
+    <ul id="quizQuestions"></ul>
+    <button class="btn" onclick="showScreen('council')">Dalej</button>
+  </div>
+
+  <!-- Ekran 6: Rada -->
+  <div class="screen" id="council">
+    <h2>Rada Starszych</h2>
+    <button class="btn" onclick="endGame()">Zakończ grę</button>
+  </div>
+
+  <!-- Ekran 7: Certyfikat -->
+  <div class="screen" id="certificate">
+    <h2>Certyfikat Drużyny</h2>
+    <p>Drużyna: <span id="teamName"></span></p>
+    <p>Decyzja: <span id="finalDecision"></span></p>
+    <p>Misja poboczna: <span id="sideMission"></span></p>
+    <button class="btn" onclick="restartGame()">Zagraj ponownie</button>
+  </div>
+
+  <script>
+    // Functionality code here...
+
+  </script>
 </body>
 </html>
