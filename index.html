@@ -166,7 +166,7 @@
       }
       missionText = missions[Math.floor(Math.random() * missions.length)];
       document.getElementById('missionText').innerText = missionText;
-      showScreen('mission');
+      showScreen('taskSelection');
     }
 
     function completeTask() {
@@ -229,10 +229,9 @@
       <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik">
       <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy">
     </div>
-    <button class="btn" onclick="showScreen('taskSelection')">Dalej</button>
+    <button class="btn" onclick="startGame()">Dalej</button>
   </div>
 
-  <!-- Mission selection -->
   <div class="screen" id="taskSelection">
     <h2>Wybierz zadanie poboczne:</h2>
     <div id="taskDescription"></div>
@@ -251,7 +250,6 @@
     <button class="btn" onclick="showScreen('council')">Dalej</button>
   </div>
 
-  <!-- Council decision -->
   <div class="screen" id="council">
     <h2>Rada Starszych</h2>
     <ul>
@@ -261,7 +259,6 @@
     </ul>
   </div>
 
-  <!-- Certificate screen -->
   <div class="screen" id="certificate">
     <h2>Certyfikat</h2>
     <p>Drużyna: <span id="certTeam"></span></p>
