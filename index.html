@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -124,12 +123,11 @@
 
 <body>
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const music = document.getElementById("bgMusic");
-      music.play().catch(() => {
-        document.body.addEventListener("click", () => music.play(), { once: true });
-      });
-    });
+    // Function to handle screen transitions
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
 
     let selectedRole = null;
     let teamName = '';
@@ -154,30 +152,32 @@
       "Chata Namiestnika"
     ];
 
-    const showScreen = (id) => {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    };
-
+    // Start screen handler
     function handleRegister() {
       if (teamName.trim()) {
         showScreen('selectRole');
       }
     }
 
+    // Role selection handler
     function handleSelectRole(role) {
       selectedRole = role;
       document.querySelectorAll('.roleIcon').forEach(img => img.classList.remove('glow'));
       event.target.classList.add('glow');
+      showScreen('taskSelection');
     }
 
+    // Task submission handler
     function handleTaskSubmit(index) {
       if (currentTaskInputs[index].trim()) {
         submittedTasks[index] = true;
-        showScreen('taskSelection');
+        if (submittedTasks.filter(task => task).length >= 4) {
+          showScreen('quiz');
+        }
       }
     }
 
+    // Submit side mission
     function handleSideMissionSubmit() {
       if (sideMissionInput.trim()) {
         sideMissionSubmitted = true;
@@ -185,6 +185,7 @@
       }
     }
 
+    // Council decision handler
     function handleCouncilDecision(decision) {
       document.getElementById('certTeam').innerText = teamName;
       document.getElementById('certMission').innerText = sideMissionInput;
