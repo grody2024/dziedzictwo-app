@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-  <meta charset="UTF-8">
+$1
+  <audio id="bgMusic" src="muzyka.mp3" loop autoplay hidden></audio>
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dziedzictwo Żelaza</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
@@ -9,7 +10,7 @@
     body {
       margin: 0;
       font-family: 'MedievalSharp', cursive;
-      background: url('tlo.png') center center / cover no-repeat fixed;
+      background: url('tlo.jpg') center center / cover no-repeat fixed;
       color: #3e2f1c;
     }
     .screen {
@@ -39,9 +40,20 @@
     .correct { background-color: #d4edda; color: #155724; }
     .incorrect { background-color: #f8d7da; color: #721c24; }
     #pointsDisplay, #finalPoints { font-weight: bold; text-align: center; font-size: 18px; }
+    #amulet { display: none; text-align: center; margin-top: 20px; }
+    #amulet img { max-width: 150px; }
   </style>
 </head>
-<body>
+$1
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const music = document.getElementById('bgMusic');
+      music.volume = 0.3;
+      music.play().catch(() => {
+        document.body.addEventListener('click', () => music.play(), { once: true });
+      });
+    });
+  </script>
   <div class="screen active" id="intro">
     <h1>Dziedzictwo Żelaza</h1>
     <p>Rok 972. Grodzisko Sopockie stoi na skraju wielkich zmian – imperia patrzą łapczywie, a starożytne obrzędy gasną w cieniu nowej wiary i nowych praw...</p>
@@ -49,8 +61,16 @@
   </div>
 
   <div class="screen" id="role">
-    <h2>Wybierz swoją postać</h2>
-    <ul>
+  <h2>Twoja rola</h2>
+  <div style="text-align:center">
+    <img id="roleImage" src="" alt="Postać" style="max-width:120px; display:none; margin: 10px auto">
+    <p id="randomRole" style="font-weight: bold; font-size: 20px;"></p>
+    <p id="roleDescription" style="margin: 10px auto; max-width: 500px; font-style: italic;"></p>
+    <p id="sideQuest" style="font-style: italic; color: #444;"></p>
+    <button class="btn" onclick="assignRandomRole()">Wylosuj postać i zadanie poboczne</button>
+  </div>
+</div>
+    <ul style="display:none">
       <li onclick="selectRole('Zwiadowca')">Zwiadowca</li>
       <li onclick="selectRole('Tkaczka')">Tkaczka</li>
       <li onclick="selectRole('Zielarka')">Zielarka</li>
@@ -71,7 +91,7 @@
       <li onclick="addPoints(10)">Brama Grodu</li>
     </ul>
     <p id="pointsDisplay">Punkty: 0</p>
-    <button class="btn" onclick="showScreen('quiz')">Quiz historyczny</button>
+    <button class="btn" onclick="checkQuizAccess()">Quiz historyczny</button>
   </div>
 
   <div class="screen" id="quiz">
@@ -92,12 +112,13 @@
     <button class="btn" onclick="finishCouncil('Otwarcie na handel')">Otwarcie na handel</button>
     <button class="btn" onclick="finishCouncil('Izolacja granic')">Izolacja granic</button>
     <button class="btn" onclick="finishCouncil('Adaptacja prawa')">Adaptacja prawa</button>
+  <button class="btn" onclick="resetGame()">Zacznij od nowa</button>
   </div>
-
   <div class="screen" id="certificate">
     <h2>Gratulacje!</h2>
     <p>Twoja decyzja: <span id="decisionText"></span></p>
     <p>Łączna liczba punktów: <span id="finalPoints"></span></p>
+    
   </div>
 
   <script>
@@ -114,14 +135,45 @@
     ];
 
     function selectRole(role) {
-      localStorage.setItem('role', role);
-      showScreen('tasks');
-    }
+  localStorage.setItem('role', role);
+  document.getElementById('randomRole').innerText = 'Wylosowano: ' + role;
+  showScreen('tasks');
+}
+
+function assignRandomRole() {
+  const roles = ['Zwiadowca', 'Tkaczka', 'Zielarka', 'Kupiec', 'Rzemieślnik', 'Starszy'];
+  const roleDescriptions = {
+    'Zwiadowca': 'Odwaga i ciekawość prowadzą Zwiadowcę przez nieznane ścieżki. Wyczuwa zagrożenia i odkrywa ukryte miejsca.',
+    'Tkaczka': 'Tkaczka widzi to, co niewidzialne – symbole, wzory i opowieści zapisane w tkaninie rzeczywistości.',
+    'Zielarka': 'Zna zioła, rośliny i sekrety lasów. Zielarka potrafi pomóc innym dzięki swojej przyrodniczej wiedzy.',
+    'Kupiec': 'Słowo to jego miecz. Kupiec negocjuje, słucha i wie, jak zdobyć to, co inni ukrywają.',
+    'Rzemieślnik': 'Dłonie Rzemieślnika tworzą i naprawiają. Umysł techniczny, serce praktyczne.',
+    'Starszy': 'Starszy nosi ciężar decyzji. To lider i doradca – ostatnie słowo często należy do niego.'
+  };
+  const quests = [
+    '🔍 Ślady Przeszłości – odnajdź ślad dawnego życia.',
+    '🌿 Kształty Natury – znajdź różne formy w otoczeniu.',
+    '🧘 Cisza Testowa – usiądź w ciszy przez 3 minuty.',
+    '📍 Obiekt numer 7 – policz 7 elementów i zareaguj.',
+    '🧾 Kod z Przeszłości – zapamiętaj ciekawostkę.',
+    '👁️ Obserwator Ruchu – notuj poruszające się istoty.',
+    '🚶‍♂️ Rytm Terenu – przejdź tę samą trasę różnie.'
+  ];
+  const role = roles[Math.floor(Math.random() * roles.length)];
+  const quest = quests[Math.floor(Math.random() * quests.length)];
+
+  document.getElementById('randomRole').innerText = 'Wylosowano: ' + role;
+  document.getElementById('roleDescription').innerText = roleDescriptions[role];
+  document.getElementById('sideQuest').innerText = 'Misja poboczna: ' + quest;
+  document.getElementById('roleImage').src = role.toLowerCase() + '.png';
+  document.getElementById('roleImage').style.display = 'block';
+  selectRole(role);
+}
 
     function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
 
     function addPoints(val) {
       points += val;
@@ -155,10 +207,16 @@
     }
 
     function nextQuestion() {
-      currentQuestion++;
-      if (currentQuestion < quizQuestions.length) {
-        loadQuestion();
-      } else {
+  currentQuestion++;
+  if (currentQuestion < quizQuestions.length) {
+    loadQuestion();
+  } else {
+    points += 10;
+    localStorage.setItem('quizCompleted', 'true');
+    document.getElementById("pointsDisplay").innerText = 'Punkty: ' + points;
+    showScreen("thanks");
+  }
+} else {
         points += 10;
         document.getElementById("pointsDisplay").innerText = 'Punkty: ' + points;
         showScreen("thanks");
@@ -168,10 +226,26 @@
     function finishCouncil(decision) {
       document.getElementById("decisionText").innerText = decision;
       document.getElementById("finalPoints").innerText = points;
+      
       showScreen("certificate");
     }
 
     loadQuestion();
-  </script>
+  function checkQuizAccess() {
+  if (points >= 60) {
+    showScreen('quiz');
+  } else {
+    alert('Ukończ wszystkie zadania, zanim przejdziesz do quizu!');
+  }
+}
+
+function resetGame() {
+  localStorage.clear();
+  points = 0;
+  currentQuestion = 0;
+  document.getElementById('pointsDisplay').innerText = 'Punkty: 0';
+  showScreen('intro');
+}
+</script>
 </body>
 </html>
