@@ -93,11 +93,16 @@
 <script>
   // Upewnij się, że muzyka gra cały czas po zmianie ekranu
   let bgMusic;
+  // Zostawiamy tylko jeden DOMContentLoaded event
   document.addEventListener('DOMContentLoaded', () => {
-  bgMusic = document.getElementById('bgMusic');
-  bgMusic.volume = 0.3;
-  bgMusic.play().catch(() => {
-    document.body.addEventListener('click', () => bgMusic.play(), { once: true });
+    bgMusic = document.getElementById('bgMusic');
+    bgMusic.volume = 0.3;
+    bgMusic.play().catch(() => {
+      document.body.addEventListener('click', () => bgMusic.play(), { once: true });
+    });
+
+    const last = localStorage.getItem('lastScreen');
+    if (last) showScreen(last);
   });
 
   const last = localStorage.getItem('lastScreen');
@@ -175,7 +180,7 @@ function highlightSelected(selectedImg) {
   });
   selectedImg.classList.add('glow');
   assignRandomRole();
-});
+}
   selectedImg.classList.add('glow');
   setTimeout(() => showScreen('tasks'), 500);
 }
@@ -225,8 +230,8 @@ function toggleMusic() {
   <p id="roleDescription" style="margin: 10px auto; max-width: 500px; font-style: italic; text-align: center;"></p>
   <p id="sideQuest" style="font-style: italic; color: #fff9e6; text-align: center; font-weight: bold; font-size: 18px;"></p>
   <div style="text-align:center">
-    <button class="btn" onclick="resetSideQuest()">Wylosuj inne zadanie poboczne</button>
-  </div>">Wylosuj postać i zadanie poboczne</button>
+  <button class="btn" onclick="resetSideQuest()">Wylosuj inne zadanie poboczne</button>
+</div>
   </div>
 </div>
 
