@@ -123,6 +123,20 @@
       max-width: 700px;
       margin: 20px auto;
     }
+
+    .roleContainer {
+      text-align: center;
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .roleDescription {
+      text-align: center;
+      font-size: 14px;
+      max-width: 120px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -231,13 +245,31 @@
   <!-- Select role screen -->
   <div class="screen" id="selectRole">
     <h2>Wybierz swoją postać:</h2>
-    <div>
-      <img class="roleIcon" src="zwiadowca.png" onclick="selectRole('Zwiadowca')" alt="Zwiadowca">
-      <img class="roleIcon" src="tkaczka.png" onclick="selectRole('Tkaczka')" alt="Tkaczka">
-      <img class="roleIcon" src="zielarka (2).png" onclick="selectRole('Zielarka')" alt="Zielarka">
-      <img class="roleIcon" src="kupiec.png" onclick="selectRole('Kupiec')" alt="Kupiec">
-      <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik">
-      <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy">
+    <div class="roleContainer">
+      <div>
+        <img class="roleIcon" src="zwiadowca.png" onclick="selectRole('Zwiadowca')" alt="Zwiadowca">
+        <div class="roleDescription">Zwiadowca - Odkrywca, ryzykant, zawsze na przodzie.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="tkaczka.png" onclick="selectRole('Tkaczka')" alt="Tkaczka">
+        <div class="roleDescription">Tkaczka - Mistrzyni wzorów i symboli, specjalistka w tkaninach.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="zielarka (2).png" onclick="selectRole('Zielarka')" alt="Zielarka">
+        <div class="roleDescription">Zielarka - Wiedza przyrodnicza i lecznicza, ziołolecznictwo to jej pasja.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="kupiec.png" onclick="selectRole('Kupiec')" alt="Kupiec">
+        <div class="roleDescription">Kupiec - Mistrz komunikacji i handlu, zna się na negocjacjach.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="rzemieslnik.png" onclick="selectRole('Rzemieślnik')" alt="Rzemieślnik">
+        <div class="roleDescription">Rzemieślnik - Mistrz techniki, potrafi rozwiązywać zadania rzemieślnicze.</div>
+      </div>
+      <div>
+        <img class="roleIcon" src="starszy.png" onclick="selectRole('Starszy')" alt="Starszy">
+        <div class="roleDescription">Starszy - Decydent, lider, ponosi odpowiedzialność za grupę.</div>
+      </div>
     </div>
     <button class="btn" onclick="startGame()">Dalej</button>
   </div>
@@ -271,7 +303,6 @@
     </ul>
   </div>
 
-  <!-- Certificate screen -->
   <div class="screen" id="certificate">
     <h2>Certyfikat</h2>
     <p>Drużyna: <span id="certTeam"></span></p>
