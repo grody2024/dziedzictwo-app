@@ -182,9 +182,14 @@ function highlightSelected(selectedImg) {
   <h2>Rejestracja Drużyny</h2>
   <p>Wprowadź nazwę drużyny (3–6 osób):</p>
   <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding: 8px; font-size: 16px;">
-  <br><br>
-  <div style="text-align:center; margin-top: 40px;">
-    $1$2; transition: 0.3s; border: 3px solid transparent; box-shadow: 0 0 0 transparent; cursor: pointer;" onmouseover="this.style.border='3px solid gold'; this.style.boxShadow='0 0 20px gold'" onmouseout="this.style.border='3px solid transparent'; this.style.boxShadow='0 0 0 transparent'$3>
+  <h2>Wybierz swoją rolę</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Zwiadowca')">
+    <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Tkaczka')">
+    <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Zielarka')">
+    <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Kupiec')">
+    <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Rzemieślnik')">
+    <img src="starszy.png" alt="Starszy" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Starszy')">
   </div>
     <div style="text-align: center; max-width: 120px;">
       $1$2$3$4$5$6" onclick="highlightSelected(this); manualRole('$4')">
