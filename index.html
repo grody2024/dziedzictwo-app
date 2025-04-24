@@ -120,6 +120,8 @@
 
     let selectedRole = null;
     let teamName = '';
+    let sideMissionInput = '';
+    let sideMissionSubmitted = false;
     let currentTaskInputs = Array(6).fill('');
     let submittedTasks = Array(6).fill(false);
     const sideMissions = [
@@ -146,7 +148,7 @@
 
     function handleRegister() {
       if (teamName.trim()) {
-        showScreen('intro');
+        showScreen('selectRole');
       }
     }
 
