@@ -6,6 +6,7 @@
   <title>Dziedzictwo Żelaza</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
   <audio id="bgMusic" src="celtic-festival-307626.mp3" loop autoplay hidden></audio>
+<button onclick="toggleMusic()" style="position: fixed; top: 15px; right: 15px; z-index: 1000; background: rgba(255,255,255,0.1); color: white; border: 1px solid #fff; border-radius: 8px; padding: 8px; font-size: 14px; cursor: pointer;">🔊 Wycisz</button>
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -168,9 +169,21 @@ function highlightSelected(selectedImg) {
     img.classList.remove('glow');
   });
   selectedImg.classList.add('glow');
-});
+  setTimeout(() => showScreen('tasks'), 500);
+};
   selectedImg.style.border = '3px solid gold';
   selectedImg.style.boxShadow = '0 0 20px gold';
+}
+
+function toggleMusic() {
+  const music = document.getElementById('bgMusic');
+  if (music.paused) {
+    music.play();
+    event.target.innerText = '🔊 Wycisz';
+  } else {
+    music.pause();
+    event.target.innerText = '🔈 Wznów';
+  }
 }
 
 </script>
@@ -184,19 +197,12 @@ function highlightSelected(selectedImg) {
   <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding: 8px; font-size: 16px;">
   <h2>Wybierz swoją rolę</h2>
   <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Zwiadowca')">
-    <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Tkaczka')">
-    <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Zielarka')">
-    <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Kupiec')">
-    <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Rzemieślnik')">
-    <img src="starszy.png" alt="Starszy" style="width: 100px; border-radius: 50%;" onclick="highlightSelected(this); manualRole('Starszy')">
-  </div>
-    <div style="text-align: center; max-width: 120px;">
-      $1$2$3$4$5$6" onclick="highlightSelected(this); manualRole('$4')">
-    <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Zielarka')">
-    <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Kupiec')">
-    <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Rzemieślnik')">
-    <img src="starszy.png" alt="Starszy" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Starszy')">
+    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Zwiadowca')">
+    <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Tkaczka')">
+    <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Zielarka')">
+    <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Kupiec')">
+    <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Rzemieślnik')">
+    <img src="starszy.png" alt="Starszy" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="highlightSelected(this); manualRole('Starszy')">
   </div>
   <p id="randomRole" style="font-weight: bold; font-size: 20px; text-align: center;"></p>
   <p id="roleDescription" style="margin: 10px auto; max-width: 500px; font-style: italic; text-align: center;"></p>
