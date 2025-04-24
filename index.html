@@ -19,6 +19,18 @@
       }
     }
 
+    @keyframes sparkle {
+      0% {
+        box-shadow: 0 0 10px gold;
+      }
+      50% {
+        box-shadow: 0 0 30px gold;
+      }
+      100% {
+        box-shadow: 0 0 10px gold;
+      }
+    }
+
     body {
       margin: 0;
       font-family: 'MedievalSharp', cursive;
@@ -26,6 +38,7 @@
       background-color: #1d1b16;
       color: #f4f1e6;
       text-align: center;
+      transition: background-color 0.3s;
     }
 
     .screen {
@@ -38,6 +51,7 @@
       backdrop-filter: blur(4px);
       border-radius: 12px;
       margin: 20px;
+      transition: transform 0.3s;
     }
 
     .active {
@@ -62,6 +76,10 @@
       transform: scale(1.05);
     }
 
+    h1, h2, p {
+      text-align: center;
+    }
+
     .instruction-box {
       background-color: rgba(255, 248, 230, 0.08);
       border: 2px solid #8d744a;
@@ -72,14 +90,17 @@
     }
 
     .roleIcon {
-      width: 100px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin: 10px;
     }
 
     .roleIcon:hover {
       transform: scale(1.1);
+      box-shadow: 0 0 15px 5px gold;
     }
 
     .glow {
@@ -104,29 +125,50 @@
       cursor: pointer;
     }
 
-    h2, h3, p {
-      text-align: center;
+    .taskContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
     }
+
+    .taskContainer .task {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    #teamName {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 15px;
+      border: 2px solid #8d744a;
+      background-color: #f4f1e6;
+      color: #1d1b16;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    #teamName:focus {
+      border-color: gold;
+    }
+
+    .taskContainer h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
   </style>
 </head>
 
 <body>
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const music = document.getElementById("bgMusic");
-      music.play().catch(() => {
-        document.body.addEventListener("click", () => music.play(), { once: true });
-      });
-    });
-
-    // Variables
+    // Variables to manage game flow
     let selectedRole = null;
     let teamName = '';
     let sideMissionInput = '';
     let sideMissionSubmitted = false;
     let currentTaskInputs = Array(6).fill('');
     let submittedTasks = Array(6).fill(false);
-
     const sideMissions = [
       "Zrób zdjęcie czegoś, co przypomina przeszłość.",
       "Zbierz trzy różne liście i zrób z nich kompozycję.",
@@ -135,7 +177,6 @@
       "Ułóż krótką rymowankę o Grodzie.",
       "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
     ];
-
     const tasks = [
       "Chata Zielarki",
       "Zbrojownia",
@@ -145,20 +186,20 @@
       "Chata Namiestnika"
     ];
 
-    // Show screen by ID
+    // Function to show the screens
     function showScreen(id) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
-    // Handle Registration
+    // Function to handle registration
     function handleRegister() {
       if (teamName.trim()) {
         showScreen('selectRole');
       }
     }
 
-    // Handle Role Selection
+    // Handle role selection
     function handleSelectRole(role) {
       selectedRole = role;
       document.querySelectorAll('.roleIcon').forEach(img => img.classList.remove('glow'));
@@ -166,7 +207,7 @@
       showScreen('taskSelection');
     }
 
-    // Handle Task Submit
+    // Handle task completion
     function handleTaskSubmit(index) {
       if (currentTaskInputs[index].trim()) {
         submittedTasks[index] = true;
@@ -176,7 +217,7 @@
       }
     }
 
-    // Submit Side Mission
+    // Submit side mission
     function handleSideMissionSubmit() {
       if (sideMissionInput.trim()) {
         sideMissionSubmitted = true;
@@ -184,7 +225,7 @@
       }
     }
 
-    // Handle Council Decision
+    // Handle final council decision
     function handleCouncilDecision(decision) {
       document.getElementById('certTeam').innerText = teamName;
       document.getElementById('certMission').innerText = sideMissionInput;
@@ -209,7 +250,7 @@
     <button class="btn" onclick="handleRegister()">Dalej</button>
   </div>
 
-  <!-- Select Role screen -->
+  <!-- Role selection screen -->
   <div class="screen" id="selectRole">
     <h2>Wybierz postać:</h2>
     <div>
@@ -227,19 +268,21 @@
   <div class="screen" id="taskSelection">
     <h2>Misja poboczna: {sideMissions[Math.floor(Math.random() * sideMissions.length)]}</h2>
     <h2>Zadania główne:</h2>
-    {tasks.map((task, index) => (
-      <div key={task} class="task">
-        <h3>{task}</h3>
-        <input
-          placeholder="Wpisz rozwiązanie"
-          value={currentTaskInputs[index]}
-          onChange={(e) => {
-            currentTaskInputs[index] = e.target.value;
-          }}
-        />
-        <button onClick={() => handleTaskSubmit(index)}>Zatwierdź</button>
-      </div>
-    ))}
+    <div class="taskContainer">
+      {tasks.map((task, index) => (
+        <div key={task} class="task">
+          <h3>{task}</h3>
+          <input
+            placeholder="Wpisz rozwiązanie"
+            value={currentTaskInputs[index]}
+            onChange={(e) => {
+              currentTaskInputs[index] = e.target.value;
+            }}
+          />
+          <button onClick={() => handleTaskSubmit(index)}>Zatwierdź</button>
+        </div>
+      ))}
+    </div>
     <button onclick="showScreen('quiz')">Dalej</button>
   </div>
 
@@ -271,4 +314,5 @@
   </div>
 
 </body>
+
 </html>
