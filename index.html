@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,18 +16,6 @@
       to {
         opacity: 1;
         transform: translateY(0);
-      }
-    }
-
-    @keyframes sparkle {
-      0% {
-        box-shadow: 0 0 10px gold;
-      }
-      50% {
-        box-shadow: 0 0 30px gold;
-      }
-      100% {
-        box-shadow: 0 0 10px gold;
       }
     }
 
@@ -73,10 +62,6 @@
       transform: scale(1.05);
     }
 
-    h1, h2, p {
-      text-align: center;
-    }
-
     .instruction-box {
       background-color: rgba(255, 248, 230, 0.08);
       border: 2px solid #8d744a;
@@ -118,23 +103,30 @@
       margin: 5px;
       cursor: pointer;
     }
+
+    h2, h3, p {
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
   <script>
-    // Function to handle screen transitions
-    function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+    window.addEventListener("DOMContentLoaded", () => {
+      const music = document.getElementById("bgMusic");
+      music.play().catch(() => {
+        document.body.addEventListener("click", () => music.play(), { once: true });
+      });
+    });
 
+    // Variables
     let selectedRole = null;
     let teamName = '';
     let sideMissionInput = '';
     let sideMissionSubmitted = false;
     let currentTaskInputs = Array(6).fill('');
     let submittedTasks = Array(6).fill(false);
+
     const sideMissions = [
       "Zrób zdjęcie czegoś, co przypomina przeszłość.",
       "Zbierz trzy różne liście i zrób z nich kompozycję.",
@@ -143,6 +135,7 @@
       "Ułóż krótką rymowankę o Grodzie.",
       "Zrób zdjęcie miejsca, w którym chciałbyś założyć własne grodzisko."
     ];
+
     const tasks = [
       "Chata Zielarki",
       "Zbrojownia",
@@ -152,14 +145,20 @@
       "Chata Namiestnika"
     ];
 
-    // Start screen handler
+    // Show screen by ID
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // Handle Registration
     function handleRegister() {
       if (teamName.trim()) {
         showScreen('selectRole');
       }
     }
 
-    // Role selection handler
+    // Handle Role Selection
     function handleSelectRole(role) {
       selectedRole = role;
       document.querySelectorAll('.roleIcon').forEach(img => img.classList.remove('glow'));
@@ -167,7 +166,7 @@
       showScreen('taskSelection');
     }
 
-    // Task submission handler
+    // Handle Task Submit
     function handleTaskSubmit(index) {
       if (currentTaskInputs[index].trim()) {
         submittedTasks[index] = true;
@@ -177,7 +176,7 @@
       }
     }
 
-    // Submit side mission
+    // Submit Side Mission
     function handleSideMissionSubmit() {
       if (sideMissionInput.trim()) {
         sideMissionSubmitted = true;
@@ -185,7 +184,7 @@
       }
     }
 
-    // Council decision handler
+    // Handle Council Decision
     function handleCouncilDecision(decision) {
       document.getElementById('certTeam').innerText = teamName;
       document.getElementById('certMission').innerText = sideMissionInput;
@@ -206,13 +205,13 @@
         <li>Na koniec wybierz przyszłość Grodu.</li>
       </ul>
     </div>
-    <input type="text" placeholder="Wpisz nazwę drużyny" value={teamName} onChange={(e) => teamName = e.target.value} />
-    <button onclick="handleRegister()">Dalej</button>
+    <input type="text" id="teamName" placeholder="Wpisz nazwę drużyny" value={teamName} onChange={(e) => teamName = e.target.value} />
+    <button class="btn" onclick="handleRegister()">Dalej</button>
   </div>
 
-  <!-- Role selection screen -->
+  <!-- Select Role screen -->
   <div class="screen" id="selectRole">
-    <h2>Wybierz postać</h2>
+    <h2>Wybierz postać:</h2>
     <div>
       <img class="roleIcon" src="zwiadowca.png" onclick="handleSelectRole('Zwiadowca')" />
       <img class="roleIcon" src="tkaczka.png" onclick="handleSelectRole('Tkaczka')" />
@@ -221,7 +220,7 @@
       <img class="roleIcon" src="rzemieslnik.png" onclick="handleSelectRole('Rzemieślnik')" />
       <img class="roleIcon" src="starszy.png" onclick="handleSelectRole('Starszy')" />
     </div>
-    <button onclick="showScreen('taskSelection')">Dalej</button>
+    <button class="btn" onclick="showScreen('taskSelection')">Dalej</button>
   </div>
 
   <!-- Task selection -->
@@ -272,5 +271,4 @@
   </div>
 
 </body>
-
 </html>
