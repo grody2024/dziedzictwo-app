@@ -136,7 +136,7 @@ function markComplete(input) {
       <strong>Tkaczka</strong><br><small>Ekspertka od wzorów i symboli</small>
     </div>
     <div style="text-align: center; max-width: 120px;">
-      <img src="zielarka.png" alt="Zielarka" style="width: 100px; border-radius: 50%;"><br>
+      <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%;"><br>
       <strong>Zielarka</strong><br><small>Wiedza o roślinach i ziołach</small>
     </div>
     <div style="text-align: center; max-width: 120px;">
@@ -246,7 +246,9 @@ function markComplete(input) {
     document.getElementById('randomRole').innerText = 'Wylosowano: ' + role;
     document.getElementById('roleDescription').innerText = roleDescriptions[role];
     document.getElementById('sideQuest').innerText = 'Misja poboczna: ' + quest;
-    document.getElementById('roleImage').src = role.toLowerCase() + '.png';
+    let roleImg = role.toLowerCase();
+    if (role === 'Zielarka') roleImg = 'zielarka (2)';
+    document.getElementById('roleImage').src = roleImg + '.png';
     document.getElementById('roleImage').style.display = 'block';
     localStorage.setItem('role', role);
     showScreen('tasks');
