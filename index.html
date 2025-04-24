@@ -75,7 +75,18 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
-  </style>
+    @keyframes sparkle {
+    0% { box-shadow: 0 0 10px gold; }
+    50% { box-shadow: 0 0 30px gold; }
+    100% { box-shadow: 0 0 10px gold; }
+  }
+
+  .glow {
+    animation: sparkle 1.5s infinite;
+    border: 3px solid gold !important;
+    border-radius: 50%;
+  }
+</style>
 </head>
 <body>
 <script>
@@ -141,6 +152,7 @@ function manualRole(role) {
   if (role === 'Zielarka') roleImg = 'zielarka (2)';
   document.getElementById('roleImage').src = roleImg + '.png';
   document.getElementById('roleImage').style.display = 'block';
+  setTimeout(() => showScreen('tasks'), 500);
   localStorage.setItem('role', role);
   localStorage.setItem('questInfo', quest);
 }
@@ -149,6 +161,16 @@ function resetSideQuest() {
   const role = localStorage.getItem('role');
   if (!role) return alert('Wybierz najpierw rolę.');
   manualRole(role);
+}
+
+function highlightSelected(selectedImg) {
+  document.querySelectorAll('#role img').forEach(img => {
+    img.classList.remove('glow');
+  });
+  selectedImg.classList.add('glow');
+});
+  selectedImg.style.border = '3px solid gold';
+  selectedImg.style.boxShadow = '0 0 20px gold';
 }
 
 </script>
@@ -161,45 +183,11 @@ function resetSideQuest() {
   <p>Wprowadź nazwę drużyny (3–6 osób):</p>
   <input type="text" id="teamName" placeholder="Nazwa drużyny" style="padding: 8px; font-size: 16px;">
   <br><br>
-  <h2>Postacie do odkrycia</h2>
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-    <div style="text-align: center; max-width: 120px;">
-      <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%;"><br>
-      <strong>Zwiadowca</strong><br><small>Odkrywca punktów, podejmuje ryzyko</small>
-    </div>
-    <div style="text-align: center; max-width: 120px;">
-      <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%;"><br>
-      <strong>Tkaczka</strong><br><small>Ekspertka od wzorów i symboli</small>
-    </div>
-    <div style="text-align: center; max-width: 120px;">
-      <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%;"><br>
-      <strong>Zielarka</strong><br><small>Wiedza o roślinach i ziołach</small>
-    </div>
-    <div style="text-align: center; max-width: 120px;">
-      <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%;"><br>
-      <strong>Kupiec</strong><br><small>Negocjator i mistrz komunikacji</small>
-    </div>
-    <div style="text-align: center; max-width: 120px;">
-      <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%;"><br>
-      <strong>Rzemieślnik</strong><br><small>Zadania techniczne i logika</small>
-    </div>
-    <div style="text-align: center; max-width: 120px;">
-      <img src="starszy.png" alt="Starszy" style="width: 100px; border-radius: 50%;"><br>
-      <strong>Starszy</strong><br><small>Decyduje o losie Grodziska</small>
-    </div>
+  <div style="text-align:center; margin-top: 40px;">
+    $1$2; transition: 0.3s; border: 3px solid transparent; box-shadow: 0 0 0 transparent; cursor: pointer;" onmouseover="this.style.border='3px solid gold'; this.style.boxShadow='0 0 20px gold'" onmouseout="this.style.border='3px solid transparent'; this.style.boxShadow='0 0 0 transparent'$3>
   </div>
-  <br>
-  <button class="btn" onclick="registerTeam()">Zarejestruj i rozpocznij</button>
-  <p style="margin-top: 30px; font-style: italic; font-size: 14px; max-width: 600px; margin-left: auto; margin-right: auto;">
-    <strong>Instrukcja gry:</strong> Zarejestruj nazwę drużyny, poznaj swoją postać i misję. Wykonaj 4–6 zadań w terenie, zdobądź punkty, ukończ quiz, a następnie podejmij decyzję w Radzie Starszych. Gra kończy się otrzymaniem certyfikatu i oceną Twojej drużyny!
-  </p>
-</div>
-
-<div class="screen" id="role">
-  <h2>Wybierz swoją rolę</h2>
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
-    <img src="zwiadowca.png" alt="Zwiadowca" style="width: 100px; border-radius: 50%; cursor: pointer; transition: 0.3s; border: 3px solid transparent; box-shadow: 0 0 0 transparent;" onmouseover="this.style.border='3px solid gold'; this.style.boxShadow='0 0 20px gold'" onmouseout="this.style.border='3px solid transparent'; this.style.boxShadow='0 0 0 transparent'"" onclick="manualRole('Zwiadowca')">
-    <img src="tkaczka.png" alt="Tkaczka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Tkaczka')">
+    <div style="text-align: center; max-width: 120px;">
+      $1$2$3$4$5$6" onclick="highlightSelected(this); manualRole('$4')">
     <img src="zielarka (2).png" alt="Zielarka" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Zielarka')">
     <img src="kupiec.png" alt="Kupiec" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Kupiec')">
     <img src="rzemieslnik.png" alt="Rzemieślnik" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="manualRole('Rzemieślnik')">
