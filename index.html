@@ -189,7 +189,15 @@
       document.getElementById('randomTask').innerText=randomTasks[Math.floor(Math.random()*randomTasks.length)];
     });
     document.getElementById('completeRandom').addEventListener('click', ()=>{
-      if(!doneRandom){ doneRandom=true; correctCount++; document.getElementById('completeRandom').textContent='ZROBIONE'; document.getElementById('bonusText').style.display='block'; if(correctCount>=4) document.getElementById('toCouncil').disabled=false; }
+      if(!doneRandom){
+        doneRandom = true;
+        correctCount++;
+        const btn = document.getElementById('completeRandom');
+        btn.textContent = 'ZROBIONE';
+        btn.classList.add('clicked');
+        document.getElementById('bonusText').style.display = 'block';
+        if(correctCount >= 4) document.getElementById('toCouncil').disabled = false;
+      }
     });
     function selectRole(el,r){ role=r; document.querySelectorAll('.role').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); document.getElementById('roleNext').disabled=false; }
     function check(id,code){ const val=document.getElementById('a'+id).value.trim().toUpperCase(); const li=document.getElementById('p'+id);
