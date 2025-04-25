@@ -38,7 +38,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop preload="auto"></audio>
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop preload="auto" controls></audio>
 
   <!-- 1: Rejestracja drużyny -->
   <div class="screen active" id="page1">
@@ -154,13 +154,21 @@
       'Głos Rodu – Jeden mówi "Jestem z Grodu", reszta odpowiada "My z Tobą!"'
     ];
     let team='', role='', answers={}, correctCount=0;
+    let doneRandom = false;
     function nextPage(n){
       if(n===2){ const val=document.getElementById('teamName').value.trim(); if(!val){alert('Podaj nazwę drużyny');return;} team=val; }
       if(n===4){ document.getElementById('randomTask').innerText='Kliknij kostkę aby wylosować zadanie'; }
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById('page'+n).classList.add('active');
     }
     document.getElementById('randomBtn').addEventListener('click',()=>{ document.getElementById('randomTask').innerText=randomTasks[Math.floor(Math.random()*randomTasks.length)]; });
-    document.getElementById('completeRandom').addEventListener('click',()=>{ alert('Zadanie losowe oznaczone jako wykonane!'); });
+    document.getElementById('completeRandom').addEventListener('click', ()=>{
+      if(!doneRandom) {
+        doneRandom = true;
+        correctCount++;
+        document.getElementById('completeRandom').textContent = '✓';
+        if(correctCount >= 4) document.getElementById('toCouncil').disabled = false;
+      }
+    });
     function selectRole(el,r){ role=r; document.querySelectorAll('.role').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); document.getElementById('roleNext').disabled=false; }
     function check(id,code){ const val=document.getElementById('a'+id).value.trim().toUpperCase(); const li=document.getElementById('p'+id);
       if(val===code){ if(!answers[id])correctCount++; answers[id]=true; li.classList.add('correct'); li.textContent=li.textContent.split(':')[0]+': ✓'; }
