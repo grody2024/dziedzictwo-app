@@ -20,7 +20,7 @@
     .role:hover { transform:scale(1.05); }
     .role img { width:100px; height:140px; border-radius:50px; border:3px solid transparent; transition:border 0.3s; }
     .role.selected img { border-color:gold; animation:blink 1s infinite; }
-    @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.5;} }
+    @keyframes blink {0%,100%{opacity:1;}50%{opacity:0.5;}}
     #randomTaskBox { max-width:600px; margin:20px auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; background:rgba(0,0,0,0.4); padding:15px; border-radius:8px; }
     #randomTask { flex:1 1 auto; margin-right:10px; word-break:break-word; }
     #randomBtn,#completeRandom { background:none; border:none; font-size:20px; cursor:pointer; transition:background 0.3s; }
@@ -34,16 +34,18 @@
     .card { width:260px; padding:20px; background:rgba(255,255,255,0.1); border-radius:12px; text-align:center; backdrop-filter:blur(4px); transition:transform 0.3s; }
     .card:hover { transform:scale(1.02); }
     @keyframes fadeIn { from{opacity:0;}to{opacity:1;} }
+    /* Overlay Inicjacji */
     #initiationOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; align-items:center; justify-content:center; z-index:1000; }
     #initiationContent { background:rgba(0,0,0,0.7); padding:30px; border-radius:12px; text-align:center; color:#f4f1e6; }
     #initiationContent h2 { color:#e3c54a; margin-bottom:10px; }
     #initiationContent img { width:120px; margin:20px auto; display:block; }
+    #initContinue { display:none; }
   </style>
 </head>
 <body>
-  <audio id="bgMusic" src="celtic-glory-307625.mp3" loop playsinline preload="auto"></audio></audio>
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" loop playsinline preload="auto"></audio>
 
-  <!-- Initiation Overlay -->
+  <!-- Overlay Inicjacji -->
   <div id="initiationOverlay">
     <div id="initiationContent">
       <h2 id="initTitle">Rytuał Inicjacji</h2>
@@ -53,12 +55,12 @@
     </div>
   </div>
 
-  <!-- Page 1": Rejestracja drużyny -->
+  <!-- Page 1: Rejestracja drużyny -->
   <div class="screen active" id="page1">
     <h1>GRODOWA ODYSEJA</h1>
-    <img src="logo.1.png" alt="Logo Muzeum" style="width:80px; margin:10px auto; display:block; border:3px solid gold; border-radius:8px;">
+    <img src="logo.1.png" alt="Logo Muzeum" style="width:80px;margin:10px auto;display:block;border:3px solid gold;border-radius:8px;">
     <div class="instruction-box">
-      <h2>📘 JAK GRAĆ?</h2>
+      <h2>JAK GRAĆ?</h2>
       <p>Wpisz nazwę drużyny → kliknij „DALEJ”</p>
       <p>PRZECZYTAJ HISTORIĘ → kliknij „DALEJ”</p>
       <p>WYBIERZ POSTAĆ → wykonaj rytuał</p>
@@ -74,18 +76,15 @@
   <div class="screen" id="page2">
     <h2>WSTĘP FABULARNY</h2>
     <div class="instruction-box">
-      <p>Rok 972 – Czas Próby</p>
-      <p>To może być ostatni spokojny rok.</p>
-      <p>Wieści o zwycięstwie Mieszka I pod Cedynią rozchodzą się po ziemiach, a wielkie imperia zaczynają spoglądać na nas łakomie.</p>
-      <p>Ze wschodu nadciąga nowe pismo – słowa jak syk żmii przynoszące prawa pisane obcym alfabetem.</p>
-      <p>Z zachodu nadciąga obca wiara, która ścina święte dęby i wznosi kamienne kaplice.</p>
-      <p>Grodzisko Sopockie wciąż trwa tutaj, na wzgórzu – niegdyś punkt siły, teraz ciche, lecz czujne.</p>
-      <p>Pamięta czasy, gdy żelazo było dziedzictwem kowali, gdy Rada Starszych rządziła mądrze, a wilcze wycie zwiastowało burzę.</p>
-      <p>Teraz, gdy świat rozdziera się między nowym a starym, potrzebujemy nie wojowników, lecz strażników pamięci.</p>
-      <p>Was – mieszkańców Grodu: cieśli, tkaczy, zwiadowców, zielarek, rzemieślników, handlarzy.</p>
-      <p>Wasza drużyna zostaje wezwana do Próby Dziedzictwa Żelaza.</p>
-      <p>W ciągu najbliższej godziny odnajdziecie ślady przeszłości i ułożycie historię, zanim zapiszą ją obcy.</p>
-      <p>A potem staniecie przed Radą Grodu i zadecydujecie: otworzyć Grodzisko na świat czy zamknąć je na sto lat.</p>
+      <p>Rok 972.</p>
+      <p>Mówią, że to ostatni spokojny rok. Ziemia drży – z południa wieści o zwycięstwie Mieszka I pod Cedynią, ale i o rosnącym zainteresowaniu imperiów.</p>
+      <p>Ze wschodu nadciągają nowe prawa, nowa mowa i srebro od Rusów.</p>
+      <p>Z zachodu – krzyż, który Mieszko już przyjął, oddając Dąbrówkę za chrzest i pokój. Ale czy ten pokój jest trwały?</p>
+      <p>Tymczasem Grodzisko Sopockie czuwa – miejsce przesiąknięte pamięcią dawnych czasów, gdy żelazo było dziedzictwem, a głos szeptunek znaczył więcej niż miecz.</p>
+      <p>Świat się zmienia. Potrzebujemy nie wojowników, lecz strażników pamięci.</p>
+      <p>Dlatego was wezwano – cieśli, tkaczy, zielarki, zwiadowców. Macie stanąć do Próby Dziedzictwa Żelaza.</p>
+      <p>Odszukacie ślady przeszłości i zdecydujecie:</p>
+      <p>czy Grodzisko otworzy bramy na nowe, czy zamknie się i trwać będzie przy ogniu przodków.</p>
     </div>
     <button class="btn" id="next2">DALEJ</button>
   </div>
@@ -127,9 +126,9 @@
   <div class="screen" id="page5">
     <h2>RADA GRODU</h2>
     <div class="council-cards">
-      <div class="card"><h3>Otwarcie na handel</h3><p>Otwórzcie wrota grodu ...</p><button class="btn" onclick="finish('Otwarcie na handel')">WYBIERAM TĘ DROGĘ</button></div>
-      <div class="card"><h3>Zamknięcie granic</h3><p>Zacieśnijcie bramy ...</p><button class="btn" onclick="finish('Zamknięcie granic')">WYBIERAM TĘ DROGĘ</button></div>
-      <div class="card"><h3>Wprowadzenie nowego prawa</h3><p>Spiszcie świeże ustawy ...</p><button class="btn" onclick="finish('Wprowadzenie nowego prawa')">WYBIERAM TĘ DROGĘ</button></div>
+      <div class="card"><h3>Otwarcie na handel</h3><p>Otwórzcie wrota grodu...</p><button class="btn" onclick="finish('Otwarcie na handel')">WYBIERAM TĘ DROGĘ</button></div>
+      <div class="card"><h3>Zamknięcie granic</h3><p>Zacieśnijcie bramy...</p><button class="btn" onclick="finish('Zamknięcie granic')">WYBIERAM TĘ DROGĘ</button></div>
+      <div class="card"><h3>Wprowadzenie nowego prawa</h3><p>Spiszcie świeże ustawy...</p><button class="btn" onclick="finish('Wprowadzenie nowego prawa')">WYBIERAM TĘ DROGĘ</button></div>
     </div>
   </div>
 
@@ -149,17 +148,10 @@
 
   <script>
     const bgMusic = document.getElementById('bgMusic');
-    document.body.addEventListener('click', () => {
-      bgMusic.muted = false;
-      bgMusic.play().catch(() => {});
-    }, { once: true });
+    document.body.addEventListener('click', () => { bgMusic.play().catch(()=>{}); }, { once:true });
 
-    let team = '';
-    let role = '';
-    let correctCount = 0;
-    let doneRandom = false;
-
-    const randomTasks = [
+    let team='', role='', correctCount=0, doneRandom=false;
+    const randomTasks=[
       'Policzcie razem do 10.',
       'Stańcie w rzędzie...',
       'Każdy niech dotknie...',
@@ -172,68 +164,59 @@
       'Obróćcie się w miejscu.'
     ];
 
-    function nextPage(n) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('page' + n).classList.add('active');
+    function nextPage(n){
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById('page'+n).classList.add('active');
     }
 
-    document.getElementById('next1').onclick = () => {
+    document.getElementById('next1').onclick = ()=> {
       const name = document.getElementById('teamName').value.trim();
-      if (!name) {
-        alert('Podaj nazwę drużyny');
-      } else {
-        team = name;
-        nextPage(2);
-      }
+      if(!name) alert('Podaj nazwę drużyny');
+      else { team=name; nextPage(2); }
     };
+    document.getElementById('next2').onclick = ()=> nextPage(3);
 
-    document.getElementById('next2').onclick = () => nextPage(3);
-
-    function startInitiation(r) {
-      role = r;
-      document.getElementById('initTitle').innerText = `Inicjacja: ${r}`;
-      document.getElementById('initDesc').innerText = `Przeciągnij, aby odsłonić kartę z zadaniami`;
-      document.getElementById('initImg').src = `${r.toLowerCase()}.init.png`;
-      document.getElementById('initContinue').style.display = 'none';
-      document.getElementById('initiationOverlay').style.display = 'flex';
+    function startInitiation(r){
+      role=r;
+      document.getElementById('initTitle').innerText=`Inicjacja: ${r}`;
+      document.getElementById('initDesc').innerText='Przeciągnij, aby odsłonić kartę z zadaniami...';
+      document.getElementById('initImg').src=`${r.toLowerCase()}.init.png`;
+      document.getElementById('initContinue').style.display='none';
+      document.getElementById('initiationOverlay').style.display='flex';
     }
 
-    // Swipe detection
-    const initImg = document.getElementById('initImg');
-    let startX = 0;
-    initImg.addEventListener('pointerdown', e => { startX = e.clientX; });
-    initImg.addEventListener('pointerup', e => {
-      if (Math.abs(e.clientX - startX) > 50) {
-        document.getElementById('initDesc').innerText = 'Rewelacja! Karta odsłonięta.';
-        document.getElementById('initContinue').style.display = 'inline-block';
+    const initImgEl = document.getElementById('initImg');
+    let startX=0;
+    initImgEl.addEventListener('pointerdown', e=> startX=e.clientX);
+    initImgEl.addEventListener('pointerup', e=>{
+      if(Math.abs(e.clientX-startX)>50){
+        document.getElementById('initDesc').innerText='Rewelacja! Karta odsłonięta.';
+        document.getElementById('initContinue').style.display='inline-block';
       }
     });
 
-    document.getElementById('initContinue').onclick = () => {
-      document.getElementById('initiationOverlay').style.display = 'none';
+    document.getElementById('initContinue').onclick = ()=>{
+      document.getElementById('initiationOverlay').style.display='none';
       nextPage(4);
     };
 
-    document.getElementById('randomBtn').onclick = () => {
-      document.getElementById('randomTask').innerText = randomTasks[Math.floor(Math.random() * randomTasks.length)];
+    document.getElementById('randomBtn').onclick = ()=>{
+      document.getElementById('randomTask').innerText=randomTasks[Math.floor(Math.random()*randomTasks.length)];
     };
-
-    document.getElementById('completeRandom').onclick = () => {
-      if (!doneRandom) {
-        doneRandom = true;
-        correctCount++;
+    document.getElementById('completeRandom').onclick = ()=>{
+      if(!doneRandom){
+        doneRandom=true; correctCount++;
         document.getElementById('completeRandom').classList.add('clicked');
-        if (correctCount >= 4) document.getElementById('toCouncil').disabled = false;
+        if(correctCount>=4) document.getElementById('toCouncil').disabled=false;
       }
     };
+    document.getElementById('toCouncil').onclick = ()=> nextPage(5);
 
-    document.getElementById('toCouncil').onclick = () => nextPage(5);
-
-    function finish(dec) {
-      document.getElementById('outTeam').innerText = team;
-      document.getElementById('outRole').innerText = role;
-      document.getElementById('outDecision').innerText = dec;
-      document.getElementById('outPoints').innerText = correctCount;
+    function finish(dec){
+      document.getElementById('outTeam').innerText=team;
+      document.getElementById('outRole').innerText=role;
+      document.getElementById('outDecision').innerText=dec;
+      document.getElementById('outPoints').innerText=correctCount;
       nextPage(6);
     }
   </script>
