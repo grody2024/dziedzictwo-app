@@ -2,49 +2,50 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
   <title>Grodowa Odyseja</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    body { margin:0; font-family:'MedievalSharp',cursive; background:url('tło gry.png') center/cover fixed; color:#f4f1e6; overflow-x:hidden; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
-    .screen { display:none; padding:20px; min-height:100vh; box-sizing:border-box; animation:fadeIn .5s ease-out; }
-    .active { display:block; }
-    h1,h2,h3 { text-align:center; font-family:'Uncial Antiqua',cursive; text-shadow:2px 2px 4px rgba(0,0,0,0.6); margin-bottom:16px; }
-    .btn { display:inline-block; background:linear-gradient(to bottom,#c49e5b,#8b6237); color:#fff9e6; padding:12px 24px; border:none; border-radius:8px; margin:8px; font-size:18px; cursor:pointer; transition:transform .2s; }
-    .btn:disabled { opacity:.5; cursor:default; }
-    .btn:hover:not(:disabled){ transform:scale(1.05); }
-    input[type=text] { width:100%; padding:12px; font-size:16px; border-radius:6px; border:none; margin:8px 0; box-sizing:border-box; }
-    .instruction-box { background:rgba(0,0,0,0.5); border:2px solid #8d744a; border-radius:8px; padding:16px; max-width:800px; margin:16px auto; text-align:left; }
-    .instruction-box ul { padding-left:20px; }
-    .logo { display:block; width:80px; margin:12px auto; border:3px solid gold; border-radius:8px; }
-    .roles { display:flex; justify-content:center; flex-wrap:wrap; gap:16px; margin:24px 0; }
-    .role { text-align:center; flex:0 1 120px; cursor:pointer; }
-    .role img { width:120px; height:140px; border-radius:60px; border:3px solid transparent; transition:border .3s,box-shadow .3s; }
-    .role.selected img { border-color:gold; animation:blink 1s infinite; }
-    @keyframes blink { 0%,100%{box-shadow:0 0 8px gold;}50%{box-shadow:0 0 2px gold;} }
-    #videoOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; align-items:center; justify-content:center; flex-direction:column; z-index:1000; }
-    #videoOverlay video { max-width:90%; border:3px solid #8d744a; border-radius:12px; }
-    #randomTaskBox { background:rgba(0,0,0,0.5); padding:16px; border-radius:8px; margin:20px auto; max-width:600px; text-align:center; }
-    #randomTask { color:#fff; margin-bottom:8px; font-size:16px; white-space:pre-wrap; }
-    #taskStats { text-align:center; margin:12px 0; }
-    #tasksList { max-width:600px; margin:0 auto; }
-    .task-row { display:flex; align-items:center; justify-content:space-between; margin:8px 0; }
-    .task-row input { width:120px; padding:6px; border-radius:4px; border:2px solid #444; }
-    .task-row.correct input { border-color:lime; background:rgba(0,128,0,0.2); }
-    .task-row.wrong input { border-color:crimson; background:rgba(255,0,0,0.2); }
-    #needFour { text-align:center; font-style:italic; margin:16px 0; background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; }
-    .badges { display:flex; justify-content:center; gap:24px; margin:16px 0; }
-    .badges img { width:100px; border:2px solid #8d744a; border-radius:8px; }
-    #finalPortrait img { display:block; margin:0 auto 12px; width:120px; height:140px; border-radius:60px; border:3px solid #8d744a; }
-    #downloads a { margin:8px; }
+    body { margin:0; font-family:'MedievalSharp',cursive; background:url('tło gry.png') center/cover fixed; color:#f4f1e6; overflow-x:hidden; }
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    .screen{display:none;padding:20px;min-height:100vh;box-sizing:border-box;animation:fadeIn .5s}
+    .active{display:block}
+    h1,h2,h3{text-align:center;font-family:'Uncial Antiqua',cursive;text-shadow:2px 2px 4px rgba(0,0,0,0.6);margin-bottom:16px}
+    .btn{display:inline-block;background:linear-gradient(to bottom,#c49e5b,#8b6237);color:#fff9e6;padding:12px 24px;border:none;border-radius:8px;margin:8px;font-size:18px;cursor:pointer;transition:transform .2s}
+    .btn:disabled{opacity:.5;cursor:default}
+    .btn:hover:not(:disabled){transform:scale(1.05)}
+    input[type=text]{width:100%;padding:12px;font-size:16px;border-radius:6px;border:none;margin:8px 0;box-sizing:border-box}
+    .instruction-box{background:rgba(0,0,0,0.5);border:2px solid #8d744a;border-radius:8px;padding:16px;max-width:800px;margin:16px auto;text-align:left}
+    .instruction-box ul{padding-left:20px}
+    .logo{display:block;width:80px;margin:12px auto;border:3px solid gold;border-radius:8px}
+    .roles{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;margin:24px 0}
+    .role{cursor:pointer;text-align:center;flex:0 1 120px}
+    .role img{width:120px;height:140px;border-radius:60px;border:3px solid transparent;transition:border .3s,box-shadow .3s}
+    .role.selected img{border-color:gold;animation:blink 1s infinite}
+    @keyframes blink{0%,100%{box-shadow:0 0 8px gold;}50%{box-shadow:0 0 2px gold;}}
+    #videoOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:1000}
+    #videoOverlay video{max-width:90%;border:3px solid #8d744a;border-radius:12px}
+    #randomTaskBox{background:rgba(0,0,0,0.5);padding:16px;border-radius:8px;margin:20px auto;max-width:600px;text-align:center}
+    #randomTask{color:#fff;margin-bottom:8px;font-size:16px;white-space:pre-wrap}
+    #taskStats{text-align:center;margin:12px 0}
+    #tasksList{max-width:600px;margin:0 auto}
+    .task-row{display:flex;align-items:center;justify-content:space-between;margin:8px 0}
+    .task-row input{width:120px;padding:6px;border-radius:4px;border:2px solid #444}
+    .task-row.correct input{border-color:lime;background:rgba(0,128,0,0.2)}
+    .task-row.wrong input{border-color:crimson;background:rgba(255,0,0,0.2)}
+    #needFour{text-align:center;font-style:italic;margin:16px 0;background:rgba(0,0,0,0.5);padding:12px;border-radius:8px}
+    .badges{display:flex;justify-content:center;gap:24px;margin:16px 0}
+    .badges img{width:100px;border:2px solid #8d744a;border-radius:8px}
+    #finalPortrait img{display:block;margin:0 auto 12px;width:120px;height:140px;border-radius:60px;border:3px solid #8d744a}
+    #downloads a{margin:8px}
   </style>
 </head>
-<body>
-  <audio id="bgMusic" src="celtic-glory-307625.mp3" loop playsinline preload="auto"></audio>
+<body onclick="bg.play().catch()">
+
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" loop></audio>
 
   <!-- 1. Rejestracja -->
-  <div class="screen active" id="page1">
+  <div id="page1" class="screen active">
     <h1>GRODOWA ODYSEJA</h1>
     <img src="logo.1.png" class="logo" alt="Logo">
     <div class="instruction-box">
@@ -60,12 +61,12 @@
         <li><strong>PRZEJDŹ DO RADY</strong></li>
       </ul>
     </div>
-    <input type="text" id="teamName" placeholder="Nazwa drużyny">
-    <button class="btn" id="next1">DALEJ</button>
+    <input id="teamName" type="text" placeholder="Nazwa drużyny">
+    <button id="next1" class="btn">DALEJ</button>
   </div>
 
   <!-- 2. Pełna fabuła -->
-  <div class="screen" id="page2">
+  <div id="page2" class="screen">
     <h2>Rok 972 – Czas Próby</h2>
     <div class="instruction-box">
       <p>Rok 972.<br>
@@ -75,7 +76,7 @@
       <p>Z zachodu nadciąga inna fala – wiara, która każe równać święte dęby z ziemią i wznosić kamienne kaplice. Mówią, że Mieszko już przyjął ten krzyż, że oddał Dąbrówkę za pokój i chrzest. Ale czy pokój zrodzony z handlu duszami jest pokojem trwałym?</p>
       <p>A my? My wciąż trwamy tutaj, na wzgórzu, gdzie przodkowie wznieśli palisady, świątynie i kamienie ofiarne. Grodzisko Sopockie – niegdyś punkt siły, teraz ciche, lecz czujne. Ono widziało więcej, niż mówią legendy.</p>
       <p>Pamięta czasy, gdy żelazo nie było towarem, lecz dziedzictwem – przekazywanym przez pokolenia kowali, którzy znali tajemnice ognia i ziemi. Gdy nie było jeszcze książąt, lecz Rada Starszych i szeptunki, których głos ważył więcej niż ostrze. Gdy wilcze wycie zwiastowało burzę, a kruki przy świątyniach ostrzegały przed zdradą.</p>
-      <p>Teraz, gdy świat rozdziera się między nowym a starym, potrzebujemy nie bohaterów z mieczami – lecz strażników pamięci.<br>
+      <p>Teraz, gdy świat rozdziera się między nowym a starym, potrzebujemy nie wojowników – lecz strażników pamięci.<br>
       Nie wojów. Nie możnych.<br>
       <strong>Was.</strong><br>
       Was – mieszkańców Grodu: cieśli, tkaczy, zwiadowców, zielarki, rzemieślników, handlarzy. Ludzi, których życie splata się z tą ziemią jak włókna w splocie.</p>
@@ -85,11 +86,11 @@
       Czy Grodzisko otworzy bramy – przyjmując nowe mowy, nowych bogów, nowe prawa…<br>
       …czy zamknie się na sto lat – trwając przy ogniu, który płonął, zanim spadły pierwsze monety z cesarskiej mennicy.</p>
     </div>
-    <button class="btn" id="next2">DALEJ</button>
+    <button id="next2" class="btn">DALEJ</button>
   </div>
 
   <!-- 3. Wybór postaci -->
-  <div class="screen" id="page3">
+  <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
       <div class="role" data-role="zwiadowca"><img src="zwiadowca.1.png" alt=""><p>Zwiadowca</p></div>
@@ -98,23 +99,23 @@
       <div class="role" data-role="kupiec"><img src="kupiec.1.png" alt=""><p>Kupiec</p></div>
       <div class="role" data-role="rzemieslnik"><img src="kowal.1.png" alt=""><p>Rzemieślnik</p></div>
     </div>
-    <button class="btn" id="next3" disabled>DALEJ</button>
+    <button id="next3" class="btn" disabled>DALEJ</button>
   </div>
 
   <!-- 4. Filmik inicjacyjny -->
   <div id="videoOverlay">
     <video id="roleVideo" controls></video>
-    <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button>
+    <button id="videoNext" class="btn">DALEJ DO ZADAŃ</button>
   </div>
 
   <!-- 5. Zadania -->
-  <div class="screen" id="page4">
+  <div id="page4" class="screen">
     <h2>ZADANIA</h2>
     <div id="randomTaskBox">
       <em>Wykonuj samodzielnie – nikt nic nie wpisuje</em>
       <div id="randomTask">Kliknij 🎲, aby wylosować zadanie poboczne</div>
-      <button class="btn" id="randomBtn">🎲</button>
-      <button class="btn" id="sideDone" disabled>ZROBIONE</button>
+      <button id="randomBtn" class="btn">🎲</button>
+      <button id="sideDone" class="btn" disabled>ZROBIONE</button>
     </div>
     <div id="taskStats">Ukończono: <strong id="completedCount">0</strong>/6</div>
     <div id="tasksList">
@@ -125,12 +126,12 @@
       <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
       <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
     </div>
-    <div id="needFour">Aby przejść dalej do Rady, musisz poprawnie wykonać minimum 4 zadania.</div>
-    <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
+    <div id="needFour">Aby przejść dalej do Rady, musisz wykonać min. 4 zadania.</div>
+    <button id="toCouncil" class="btn" disabled>PRZEJDŹ DO RADY</button>
   </div>
 
   <!-- 6. Rada -->
-  <div class="screen" id="page5">
+  <div id="page5" class="screen">
     <h2>RADA GRODU</h2>
     <div class="roles council-cards">
       <div class="role"><h3>🛒 Otwarcie na handel</h3><button class="btn" data-dec="handel">WYBIERAM</button></div>
@@ -140,7 +141,7 @@
   </div>
 
   <!-- 7. Podsumowanie -->
-  <div class="screen" id="page6">
+  <div id="page6" class="screen">
     <h1>GRATULACJE!</h1>
     <img src="logo.1.png" class="logo" alt="Logo">
     <div id="finalPortrait"><img id="outPortrait" alt="Twoja postać"></div>
@@ -155,12 +156,9 @@
   </div>
 
   <script>
-    const bg = document.getElementById('bgMusic');
-    document.body.addEventListener('click', ()=> bg.play().catch(), { once:true });
-
+    const bg=document.getElementById('bgMusic');
     let team='', role='', completed=0, sideDone=false;
-
-    const sideTasks = [
+    const sideTasks=[
       'Znajdź coś zielonego i dotknij to.',
       'Zrób 5 przysiadów przy najbliższej ławce.',
       'Znajdź kamień większy niż twoja dłoń.',
@@ -172,135 +170,78 @@
       'Zrób 10 kroków do przodu, potem 5 w bok i znajdź coś ciekawego.',
       'Stań na jednej nodze i policz do 10 na głos.'
     ];
-
-    const endings = {
-      handel: {
-        name:'Otwarcie na handel',
-        desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw.
-
-Lecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?`
-      },
-      granice:{
-        name:'Zamknięcie granic',
-        desc:`Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.
-
-Jednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?`
-      },
-      prawo:{
-        name:'Wprowadzenie nowego prawa',
-        desc:`Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.
-
-Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku?`
-      }
+    const endings={
+      handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji...`},
+      granice:{name:'Zamknięcie granic',desc:`Decyzja zapadła w ciszy...`},
+      prawo:{name:'Wprowadzenie nowego prawa',desc:`Głos Starszyzny niósł się echem...`}
     };
-
     function show(id){
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
-
-    // 1→2
-    document.getElementById('next1').onclick = ()=>{
-      const v = document.getElementById('teamName').value.trim();
-      if(!v){ alert('Podaj nazwę drużyny'); return; }
-      team = v; show('page2');
+    document.body.addEventListener('click',()=>bg.play().catch(),{once:true});
+    document.getElementById('next1').onclick=()=>{
+      const v=document.getElementById('teamName').value.trim();
+      if(!v){alert('Podaj nazwę drużyny');return;}
+      team=v;show('page2');
     };
-
-    // 2→3
-    document.getElementById('next2').onclick = ()=> show('page3');
-
-    // wybór postaci
-    document.querySelectorAll('#page3 .role').forEach(el=>{
-      el.onclick = ()=>{
-        document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected'));
-        el.classList.add('selected');
-        role = el.dataset.role;
-        document.getElementById('next3').disabled = false;
-      };
+    document.getElementById('next2').onclick=()=>show('page3');
+    document.querySelectorAll('#page3 .role').forEach(el=>el.onclick=()=>{
+      document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected'));
+      el.classList.add('selected');
+      role=el.dataset.role;
+      document.getElementById('next3').disabled=false;
     });
-
-    // 3→film
-    document.getElementById('next3').onclick = ()=>{
-      const vids = {
-        zwiadowca:'zwiadowca.1.mp4',
-        tkaczka:'tkaczka.1.mp4',
-        zielarka:'zielarka.1.mp4',
-        kupiec:'kupiec.1.mp4',
-        rzemieslnik:'rzemieslnik.1.mp4'
-      };
-      document.getElementById('roleVideo').src = vids[role];
+    document.getElementById('next3').onclick=()=>{
+      const vids={zwiadowca:'zwiadowca.1.mp4',tkaczka:'tkaczka.1.mp4',zielarka:'zielarka.1.mp4',kupiec:'kupiec.1.mp4',rzemieslnik:'rzemieslnik.1.mp4'};
+      document.getElementById('roleVideo').src=vids[role];
       document.getElementById('videoOverlay').style.display='flex';
     };
-
-    // film→4
-    document.getElementById('videoNext').onclick = ()=>{
-      completed=0; sideDone=false;
+    document.getElementById('videoNext').onclick=()=>{
+      completed=0;sideDone=false;
       show('page4');
       document.getElementById('videoOverlay').style.display='none';
       document.getElementById('sideDone').disabled=false;
       document.getElementById('randomTask').innerText='Kliknij 🎲, aby wylosować zadanie poboczne';
       document.getElementById('completedCount').innerText='0';
-      document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong'); r.querySelector('input').value='';});
+      document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong');r.querySelector('input').value='';});
       document.getElementById('toCouncil').disabled=true;
     };
-
-    // zadanie poboczne
-    document.getElementById('randomBtn').onclick = ()=>{
-      document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
-    };
-    document.getElementById('sideDone').onclick = ()=>{
+    document.getElementById('randomBtn').onclick=()=>document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)];
+    document.getElementById('sideDone').onclick=()=>{
       sideDone=true;
       document.getElementById('sideDone').style.background='lime';
       document.getElementById('sideDone').innerText='ZROBIONE';
     };
-
-    // zadania główne
-    let completed=0;
     document.querySelectorAll('.task-row').forEach(row=>{
-      const ans = row.dataset.ans;
-      const inp = row.querySelector('input');
-      row.querySelector('.confirm').onclick = ()=>{
+      const ans=row.dataset.ans, inp=row.querySelector('input');
+      row.querySelector('.confirm').onclick=()=>{
         if(inp.value.trim().toUpperCase()===ans){
-          if(!row.classList.contains('correct')){
-            row.classList.add('correct');
-            row.classList.remove('wrong');
-            completed++;
-          }
+          if(!row.classList.contains('correct')){row.classList.add('correct');completed++;}
         } else {
-          if(!row.classList.contains('wrong')){
-            row.classList.add('wrong');
-            row.classList.remove('correct');
-            if(completed>0) completed--;
-          }
+          if(!row.classList.contains('wrong')){row.classList.add('wrong');if(completed>0)completed--;}
         }
-        document.getElementById('completedCount').innerText = completed;
-        if(completed>=4) document.getElementById('toCouncil').disabled=false;
+        document.getElementById('completedCount').innerText=completed;
+        if(completed>=4)document.getElementById('toCouncil').disabled=false;
       };
     });
-
-    // 4→5
-    document.getElementById('toCouncil').onclick = ()=> show('page5');
-
-    // 5→6 podsumowanie
-    document.querySelectorAll('#page5 .btn').forEach(b=>{
-      b.onclick = ()=>{
-        const key = b.dataset.dec;
-        document.getElementById('outTeam').innerText = team;
-        document.getElementById('outRole').innerText = role;
-        document.getElementById('outDecisionName').innerText = endings[key].name;
-        document.getElementById('outDecisionDesc').innerText = endings[key].desc;
-        document.getElementById('outPortrait').src = role + '.png';
-        document.getElementById('outSideDone').innerText = sideDone?'TAK':'NIE';
-        document.getElementById('outPoints').innerText = completed;
-        // odznaki i pobranie
-        const bcont = document.getElementById('badges');
-        bcont.innerHTML = `<div><img src="medalion.1.png"><p>Medalion Grodu</p></div>`;
-        if(sideDone) bcont.innerHTML += `<div><img src="korona.1.png"><p>Korona Wyzwań</p></div>`;
-        const dl = document.getElementById('downloads');
-        dl.innerHTML = `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>`;
-        if(sideDone) dl.innerHTML += `<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`;
-        show('page6');
-      };
+    document.getElementById('toCouncil').onclick=()=>show('page5');
+    document.querySelectorAll('#page5 .btn').forEach(b=>b.onclick=()=>{
+      const key=b.dataset.dec;
+      document.getElementById('outTeam').innerText=team;
+      document.getElementById('outRole').innerText=role;
+      document.getElementById('outDecisionName').innerText=endings[key].name;
+      document.getElementById('outDecisionDesc').innerText=endings[key].desc;
+      document.getElementById('outPortrait').src=`${role}.png`;
+      document.getElementById('outSideDone').innerText=sideDone?'TAK':'NIE';
+      document.getElementById('outPoints').innerText=completed;
+      const bcont=document.getElementById('badges');
+      bcont.innerHTML=`<div><img src="medalion.1.png"><p>Medalion Grodu</p></div>`;
+      if(sideDone)bcont.innerHTML+=`<div><img src="korona.1.png"><p>Korona Wyzwań</p></div>`;
+      const dl=document.getElementById('downloads');
+      dl.innerHTML=`<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>`;
+      if(sideDone)dl.innerHTML+=`<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`;
+      show('page6');
     });
   </script>
 </body>
