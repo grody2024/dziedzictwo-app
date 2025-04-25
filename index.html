@@ -47,13 +47,12 @@
   <div id="initiationOverlay">
     <div id="initiationContent">
       <h2 id="initTitle">Rytuał Inicjacji</h2>
-      <p id="initDesc">Przygotuj się na swoją misję...</p>
+      <p id="initDesc">Przeciągnij, aby odsłonić kartę z zadaniami...</p>
       <img id="initImg" src="" alt="Inicjacja">
-      <button class="btn" id="initContinue">KONTYNUUJ</button>
     </div>
   </div>
 
-  <!-- Page 1: Rejestracja drużyny -->
+  <!-- Page 1": Rejestracja drużyny -->
   <div class="screen active" id="page1">
     <h1>GRODOWA ODYSEJA</h1>
     <img src="logo.1.png" alt="Logo Muzeum" style="width:80px; margin:10px auto; display:block; border:3px solid gold; border-radius:8px;">
@@ -74,7 +73,18 @@
   <div class="screen" id="page2">
     <h2>WSTĘP FABULARNY</h2>
     <div class="instruction-box">
-      <p>Rok 972 – Czas Próby. Ziemia drży, Grodzisko Sopockie trwa. Potrzebujemy strażników pamięci.</p>
+      <p>Rok 972 – Czas Próby</p>
+      <p>To może być ostatni spokojny rok.</p>
+      <p>Wieści o zwycięstwie Mieszka I pod Cedynią rozchodzą się po ziemiach, a wielkie imperia zaczynają spoglądać na nas łakomie.</p>
+      <p>Ze wschodu nadciąga nowe pismo – słowa jak syk żmii przynoszące prawa pisane obcym alfabetem.</p>
+      <p>Z zachodu nadciąga obca wiara, która ścina święte dęby i wznosi kamienne kaplice.</p>
+      <p>Grodzisko Sopockie wciąż trwa tutaj, na wzgórzu – niegdyś punkt siły, teraz ciche, lecz czujne.</p>
+      <p>Pamięta czasy, gdy żelazo było dziedzictwem kowali, gdy Rada Starszych rządziła mądrze, a wilcze wycie zwiastowało burzę.</p>
+      <p>Teraz, gdy świat rozdziera się między nowym a starym, potrzebujemy nie wojowników, lecz strażników pamięci.</p>
+      <p>Was – mieszkańców Grodu: cieśli, tkaczy, zwiadowców, zielarek, rzemieślników, handlarzy.</p>
+      <p>Wasza drużyna zostaje wezwana do Próby Dziedzictwa Żelaza.</p>
+      <p>W ciągu najbliższej godziny odnajdziecie ślady przeszłości i ułożycie historię, zanim zapiszą ją obcy.</p>
+      <p>A potem staniecie przed Radą Grodu i zadecydujecie: otworzyć Grodzisko na świat czy zamknąć je na sto lat.</p>
     </div>
     <button class="btn" id="next2">DALEJ</button>
   </div>
@@ -181,8 +191,24 @@
       document.getElementById('initiationOverlay').style.display = 'flex';
     }
 
-    document.getElementById('initContinue').onclick = () => {
+    // Swipe to reveal continuation button
+    const initImg = document.getElementById('initImg');
+    let startX;
+    initImg.addEventListener('pointerdown', e => { startX = e.clientX; });
+    initImg.addEventListener('pointerup', e => {
+      if (Math.abs(e.clientX - startX) > 50) {
+        document.getElementById('initDesc').innerText = 'Rewelacja! Karta odsłonięta.';
+        const btn = document.getElementById('initContinue');
+        btn.style.display = 'inline-block';
+      }
+    });
+    // Continue button hidden until swipe
+    const initBtn = document.getElementById('initContinue');
+    initBtn.style.display = 'none';
+    initBtn.onclick = () => {
       document.getElementById('initiationOverlay').style.display = 'none';
+      nextPage(4);
+    };
       nextPage(4);
     };
 
