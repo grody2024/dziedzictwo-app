@@ -34,7 +34,6 @@
     .card { width:260px; padding:20px; background:rgba(255,255,255,0.1); border-radius:12px; text-align:center; backdrop-filter:blur(4px); transition:transform 0.3s; }
     .card:hover { transform:scale(1.02); }
     @keyframes fadeIn { from{opacity:0;}to{opacity:1;} }
-    /* Initiation Overlay */
     #initiationOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); display:none; align-items:center; justify-content:center; z-index:1000; }
     #initiationContent { background:rgba(0,0,0,0.7); padding:30px; border-radius:12px; text-align:center; color:#f4f1e6; }
     #initiationContent h2 { color:#e3c54a; margin-bottom:10px; }
@@ -42,7 +41,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" src="celtic-glory-307625.mp3" playsinline preload="auto"></audio>
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop muted></audio>
 
   <!-- Initiation Overlay -->
   <div id="initiationOverlay">
@@ -139,9 +138,13 @@
 
   <script>
     const bgMusic = document.getElementById('bgMusic');
-    document.body.addEventListener('click',()=>bgMusic.play().catch(()=>{}),{once:true});
-    let team='', role='', correctCount=0, doneRandom=false;
-    const randomTasks=[
+    document.body.addEventListener('click', () => {
+      bgMusic.muted = false;
+      bgMusic.play().catch(() => {});
+    }, { once: true });
+
+    let team = '', role = '', correctCount = 0, doneRandom = false;
+    const randomTasks = [
       'Policzcie razem do 10.',
       'Stańcie w rzędzie...',
       'Każdy niech dotknie...',
@@ -153,21 +156,58 @@
       'Zamknijcie oczy na 5s.',
       'Obróćcie się w miejscu.'
     ];
-    function nextPage(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('page'+n).classList.add('active');}
-    document.getElementById('next1').onclick=()=>{const name=document.getElementById('teamName').value.trim();if(!name)alert('Podaj nazwę');else{team=name;nextPage(2);}};
-    document.getElementById('next2').onclick=()=>nextPage(3);
-    function startInitiation(r){
-      role=r;
-      document.getElementById('initTitle').innerText=`Inicjacja: ${r}`;
-      document.getElementById('initDesc').innerText=`Wykonaj rytuał ${r}, aby odblokować swoje moce.`;
-      document.getElementById('initImg').src=`${r.toLowerCase()}.init.png`;
-      document.getElementById('initiationOverlay').style.display='flex';
+
+    function nextPage(n) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('page' + n).classList.add('active');
     }
-    document.getElementById('initContinue').onclick=()=>{document.getElementById('initiationOverlay').style.display='none';nextPage(4);};
-    document.getElementById('randomBtn').onclick=()=>{document.getElementById('randomTask').innerText=randomTasks[Math.floor(Math.random()*randomTasks.length)];};
-    document.getElementById('completeRandom').onclick=()=>{if(!doneRandom){doneRandom=true;correctCount++;document.getElementById('completeRandom').classList.add('clicked');if(correctCount>=4)document.getElementById('toCouncil').disabled=false;}};
-    document.getElementById('toCouncil').onclick=()=>nextPage(5);
-    function finish(dec){document.getElementById('outTeam').innerText=team;document.getElementById('outRole').innerText=role;document.getElementById('outDecision').innerText=dec;document.getElementById('outPoints').innerText=correctCount;nextPage(6);}  
+
+    document.getElementById('next1').onclick = () => {
+      const name = document.getElementById('teamName').value.trim();
+      if (!name) alert('Podaj nazwę drużyny');
+      else {
+        team = name;
+        nextPage(2);
+      }
+    };
+
+    document.getElementById('next2').onclick = () => nextPage(3);
+
+    function startInitiation(r) {
+      role = r;
+      document.getElementById('initTitle').innerText = `Inicjacja: ${r}`;
+      document.getElementById('initDesc').innerText = `Wykonaj rytuał ${r}, aby odblokować swoje moce.`;
+      document.getElementById('initImg').src = `${r.toLowerCase()}.init.png`;
+      document.getElementById('initiationOverlay').style.display = 'flex';
+    }
+
+    document.getElementById('initContinue').onclick = () => {
+      document.getElementById('initiationOverlay').style.display = 'none';
+      nextPage(4);
+    };
+
+    document.getElementById('randomBtn').onclick = () => {
+      document.getElementById('randomTask').innerText = randomTasks[Math.floor(Math.random() * randomTasks.length)];
+    };
+
+    document.getElementById('completeRandom').onclick = () => {
+      if (!doneRandom) {
+        doneRandom = true;
+        correctCount++;
+        document.getElementById('completeRandom').classList.add('clicked');
+        if (correctCount >= 4) document.getElementById('toCouncil').disabled = false;
+      }
+    };
+
+    document.getElementById('toCouncil').onclick = () => nextPage(5);
+
+    function finish(dec) {
+      document.getElementById('outTeam').innerText = team;
+      document.getElementById('outRole').innerText = role;
+      document.getElementById('outDecision').innerText = dec;
+      document.getElementById('outPoints').innerText = correctCount;
+      nextPage(6);
+    }
   </script>
 </body>
 </html>
