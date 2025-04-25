@@ -41,7 +41,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop muted></audio>
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" loop playsinline preload="auto"></audio></audio>
 
   <!-- Initiation Overlay -->
   <div id="initiationOverlay">
@@ -153,7 +153,11 @@
       bgMusic.play().catch(() => {});
     }, { once: true });
 
-    let team = '', role = '', correctCount = 0, doneRandom = false;
+    let team = '';
+    let role = '';
+    let correctCount = 0;
+    let doneRandom = false;
+
     const randomTasks = [
       'Policzcie razem do 10.',
       'Stańcie w rzędzie...',
@@ -174,8 +178,9 @@
 
     document.getElementById('next1').onclick = () => {
       const name = document.getElementById('teamName').value.trim();
-      if (!name) alert('Podaj nazwę drużyny');
-      else {
+      if (!name) {
+        alert('Podaj nazwę drużyny');
+      } else {
         team = name;
         nextPage(2);
       }
@@ -186,29 +191,25 @@
     function startInitiation(r) {
       role = r;
       document.getElementById('initTitle').innerText = `Inicjacja: ${r}`;
-      document.getElementById('initDesc').innerText = `Wykonaj rytuał ${r}, aby odblokować swoje moce.`;
+      document.getElementById('initDesc').innerText = `Przeciągnij, aby odsłonić kartę z zadaniami`;
       document.getElementById('initImg').src = `${r.toLowerCase()}.init.png`;
+      document.getElementById('initContinue').style.display = 'none';
       document.getElementById('initiationOverlay').style.display = 'flex';
     }
 
-    // Swipe to reveal continuation button
+    // Swipe detection
     const initImg = document.getElementById('initImg');
-    let startX;
+    let startX = 0;
     initImg.addEventListener('pointerdown', e => { startX = e.clientX; });
     initImg.addEventListener('pointerup', e => {
       if (Math.abs(e.clientX - startX) > 50) {
         document.getElementById('initDesc').innerText = 'Rewelacja! Karta odsłonięta.';
-        const btn = document.getElementById('initContinue');
-        btn.style.display = 'inline-block';
+        document.getElementById('initContinue').style.display = 'inline-block';
       }
     });
-    // Continue button hidden until swipe
-    const initBtn = document.getElementById('initContinue');
-    initBtn.style.display = 'none';
-    initBtn.onclick = () => {
+
+    document.getElementById('initContinue').onclick = () => {
       document.getElementById('initiationOverlay').style.display = 'none';
-      nextPage(4);
-    };
       nextPage(4);
     };
 
