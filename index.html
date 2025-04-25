@@ -22,7 +22,9 @@
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
     #randomTaskBox { max-width:600px; margin:20px auto; display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,0.4); padding:15px; border-radius:8px; }
     #randomTaskBox span { flex:1; font-size:16px; }
-    #randomBtn { background:none; border:none; font-size:24px; cursor:pointer; color:#c49e5b; }
+    #randomBtn, #completeRandom { background:none; border:none; cursor:pointer; }
+    #randomBtn { font-size:24px; color:#c49e5b; }
+    #completeRandom { font-size:20px; color:#e3c54a; margin-left:10px; }
     .tasks { max-width:600px; margin:20px auto; }
     .tasks .task { display:flex; align-items:center; gap:10px; margin:10px 0; }
     .tasks input { flex:1; text-transform:uppercase; }
@@ -36,7 +38,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay muted loop preload="auto"></audio>
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop preload="auto"></audio>
 
   <!-- 1: Rejestracja drużyny -->
   <div class="screen active" id="page1">
@@ -88,6 +90,7 @@
     <div id="randomTaskBox">
       <span><strong>Zadanie losowe:</strong> <span id="randomTask">Kliknij kostkę</span></span>
       <button id="randomBtn">🎲</button>
+      <button id="completeRandom" title="Oznacz jako wykonane">🎖</button>
     </div>
     <div id="progressPanel">
       <ul>
@@ -105,10 +108,13 @@
     <div class="tasks">
       <div class="task"><label>Brama Grodziska</label><input id="a1" type="text"><button onclick="check(1,'LAMELKA')">Zatwierdź</button></div>
       <div class="task"><label>Warsztat Kowala</label><input id="a2" type="text"><button onclick="check(2,'MIECH')">Zatwierdź</button></div>
-      <div class="task"><label>Zagroda</label><input id="a3" type="text"><button onclick="check(3,'ŻYTO')">Zatwierdź</button></div>
+      <div class="task"><label>Zagroda</label><input id="a3" type="text"><button onclick="check(3,'ŻYТО')">Zatwierdź</button></div>
       <div class="task"><label>Chata Tkaczki</label><input id="a4" type="text"><button onclick="check(4,'LEN')">Zatwierdź</button></div>
-      <div class="task"><label>Chata Zielarki</label><input id="a5" type="text"><button onclick="check(5,'POKRZYWA')">Zatwierdź</button></div>
+      <div class="task"><label>Chata Zielarki</label><input id="a5" type="text"><button onclick="check(5,'POKRZYВА')">Zатwierdź</button></div>
       <div class="task"><label>Chata Namiestnika</label><input id="a6" type="text"><button onclick="check(6,'DIRHEMY')">Zatwierdź</button></div>
+    </div>
+    <div class="instruction-box">
+      <p style="font-weight:bold; text-align:center;">Aby przejść do sekcji Rady, musisz poprawnie wykonać przynajmniej 4 zadania.</p>
     </div>
     <button class="btn" id="toCouncil" onclick="nextPage(5)" disabled>Przejdź do Rady</button>
   </div>
@@ -135,6 +141,8 @@
   </div>
 
   <script>
+    const bgMusic = document.getElementById('bgMusic');
+    window.addEventListener('load', ()=>{ bgMusic.play().catch(()=>{}); });
     const randomTasks = [
       'Mądrość Przodków – Wymyślcie jedno zdanie, jakby mówił je starzec z grodu.',
       'Krąg Zgody – Stańcie w kole i dotknijcie się dłońmi w środku.',
@@ -146,34 +154,20 @@
       'Głos Rodu – Jeden mówi "Jestem z Grodu", reszta odpowiada "My z Tobą!"'
     ];
     let team='', role='', answers={}, correctCount=0;
-    function nextPage(n) {
-      if(n===2) {
-        const val = document.getElementById('teamName').value.trim();
-        if(!val) { alert('Podaj nazwę drużyny'); return; }
-        team = val;
-      }
-      if(n===4) {
-        document.getElementById('randomTask').innerText = 'Kliknij kostkę aby wylosować zadanie';
-      }
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('page'+n).classList.add('active');
+    function nextPage(n){
+      if(n===2){ const val=document.getElementById('teamName').value.trim(); if(!val){alert('Podaj nazwę drużyny');return;} team=val; }
+      if(n===4){ document.getElementById('randomTask').innerText='Kliknij kostkę aby wylosować zadanie'; }
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById('page'+n).classList.add('active');
     }
-    document.getElementById('randomBtn').addEventListener('click', () => {
-      document.getElementById('randomTask').innerText = randomTasks[Math.floor(Math.random()*randomTasks.length)];
-    });
-    function selectRole(el, r) {
-      role = r;
-      document.querySelectorAll('.role').forEach(x => x.classList.remove('selected')); el.classList.add('selected');
-      document.getElementById('roleNext').disabled = false;
+    document.getElementById('randomBtn').addEventListener('click',()=>{ document.getElementById('randomTask').innerText=randomTasks[Math.floor(Math.random()*randomTasks.length)]; });
+    document.getElementById('completeRandom').addEventListener('click',()=>{ alert('Zadanie losowe oznaczone jako wykonane!'); });
+    function selectRole(el,r){ role=r; document.querySelectorAll('.role').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); document.getElementById('roleNext').disabled=false; }
+    function check(id,code){ const val=document.getElementById('a'+id).value.trim().toUpperCase(); const li=document.getElementById('p'+id);
+      if(val===code){ if(!answers[id])correctCount++; answers[id]=true; li.classList.add('correct'); li.textContent=li.textContent.split(':')[0]+': ✓'; }
+      else{ answers[id]=false; li.classList.add('incorrect'); li.textContent=li.textContent.split(':')[0]+': ✗'; }
+      if(correctCount>=4) document.getElementById('toCouncil').disabled=false;
     }
-    function check(id, code) {
-      const inputVal = document.getElementById('a'+id).value.trim().toUpperCase();
-      const li = document.getElementById('p'+id);
-      if(inputVal === code) { if(!answers[id]) correctCount++; answers[id]=true; li.classList.add('correct'); li.textContent = li.textContent.split(':')[0] + ': ✓'; }
-      else { answers[id]=false; li.classList.add('incorrect'); li.textContent = li.textContent.split(':')[0] + ': ✗'; }
-      if(correctCount >= 4) document.getElementById('toCouncil').disabled = false;
-    }
-    function finish(dec) { document.getElementById('outTeam').innerText = team; document.getElementById('outRole').innerText = role; document.getElementById('outDecision').innerText = dec; document.getElementById('outPoints').innerText = correctCount; nextPage(6); }
+    function finish(dec){ document.getElementById('outTeam').innerText=team; document.getElementById('outRole').innerText=role; document.getElementById('outDecision').innerText=dec; document.getElementById('outPoints').innerText=correctCount; nextPage(6); }
   </script>
 </body>
 </html>
