@@ -1,274 +1,155 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grodowa Odyseja</title>
-  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      font-family: 'MedievalSharp', cursive;
-      background: url('tło gry.png') center center / cover no-repeat fixed;
-      color: #f4f1e6;
-      overflow-x: hidden;
-    }
-    .screen { display: none; padding: 20px; min-height: 100vh; box-sizing: border-box; }
-    .active { display: block; animation: fadeIn 0.6s ease-out; }
-    h1, h2, h3 { font-family: 'Uncial Antiqua', cursive; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); }
-    .btn {
-      background: linear-gradient(to bottom, #c49e5b, #8b6237);
-      color: #fff9e6;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 12px;
-      margin: 15px 5px;
-      cursor: pointer;
-      font-size: 18px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      transition: transform 0.2s;
-    }
-    .btn:hover { transform: scale(1.05); }
-    .instruction-box {
-      background: rgba(255,248,230,0.2);
-      border: 2px solid #8d744a;
-      border-radius: 12px;
-      padding: 20px;
-      max-width: 800px;
-      margin: 20px auto;
-      font-family: 'Uncial Antiqua', cursive;
-    }
-    input, select {
-      font-size: 16px;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-    }
-    #introText {
-      background: url('pergamin.png') center center / contain no-repeat;
-      padding: 40px;
-      font-family: 'Uncial Antiqua', cursive;
-      color: #3e2f1b;
-      max-width: 800px;
-      margin: auto;
-    }
-    .roles {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin: 30px 0;
-    }
-    .role {
-      text-align: center;
-      cursor: pointer;
-    }
-    .role img {
-      width:120px;
-      height:auto;
-      border-radius:50%;
-      border:4px solid transparent;
-      transition: border 0.3s;
-    }
-    .role.selected img {
-      border-color: gold;
-      animation: blink 1s infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0.5;} }
-    .tasks { max-width:600px; margin:auto; }
-    .tasks .task { display:flex; align-items:center; gap:10px; margin:10px 0; }
-    .tasks input { flex:1; text-transform:uppercase; }
-    #progressPanel {
-      position:fixed;
-      top:20px;
-      right:20px;
-      background:rgba(0,0,0,0.5);
-      padding:10px;
-      border-radius:8px;
-      color: #f4f1e6;
-    }
-    #progressPanel ul { list-style:none; padding:0; margin:0; }
-    #progressPanel li.correct { color: #a4e37c; }
-    #progressPanel li.incorrect { color: #e37c7c; }
-    .council-cards {
-      display:flex;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:30px;
-      margin:40px 0;
-    }
-    .card {
-      width:260px;
-      padding:20px;
-      background:rgba(255,255,255,0.1);
-      border-radius:12px;
-      text-align:center;
-      backdrop-filter: blur(4px);
-    }
-    .card img {
-      width:200px;
-      height:auto;
-      border-radius:8px;
-    }
-    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    body { margin:0; font-family:'MedievalSharp',cursive; background:url('tło gry.png') center/cover fixed; color:#f4f1e6; overflow-x:hidden; }
+    .screen { display:none; padding:20px; min-height:100vh; box-sizing:border-box; }
+    .active { display:block; animation:fadeIn .6s ease-out; }
+    h1,h2,h3{ font-family:'Uncial Antiqua',cursive; text-shadow:2px 2px 4px rgba(0,0,0,.6); }
+    .btn{ background:linear-gradient(to bottom,#c49e5b,#8b6237); color:#fff9e6; padding:12px 28px; border:none; border-radius:12px; margin:15px 5px; cursor:pointer; font-size:18px; box-shadow:0 4px 10px rgba(0,0,0,.5); transition:transform .2s; }
+    .btn:hover{ transform:scale(1.05); }
+    .instruction-box{ background:rgba(255,248,230,.2); border:2px solid #8d744a; border-radius:12px; padding:20px; max-width:800px; margin:20px auto; }
+    input[type=text]{ font-size:16px; padding:10px; border:none; border-radius:8px; }
+    #introText{ background:url('pergamin.png') center/contain no-repeat; padding:40px; color:#3e2f1b; max-width:800px; margin:20px auto; line-height:1.5; text-align:left; }
+    .roles{ display:flex; justify-content:center; flex-wrap:wrap; gap:20px; margin:30px 0; }
+    .role{ text-align:center; cursor:pointer; }
+    .role img{ width:120px; height:160px; object-fit:cover; border-radius:60px; border:4px solid transparent; transition:border .3s; }
+    .role.selected img{ border-color:gold; animation:blink 1s infinite; }
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:.5;}}
+    .tasks{ max-width:600px; margin:20px auto; }
+    .tasks .task{ display:flex; align-items:center; gap:10px; margin:10px 0; }
+    .tasks input{ flex:1; text-transform:uppercase; }
+    #progressPanel{ position:fixed; top:20px; right:20px; background:rgba(0,0,0,.5); padding:10px; border-radius:8px; }
+    #progressPanel ul{ list-style:none; padding:0; margin:0; }
+    #progressPanel li.correct{ color:#a4e37c; }
+    #progressPanel li.incorrect{ color:#e37c7c; }
+    #randomTaskBox{ max-width:600px; margin:20px auto; background:rgba(0,0,0,.4); padding:15px; border-radius:8px; }
+    .council-cards{ display:flex; justify-content:center; flex-wrap:wrap; gap:30px; margin:40px 0; }
+    .card{ width:260px; padding:20px; background:rgba(255,255,255,.1); border-radius:12px; text-align:center; backdrop-filter:blur(4px); }
+    .card img{ width:200px; height:auto; border-radius:8px; }
+    @keyframes fadeIn{ from{opacity:0;}to{opacity:1;} }
   </style>
 </head>
 <body>
-  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop></audio>
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop preload="auto" controls></audio>
 
-  <!-- 1. Rejestracja drużyny -->
+  <!-- 1: Rejestracja -->
   <div class="screen active" id="page1">
     <h1>Grodowa Odyseja</h1>
-    <p>„Grodowa Odyseja” to terenowa gra RPG, która przenosi Cię do roku 972. Wciel się w członka drużyny obrońców warowni i rozpocznij epicką przygodę.</p>
+    <p>„Grodowa Odyseja” to terenowa gra RPG z rokiem 972. Wciel się w obrońcę warowni!</p>
     <div class="instruction-box">
-      <ol style="text-align:left;">
-        <li>Podaj wymyśloną nazwę swojej drużyny (unikać danych osobowych).</li>
-        <li>Po wpisaniu nazwy naciśnij przycisk <strong>Dalej</strong>.</li>
+      <ol>
+        <li>Wymyśl nazwę drużyny (bez danych osobowych).</li>
+        <li>Naciśnij <strong>Dalej</strong>.</li>
       </ol>
     </div>
-    <input type="text" id="teamName" placeholder="Nazwa drużyny" />
+    <input type="text" id="teamName" placeholder="Nazwa drużyny">
     <button class="btn" onclick="nextPage(2)">Dalej</button>
   </div>
 
-  <!-- 2. Wstęp fabularny -->
+  <!-- 2: Fabuła -->
   <div class="screen" id="page2">
     <h2>Wstęp fabularny</h2>
     <div id="introText">
-      <!-- Wstaw pełny tekst fabuły tutaj -->
-      <p>Mówi się, że to będzie ostatni spokojny rok...</p>
+      Rok 972 – Czas Próby<br>
+      To może być ostatni spokojny rok.<br>
+      Wieści o zwycięstwie Mieszka pod Cedynią rozchodzą się po ziemiach, a imperia spoglądają łakomie.<br>
+      Z wschodu nadciąga nowe pismo, z zachodu – obca wiara<br>
+      Grodzisko Sopockie trwa – ciche, czujne, pamiętające przodków.<br>
+      Dziś potrzebujemy strażników pamięci.<br>
+      Was – cieśli, tkaczy, zwiadowców, zielarek, rzemieślników, handlarzy.<br>
+      W ciągu godziny odnajdziecie ślady przeszłości i ułożycie historię.<br>
+      Na końcu zadecydujecie: otworzyć Grodzisko… czy zamknąć je na sto lat.
     </div>
     <button class="btn" onclick="nextPage(3)">Dalej</button>
   </div>
 
-  <!-- 3. Wybór postaci -->
+  <!-- 3: Wybór postaci -->
   <div class="screen" id="page3">
     <h2>Wybierz postać</h2>
     <div class="roles">
-      <div class="role" onclick="selectRole('Zwiadowca')">
-        <img src="zwiadowca.1.png" alt="Zwiadowca" /><p>Zwiadowca</p>
-      </div>
-      <div class="role" onclick="selectRole('Tkaczka')">
-        <img src="tkaczka.1.png" alt="Tkaczka" /><p>Tkaczka</p>
-      </div>
-      <div class="role" onclick="selectRole('Zielarka')">
-        <img src="zielarka.1.png" alt="Zielarka" /><p>Zielarka</p>
-      </div>
-      <div class="role" onclick="selectRole('Kupiec')">
-        <img src="kupiec.1.png" alt="Kupiec" /><p>Kupiec</p>
-      </div>
-      <div class="role" onclick="selectRole('Rzemieślnik')">
-        <img src="kowal.1.png" alt="Rzemieślnik" /><p>Rzemieślnik</p>
-      </div>
+      <div class="role" onclick="selectRole(event,'Zwiadowca')"><img src="zwiadowca.1.png"><p>Zwiadowca</p></div>
+      <div class="role" onclick="selectRole(event,'Tkaczka')"><img src="tkaczka.1.png"><p>Tkaczka</p></div>
+      <div class="role" onclick="selectRole(event,'Zielarka')"><img src="zielarka.1.png"><p>Zielarka</p></div>
+      <div class="role" onclick="selectRole(event,'Kupiec')"><img src="kupiec.1.png"><p>Kupiec</p></div>
+      <div class="role" onclick="selectRole(event,'Rzemieślnik')"><img src="kowal.1.png"><p>Rzemieślnik</p></div>
     </div>
     <button class="btn" id="roleNext" onclick="nextPage(4)" disabled>Dalej</button>
   </div>
 
-  <!-- 4. Interaktywne punkty -->
+  <!-- 4: Interaktywne punkty -->
   <div class="screen" id="page4">
     <h2>Interaktywne punkty gry</h2>
-    <div id="progressPanel">
-      <h4>Postępy</h4>
-      <ul>
-        <li id="p1">Brama Grodziska: –</li>
-        <li id="p2">Warsztat Kowala: –</li>
-        <li id="p3">Zagroda: –</li>
-        <li id="p4">Chata Tkaczki: –</li>
-        <li id="p5">Chata Zielarki: –</li>
-        <li id="p6">Chata Namiestnika: –</li>
-      </ul>
-    </div>
+    <div id="randomTaskBox"><strong>Zadanie losowe:</strong> <span id="randomTask"></span></div>
+    <div id="progressPanel"><ul>
+      <li id="p1">Brama Grodziska: –</li>
+      <li id="p2">Warsztat Kowala: –</li>
+      <li id="p3">Zagroda: –</li>
+      <li id="p4">Chata Tkaczki: –</li>
+      <li id="p5">Chata Zielarki: –</li>
+      <li id="p6">Chata Namiestnika: –</li>
+    </ul></div>
     <div class="tasks">
-      <div class="task"><label>Brama Grodziska:</label><input id="a1" type="text" placeholder="LAMELKA"/><button onclick="check(1,'LAMELKA')">Zatwierdź</button></div>
-      <div class="task"><label>Warsztat Kowala:</label><input id="a2" type="text" placeholder="MIECH"/><button onclick="check(2,'MIECH')">Zatwierdź</button></div>
-      <div class="task"><label>Zagroda:</label><input id="a3" type="text" placeholder="ŻYTO"/><button onclick="check(3,'ŻYTO')">Zatwierdź</button></div>
-      <div class="task"><label>Chata Tkaczki:</label><input id="a4" type="text" placeholder="LEN"/><button onclick="check(4,'LEN')">Zatwierdź</button></div>
-      <div class="task"><label>Chata Zielarki:</label><input id="a5" type="text" placeholder="POKRZYWA"/><button onclick="check(5,'POKRZYWA')">Zatwierdź</button></div>
-      <div class="task"><label>Chata Namiestnika:</label><input id="a6" type="text" placeholder="DIRHEMY"/><button onclick="check(6,'DIRHEMY')">Zatwierdź</button></div>
+      <div class="task"><label>Brama Grodziska</label><input id="a1" type="text"><button onclick="check(1,'LAMELKA')">Zatwierdź</button></div>
+      <div class="task"><label>Warsztat Kowala</label><input id="a2" type="text"><button onclick="check(2,'MIECH')">Zatwierdź</button></div>
+      <div class="task"><label>Zagroda</label><input id="a3" type="text"><button onclick="check(3,'ŻYTO')">Zatwierdź</button></div>
+      <div class="task"><label>Chata Tkaczki</label><input id="a4" type="text"><button onclick="check(4,'LEN')">Zatwierdź</button></div>
+      <div class="task"><label>Chata Zielarki</label><input id="a5" type="text"><button onclick="check(5,'POKRZYWA')">Zatwierdź</button></div>
+      <div class="task"><label>Chata Namiestnika</label><input id="a6" type="text"><button onclick="check(6,'DIRHEMY')">Zatwierdź</button></div>
     </div>
     <button class="btn" id="toCouncil" onclick="nextPage(5)" disabled>Przejdź do Rady</button>
   </div>
 
-  <!-- 5. Rada Grodu -->
+  <!-- 5: Rada Grodu -->
   <div class="screen" id="page5">
     <h2>Rada Grodu</h2>
     <div class="council-cards">
-      <div class="card">
-        <img src="otwarcie.png" alt="Otwarcie na handel" />
-        <h3>Otwarcie na handel</h3>
-        <p>Otwórzcie wrota grodu dla kupców, ale miejcie na uwadze ryzyka.</p>
-        <button class="btn" onclick="finish('Otwarcie na handel')">Wybieram tę drogę</button>
-      </div>
-      <div class="card">
-        <img src="zamkniecie.png" alt="Zamknięcie granic" />
-        <h3>Zamknięcie granic</h3>
-        <p>Zacieśnijcie bramy i chrońcie grod przed obcymi.</p>
-        <button class="btn" onclick="finish('Zamknięcie granic')">Wybieram tę drogę</button>
-      </div>
-      <div class="card">
-        <img src="prawo.png" alt="Wprowadzenie nowego prawa" />
-        <h3>Wprowadzenie nowego prawa</h3>
-        <p>Spiszcie nowe ustawy i utrzymajcie równowagę interesów.</p>
-        <button class="btn" onclick="finish('Wprowadzenie nowego prawa')">Wybieram tę drogę</button>
-      </div>
+      <div class="card"><img src="otwarcie.png"><h3>Otwarcie na handel</h3><p>Otwórz grodzisko, ale uważaj na ryzyka.</p><button class="btn" onclick="finish('Otwarcie na handel')">Wybieram tę drogę</button></div>
+      <div class="card"><img src="zamkniecie.png"><h3>Zamknięcie granic</h3><p>Chroń grodzisko przed obcymi.</p><button class="btn" onclick="finish('Zamknięcie granic')">Wybieram tę drogę</button></div>
+      <div class="card"><img src="prawo.png"><h3>Wprowadzenie nowego prawa</h3><p>Spisz nowe ustawy i zachowaj równowagę.</p><button class="btn" onclick="finish('Wprowadzenie nowego prawa')">Wybieram tę drogę</button></div>
     </div>
   </div>
 
-  <!-- 6. Podsumowanie i certyfikat -->
+  <!-- 6: Podsumowanie -->
   <div class="screen" id="page6">
     <h2>Podsumowanie</h2>
     <p>Drużyna: <strong id="outTeam"></strong></p>
     <p>Postać: <strong id="outRole"></strong></p>
     <p>Decyzja: <strong id="outDecision"></strong></p>
     <p>Punkty: <strong id="outPoints"></strong></p>
-    <img src="medalion.1.png" alt="Medalion" style="max-width:200px; margin:20px;"/>
+    <img src="medalion.1.png" alt="Medalion" style="max-width:200px;margin:20px;">
     <button class="btn" onclick="location.reload()">Zagraj ponownie</button>
   </div>
 
   <script>
-    let team = '', role = '', answers = {}, correctCount = 0;
-
-    function nextPage(n) {
-      if (n === 2) {
-        const input = document.getElementById('teamName').value.trim();
-        if (!input) { alert('Podaj nazwę drużyny'); return; }
-        team = input;
-      }
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('page' + n).classList.add('active');
+    const randomTasks = [
+      'Mądrość Przodków – Wymyślcie jedno zdanie...',
+      'Krąg Zgody – Stańcie w kole...',
+      'Wilcze Oko – Spojrzyj komuś w oczy...',
+      'Szlak Cieni – Obchodźcie drzewo...',
+      'Pieśń Ziemi – Wymyślcie rytmiczne hasło...',
+      'Dar Przodków – Znajdźcie coś naturalnego...',
+      'Szept Lasu – Powiedz słowo z dawnych czasów...',
+      'Głos Rodu – Jeden mówi "Jestem z Grodu"...'
+    ];
+    let team='', role='', answers={}, correctCount=0;
+    function nextPage(n){
+      if(n===2){ const v=document.getElementById('teamName').value.trim(); if(!v){alert('Podaj nazwę');return;} team=v; }
+      if(n===4){ document.getElementById('randomTask').innerText = randomTasks[Math.floor(Math.random()*randomTasks.length)]; }
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById('page'+n).classList.add('active');
     }
-
-    function selectRole(r) {
-      role = r;
-      document.querySelectorAll('.role').forEach(el => el.classList.remove('selected'));
-      event.currentTarget.classList.add('selected');
-      document.getElementById('roleNext').disabled = false;
+    function selectRole(e,r){ role=r; document.querySelectorAll('.role').forEach(el=>el.classList.remove('selected')); e.currentTarget.classList.add('selected'); document.getElementById('roleNext').disabled=false; }
+    function check(id,code){ const val=document.getElementById('a'+id).value.trim().toUpperCase(); const li=document.getElementById('p'+id);
+      if(val===code){ if(!answers[id]) correctCount++; answers[id]=true; li.classList.add('correct'); li.textContent=li.textContent.split(':')[0]+': ✓'; }
+      else{ answers[id]=false; li.classList.add('incorrect'); li.textContent=li.textContent.split(':')[0]+': ✗'; }
+      if(correctCount>=4) document.getElementById('toCouncil').disabled=false;
     }
-
-    function check(id, code) {
-      const val = document.getElementById('a' + id).value.trim().toUpperCase();
-      const li = document.getElementById('p' + id);
-      if (val === code) {
-        if (!answers[id]) { correctCount++; }
-        answers[id] = true;
-        li.classList.add('correct');
-        li.textContent = li.textContent.split(':')[0] + ': ✓';
-      } else {
-        answers[id] = false;
-        li.classList.add('incorrect');
-        li.textContent = li.textContent.split(':')[0] + ': ✗';
-      }
-      if (correctCount >= 4) {
-        document.getElementById('toCouncil').disabled = false;
-      }
-    }
-
-    function finish(decision) {
-      document.getElementById('outTeam').innerText = team;
-      document.getElementById('outRole').innerText = role;
-      document.getElementById('outDecision').innerText = decision;
-      document.getElementById('outPoints').innerText = correctCount;
-      nextPage(6);
-    }
+    function finish(dec){ document.getElementById('outTeam').innerText=team; document.getElementById('outRole').innerText=role; document.getElementById('outDecision').innerText=dec; document.getElementById('outPoints').innerText=correctCount; nextPage(6); }
   </script>
 </body>
 </html>
