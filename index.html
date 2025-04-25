@@ -22,9 +22,9 @@
     @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
     #randomTaskBox { max-width:600px; margin:20px auto; display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,0.4); padding:15px; border-radius:8px; }
     #randomTaskBox span { flex:1; font-size:16px; }
-    #randomBtn, #completeRandom { background:none; border:none; cursor:pointer; }
-    #randomBtn { font-size:24px; color:#c49e5b; }
-    #completeRandom { font-size:20px; color:#e3c54a; margin-left:10px; }
+    #randomBtn, #completeRandom { background:none; border:none; cursor:pointer; font-size:20px; }
+    #randomBtn { color:#c49e5b; }
+    #completeRandom { color:#e3c54a; margin-left:10px; }
     .tasks { max-width:600px; margin:20px auto; }
     .tasks .task { display:flex; align-items:center; gap:10px; margin:10px 0; }
     .tasks input { flex:1; text-transform:uppercase; }
@@ -75,11 +75,11 @@
   <div class="screen" id="page3">
     <h2>Wybierz postać</h2>
     <div class="roles">
-      <div class="role" onclick="selectRole(this,'Zwiadowca')"><img src="zwiadowca.1.png"><p>Zwiadowca</p></div>
-      <div class="role" onclick="selectRole(this,'Tkaczka')"><img src="tkaczka.1.png"><p>Tkaczka</p></div>
-      <div class="role" onclick="selectRole(this,'Zielarka')"><img src="zielarka.1.png"><p>Zielarka</p></div>
-      <div class="role" onclick="selectRole(this,'Kupiec')"><img src="kupiec.1.png"><p>Kupiec</p></div>
-      <div class="role" onclick="selectRole(this,'Rzemieślnik')"><img src="kowal.1.png"><p>Rzemieślnik</p></div>
+      <div class="role" onclick="selectRole(this,'Zwiadowca')"><img src="zwiadowca.1.png" alt="Zwiadowca"><p>Zwiadowca</p></div>
+      <div class="role" onclick="selectRole(this,'Tkaczka')"><img src="tkaczka.1.png" alt="Tkaczka"><p>Tkaczka</p></div>
+      <div class="role" onclick="selectRole(this,'Zielarka')"><img src="zielarka.1.png" alt="Zielarka"><p>Zielarka</p></div>
+      <div class="role" onclick="selectRole(this,'Kupiec')"><img src="kupiec.1.png" alt="Kupiec"><p>Kupiec</p></div>
+      <div class="role" onclick="selectRole(this,'Rzemieślnik')"><img src="kowal.1.png" alt="Rzemieślnik"><p>Rzemieślnik</p></div>
     </div>
     <button class="btn" id="roleNext" onclick="nextPage(4)" disabled>Dalej</button>
   </div>
@@ -90,7 +90,7 @@
     <div id="randomTaskBox">
       <span><strong>Zadanie losowe:</strong> <span id="randomTask">Kliknij kostkę</span></span>
       <button id="randomBtn">🎲</button>
-      <button id="completeRandom" title="Zrobione">✅</button>
+      <button id="completeRandom" title="Zrobione">ZROBIONE</button>
     </div>
     <div id="progressPanel">
       <ul>
@@ -136,13 +136,14 @@
     <p>Postać: <strong id="outRole"></strong></p>
     <p>Decyzja: <strong id="outDecision"></strong></p>
     <p>Punkty: <strong id="outPoints"></strong></p>
+    <p id="bonusText" class="instruction-box" style="margin-top:10px; display:none;">Śmiałek – za realizację misji pobocznej.</p>
     <img src="medalion.1.png" alt="Medalion" style="max-width:200px; margin:20px;">
     <button class="btn" onclick="location.reload()">Zagraj ponownie</button>
   </div>
 
   <script>
     const bgMusic = document.getElementById('bgMusic');
-    window.addEventListener('load', ()=>{ bgMusic.muted = false; bgMusic.play().catch(()=>{}); });
+    window.addEventListener('load', ()=>{ bgMusic.muted=false; bgMusic.play().catch(()=>{}); });
     const randomTasks = [
       'Mądrość Przodków – Wymyślcie jedno zdanie, jakby mówił je starzec z grodu.',
       'Krąg Zgody – Stańcie w kole i dotknijcie się dłońmi w środku.',
@@ -160,9 +161,11 @@
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById('page'+n).classList.add('active');
     }
-    document.getElementById('randomBtn').addEventListener('click',()=>{ document.getElementById('randomTask').innerText=randomTasks[Math.floor(Math.random()*randomTasks.length)]; });
-    document.getElementById('completeRandom').addEventListener('click',()=>{
-      if(!doneRandom){ doneRandom=true; correctCount++; document.getElementById('completeRandom').textContent='✅'; if(correctCount>=4) document.getElementById('toCouncil').disabled=false; }
+    document.getElementById('randomBtn').addEventListener('click', ()=>{
+      document.getElementById('randomTask').innerText=randomTasks[Math.floor(Math.random()*randomTasks.length)];
+    });
+    document.getElementById('completeRandom').addEventListener('click', ()=>{
+      if(!doneRandom){ doneRandom=true; correctCount++; document.getElementById('completeRandom').textContent='ZROBIONE'; document.getElementById('bonusText').style.display='block'; if(correctCount>=4) document.getElementById('toCouncil').disabled=false; }
     });
     function selectRole(el,r){ role=r; document.querySelectorAll('.role').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); document.getElementById('roleNext').disabled=false; }
     function check(id,code){ const val=document.getElementById('a'+id).value.trim().toUpperCase(); const li=document.getElementById('p'+id);
