@@ -86,7 +86,7 @@
   <div class="screen" id="page4">
     <h2>Interaktywne punkty gry</h2>
     <div id="randomTaskBox">
-      <span><strong>Zadanie losowe:</strong> <span id="randomTask">Kliknij</span></span>
+      <span><strong>Zadanie losowe:</strong> <span id="randomTask">Kliknij kostkę</span></span>
       <button id="randomBtn">🎲</button>
     </div>
     <div id="progressPanel">
@@ -103,12 +103,12 @@
       <p style="font-weight:bold; text-align:center;">Uwaga: wpisuj odpowiedzi WIELKIMI LITERAMI.</p>
     </div>
     <div class="tasks">
-      <div class="task"><label>Brama Grodziska</label><input id="a1" type="text"><button onclick="check(1,'LAMELKA')">Zатwdź</button></div>
-      <div class="task"><label>Warsztat Kowala</label><input id="a2" type="text"><button onclick="check(2,'MIECH')">Zатwdź</button></div>
-      <div class="task"><label>Zagroda</label><input id="a3" type="text"><button onclick="check(3,'ŻYTO')">Zатwdź</button></div>
-      <div class="task"><label>Chata Tkaczki</label><input id="a4" type="text"><button onclick="check(4,'LEN')">Zатwdź</button></div>
-      <div class="task"><label>Chata Zielarki</label><input id="a5" type="text"><button onclick="check(5,'POKRZYWA')">Zатwdź</button></div>
-      <div class="task"><label>Chata Namiestnika</label><input id="a6" type="text"><button onclick="check(6,'DIRHEMY')">Zатwdź</button></div>
+      <div class="task"><label>Brama Grodziska</label><input id="a1" type="text"><button onclick="check(1,'LAMELKA')">Zatwierdź</button></div>
+      <div class="task"><label>Warsztat Kowala</label><input id="a2" type="text"><button onclick="check(2,'MIECH')">Zatwierdź</button></div>
+      <div class="task"><label>Zagroda</label><input id="a3" type="text"><button onclick="check(3,'ŻYTO')">Zatwierdź</button></div>
+      <div class="task"><label>Chata Tkaczki</label><input id="a4" type="text"><button onclick="check(4,'LEN')">Zatwierdź</button></div>
+      <div class="task"><label>Chata Zielarki</label><input id="a5" type="text"><button onclick="check(5,'POKRZYWA')">Zatwierdź</button></div>
+      <div class="task"><label>Chata Namiestnika</label><input id="a6" type="text"><button onclick="check(6,'DIRHEMY')">Zatwierdź</button></div>
     </div>
     <button class="btn" id="toCouncil" onclick="nextPage(5)" disabled>Przejdź do Rady</button>
   </div>
@@ -117,9 +117,9 @@
   <div class="screen" id="page5">
     <h2>Rada Grodu</h2>
     <div class="council-cards">
-      <div class="card"><h3>Otwarcie na handel</h3><p>Otwórz grodzisko, ale uważaj na ryzyka.</p><button class="btn" onclick="finish('Otwarcie na handel')">Wybieram tę drogę</button></div>
-      <div class="card"><h3>Zamknięcie granic</h3><p>Chroń grodzisko przed obcymi.</p><button class="btn" onclick="finish('Zamkniecie granic')">Wybieram tę drogę</button></div>
-      <div class="card"><h3>Wprowadzenie nowego prawa</h3><p>Spisz nowe ustawy i zachowaj równowagę.</p><button class="btn" onclick="finish('Wprowadzenie nowego prawa')">Wybieram tę drogę</button></div>
+      <div class="card"><h3>Otwarcie na handel</h3><p>Otwórzcie wrota grodu dla karawan kupieckich i rozbudujcie targ – zyskajcie bogactwa, egzotyczne dobra i nowe technologie, ale bądźcie czujni na cienie intryg i konkurencję dla lokalnych rzemieślników.</p><button class="btn" onclick="finish('Otwarcie na handel')">Wybieram tę drogę</button></div>
+      <div class="card"><h3>Zamknięcie granic</h3><p>Zacieśnijcie bramy, wzmocnijcie straże i odetnijcie dostęp obcym – chrońcie skarby grodu przed sabotażem i kontrabandą, lecz uważajcie na niedobory surowców i polityczną izolację.</p><button class="btn" onclick="finish('Zamknięcie granic')">Wybieram tę drogę</button></div>
+      <div class="card"><h3>Wprowadzenie nowego prawa</h3><p>Spiszcie świeże ustawy – regulacje handlu, służby wojskowej czy ochrony lasów. Zrównoważcie interesy kupców, rzemieślników i zielarek. Uważajcie jednak na korupcję i spory interpretacyjne.</p><button class="btn" onclick="finish('Wprowadzenie nowego prawa')">Wybieram tę drogę</button></div>
     </div>
   </div>
 
@@ -158,37 +158,22 @@
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById('page'+n).classList.add('active');
     }
-    document.getElementById('randomBtn').addEventListener('click', ()=> {
+    document.getElementById('randomBtn').addEventListener('click', () => {
       document.getElementById('randomTask').innerText = randomTasks[Math.floor(Math.random()*randomTasks.length)];
     });
     function selectRole(el, r) {
       role = r;
-      document.querySelectorAll('.role').forEach(x => x.classList.remove('selected'));
-      el.classList.add('selected');
+      document.querySelectorAll('.role').forEach(x => x.classList.remove('selected')); el.classList.add('selected');
       document.getElementById('roleNext').disabled = false;
     }
     function check(id, code) {
       const inputVal = document.getElementById('a'+id).value.trim().toUpperCase();
       const li = document.getElementById('p'+id);
-      if(inputVal===code) {
-        if(!answers[id]) correctCount++;
-        answers[id]=true;
-        li.classList.add('correct');
-        li.textContent = li.textContent.split(':')[0] + ': ✓';
-      } else {
-        answers[id]=false;
-        li.classList.add('incorrect');
-        li.textContent = li.textContent.split(':')[0] + ': ✗';
-      }
-      if(correctCount>=4) document.getElementById('toCouncil').disabled = false;
+      if(inputVal === code) { if(!answers[id]) correctCount++; answers[id]=true; li.classList.add('correct'); li.textContent = li.textContent.split(':')[0] + ': ✓'; }
+      else { answers[id]=false; li.classList.add('incorrect'); li.textContent = li.textContent.split(':')[0] + ': ✗'; }
+      if(correctCount >= 4) document.getElementById('toCouncil').disabled = false;
     }
-    function finish(dec) {
-      document.getElementById('outTeam').innerText = team;
-      document.getElementById('outRole').innerText = role;
-      document.getElementById('outDecision').innerText = dec;
-      document.getElementById('outPoints').innerText = correctCount;
-      nextPage(6);
-    }
+    function finish(dec) { document.getElementById('outTeam').innerText = team; document.getElementById('outRole').innerText = role; document.getElementById('outDecision').innerText = dec; document.getElementById('outPoints').innerText = correctCount; nextPage(6); }
   </script>
 </body>
 </html>
