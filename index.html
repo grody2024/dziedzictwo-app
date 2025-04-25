@@ -6,148 +6,63 @@
   <title>Grodowa Odyseja</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    /* Podstawowe style */
-    body {
-      margin: 0;
-      font-family: 'MedievalSharp', cursive;
-      background: url('tło gry.png') center/cover fixed;
-      color: #f4f1e6;
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .screen {
-      display: none;
-      padding: 20px;
-      min-height: 100vh;
-      box-sizing: border-box;
-    }
-    .active {
-      display: block;
-      animation: fadeIn 0.8s ease-out;
-    }
+    body { margin:0; font-family:'MedievalSharp',cursive; background:url('tło gry.png') center/cover fixed; color:#f4f1e6; overflow-x:hidden; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+    .screen { display:none; padding:20px; min-height:100vh; box-sizing:border-box; }
+    .active { display:block; animation:fadeIn 0.5s ease-out; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    h1, h2, h3 {
-      text-align: center;
-      font-family: 'Uncial Antiqua', cursive;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-      margin-bottom: 16px;
-    }
-    .btn {
-      display: inline-block;
-      background: linear-gradient(to bottom, #c49e5b, #8b6237);
-      color: #fff9e6;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      margin: 8px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .btn:hover { transform: scale(1.05); }
-    input[type=text] {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: none;
-      margin: 8px 0;
-      box-sizing: border-box;
-    }
-    .instruction-box {
-      background: rgba(0,0,0,0.5);
-      border: 2px solid #8d744a;
-      border-radius: 8px;
-      padding: 16px;
-      max-width: 800px;
-      margin: 16px auto;
-    }
-    .logo {
-      display: block;
-      width: 80px;
-      margin: 12px auto;
-      border: 3px solid gold;
-      border-radius: 8px;
-    }
-    .roles {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin: 24px 0;
-    }
-    .role {
-      text-align: center;
-      flex: 0 1 100px;
-      cursor: pointer;
-    }
-    .role img {
-      width: 100px;
-      height: 140px;
-      border-radius: 12px;
-      border: 3px solid transparent;
-      transition: border 0.3s;
-    }
-    .role.selected img { border-color: gold; }
-    #randomTaskBox {
-      display: flex;
-      align-items: center;
-      background: rgba(0,0,0,0.5);
-      padding: 12px;
-      border-radius: 8px;
-      margin: 20px auto;
-      max-width: 600px;
-    }
-    #randomTask {
-      flex: 1;
-      margin-right: 12px;
-      color: #fff;
-      word-break: break-word;
-    }
-    table {
-      width: 90%;
-      margin: 16px auto;
-      border-collapse: collapse;
-      color: #f4f1e6;
-    }
-    th, td {
-      padding: 8px;
-      border: 1px solid #8d744a;
-    }
-    th { background: rgba(141,116,74,0.5); }
+    h1,h2,h3 { text-align:center; font-family:'Uncial Antiqua',cursive; text-shadow:2px 2px 4px rgba(0,0,0,0.6); margin-bottom:16px; }
+    .btn { display:inline-block; background:linear-gradient(to bottom,#c49e5b,#8b6237); color:#fff9e6; padding:12px 24px; border:none; border-radius:8px; margin:8px; font-size:18px; cursor:pointer; transition:transform 0.2s; }
+    .btn:disabled { opacity:0.5; cursor:default; }
+    .btn:hover:not(:disabled) { transform:scale(1.05); }
+    input[type=text] { width:100%; padding:12px; font-size:16px; border-radius:6px; border:none; margin:8px 0; box-sizing:border-box; }
+    .instruction-box { background:rgba(0,0,0,0.5); border:2px solid #8d744a; border-radius:8px; padding:16px; max-width:800px; margin:16px auto; }
+    .logo { display:block; width:80px; margin:12px auto; border:3px solid gold; border-radius:8px; }
+    .roles { display:flex; justify-content:center; flex-wrap:wrap; gap:16px; margin:24px 0; }
+    .role { text-align:center; flex:0 1 120px; cursor:pointer; }
+    .role img { width:120px; height:120px; border-radius:50%; border:3px solid transparent; transition:border 0.3s; }
+    .role.selected img { border-color:gold; }
+    #videoOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; align-items:center; justify-content:center; z-index:1000; flex-direction:column; }
+    #videoOverlay video { max-width:90%; border:3px solid #8d744a; border-radius:12px; }
+    #randomTaskBox { background:rgba(0,0,0,0.5); padding:16px; border-radius:8px; margin:20px auto; max-width:600px; text-align:center; }
+    #randomTask { color:#fff; margin-bottom:8px; }
+    #taskStats { text-align:center; margin:12px 0; }
+    .task-row { display:flex; align-items:center; justify-content:space-between; margin:8px auto; max-width:600px; }
+    .task-row input { width:120px; margin:0 8px; padding:6px; border-radius:4px; border:none; }
+    .task-row.correct input { border:2px solid lime; }
+    table { display:none; }
   </style>
 </head>
 <body>
   <audio id="bgMusic" src="celtic-glory-307625.mp3" loop playsinline preload="auto"></audio>
 
-  <!-- Page 1: Rejestracja drużyny -->
+  <!-- Page 1: Registration -->
   <div class="screen active" id="page1">
     <h1>GRODOWA ODYSEJA</h1>
-    <img src="logo.1.png" alt="Logo Muzeum" class="logo">
+    <img src="logo.1.png" class="logo" alt="Logo">
     <div class="instruction-box">
-      <h2>JAK GRAĆ?</h2>
-      <p>Wpisz nazwę drużyny → kliknij DALEJ</p>
-      <p>Przeczytaj historię → kliknij DALEJ</p>
-      <p>Wybierz postać → kliknij postać i DALEJ</p>
-      <p>Kostka → zadanie losowe → ZROBIONE</p>
-      <p>Odwiedź min. 4 punkty terenowe, wpisz słowa WIELKIMI LITERAMI</p>
+      <p><strong>Wpisz nazwę drużyny:</strong></p>
+      <input type="text" id="teamName" placeholder="Twoja drużyna">
+      <button class="btn" id="next1">DALEJ</button>
     </div>
-    <input type="text" id="teamName" placeholder="Nazwa drużyny">
-    <button class="btn" id="next1">DALEJ</button>
   </div>
 
-  <!-- Page 2: Fabula -->
+  <!-- Page 2: Story -->
   <div class="screen" id="page2">
-    <h2>WSTĘP FABULARNY</h2>
+    <h2>Rok 972 – Czas Próby</h2>
     <div class="instruction-box">
-      <p>Rok 972. Mówią, że to ostatni spokojny rok...</p>
-      <!-- pełna treść fabuły -->
+      <p>Wokół Grodu nadciągają zmiany.</p>
+      <p>Na południu Mieszko zwycięża pod Cedynią, lecz imperia patrzą coraz łapczywiej.</p>
+      <p>Ze wschodu nadchodzi nowe pismo, z zachodu – nowa wiara.</p>
+      <p>Grodzisko Sopockie trwa – ciche, ale czujne.</p>
+      <p>Pamięta czasy przodków, kowali, starszyzny i szeptunek.</p>
+      <p>Dziś to wy – mieszkańcy Grodu – staniecie do Próby Dziedzictwa Żelaza.</p>
+      <p>Odnajdziecie ślady przeszłości i zdecydujecie, czy Grodzisko otworzy się na świat…</p>
+      <p>…czy zamknie się, by chronić to, co stare i święte.</p>
     </div>
     <button class="btn" id="next2">DALEJ</button>
   </div>
 
-  <!-- Page 3: Wybór postaci -->
+  <!-- Page 3: Choose Role -->
   <div class="screen" id="page3">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
@@ -160,30 +75,32 @@
     <button class="btn" id="next3" disabled>DALEJ</button>
   </div>
 
-  <!-- Page 4: Interaktywne punkty -->
+  <!-- Video Overlay -->
+  <div id="videoOverlay">
+    <video id="roleVideo" controls></video>
+    <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button>
+  </div>
+
+  <!-- Page 4: Side Task & Main Tasks -->
   <div class="screen" id="page4">
-    <h2>INTERAKTYWNE PUNKTY</h2>
+    <h2>INTERAKTYWNE ZADANIA</h2>
     <div id="randomTaskBox">
-      <span><strong>ZADANIE LOSOWE:</strong> <span id="randomTask">Kliknij kostkę</span></span>
+      <div id="randomTask">Kliknij 🎲, aby wylosować zadanie poboczne</div>
       <button class="btn" id="randomBtn">🎲</button>
-      <button class="btn" id="completeRandom">ZROBIONE</button>
     </div>
-    <table>
-      <tr><th>PUNKT</th><th>STATUS</th></tr>
-      <tr><td>Brama Grodziska</td><td id="s1">–</td></tr>
-      <tr><td>Warsztat Kowala</td><td id="s2">–</td></tr>
-      <tr><td>Zagroda</td><td id="s3">–</td></tr>
-      <tr><td>Chata Tkaczki</td><td id="s4">–</td></tr>
-      <tr><td>Chata Zielarki</td><td id="s5">–</td></tr>
-      <tr><td>Chata Namiestnika</td><td id="s6">–</td></tr>
-    </table>
-    <div class="instruction-box">
-      <p style="text-align:center;font-weight:bold;">WPISUJ ODPOWIEDZI WIELKIMI LITERAMI</p>
+    <div id="taskStats">Ukończono: <span id="completedCount">0</span>/6</div>
+    <div id="tasksList">
+      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
+      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
+      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
+      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
+      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
+      <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
     </div>
     <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
   </div>
 
-  <!-- Page 5: Rada Grodu -->
+  <!-- Page 5: Council -->
   <div class="screen" id="page5">
     <h2>RADA GRODU</h2>
     <div class="roles council-cards">
@@ -193,98 +110,99 @@
     </div>
   </div>
 
-  <!-- Page 6: Podsumowanie -->
+  <!-- Page 6: Summary -->
   <div class="screen" id="page6">
     <h1>GRATULACJE!</h1>
-    <img src="logo.1.png" alt="Logo Muzeum" class="logo">
+    <img src="logo.1.png" class="logo" alt="Logo">
     <p>Drużyna: <strong id="outTeam"></strong></p>
     <p>Postać: <strong id="outRole"></strong></p>
     <p>Decyzja: <strong id="outDecision"></strong></p>
-    <p>Punkty: <strong id="outPoints"></strong></p>
-    <a href="korona.1.png" download class="btn download-btn">POBIERZ KORONĘ</a>
-    <a href="medalion.1.png" download class="btn download-btn">POBIERZ MEDALION</a>
+    <p>Ukończono zadań: <strong id="outPoints"></strong>/6</p>
+    <a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>
+    <a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>
   </div>
 
   <script>
-    // Muzyka w tle
+    // Music start
     const bg = document.getElementById('bgMusic');
-    document.body.addEventListener('click', () => bg.play().catch(), { once:true });
+    document.body.addEventListener('click',()=>bg.play().catch(),{once:true});
 
-    let team = '';
-    let role = '';
-    let points = 0;
-    const tasks = [
-      'Policzcie razem do 10.',
-      'Stańcie w rzędzie...',
-      'Każdy niech dotknie...',
-      'Zróbcie razem zdjęcie.',
-      'Stańcie w ciszy przez 10s.',
-      'Zróbcie klaśnięcie.',
-      'Pokażcie dziwną minę.',
-      'Pokaż palcem w 4 kierunki.',
-      'Zamknijcie oczy na 5s.',
-      'Obróćcie się w miejscu.'
+    let team='', role='', completed=0;
+    const sideTasks = [
+      'Mądrość Przodków', 'Krąg Zgody', 'Wilcze Oko',
+      'Szlak Cieni', 'Pieśń Ziemi', 'Dar Przodków',
+      'Szept Lasu', 'Głos Rodu'
     ];
 
-    function show(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    function show(id){
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
     // Page1 -> Page2
-    document.getElementById('next1').onclick = () => {
-      const name = document.getElementById('teamName').value.trim();
-      if (!name) {
-        alert('Podaj nazwę drużyny');
-        return;
-      }
-      team = name;
-      show('page2');
+    document.getElementById('next1').onclick=()=>{
+      const n=document.getElementById('teamName').value.trim();
+      if(!n){alert('Podaj nazwę drużyny');return;}
+      team=n; show('page2');
     };
 
     // Page2 -> Page3
-    document.getElementById('next2').onclick = () => show('page3');
+    document.getElementById('next2').onclick=()=>show('page3');
 
-    // Wybór postaci
-    document.querySelectorAll('#page3 .role').forEach(el => {
-      el.onclick = () => {
-        document.querySelectorAll('#page3 .role').forEach(r => r.classList.remove('selected'));
+    // Role select
+    document.querySelectorAll('#page3 .role').forEach(el=>{
+      el.onclick=()=>{
+        document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected'));
         el.classList.add('selected');
-        role = el.dataset.role;
-        document.getElementById('next3').disabled = false;
+        role=el.dataset.role;
+        document.getElementById('next3').disabled=false;
       };
     });
 
-    // Page3 -> Page4
-    document.getElementById('next3').onclick = () => show('page4');
-
-    // Zadanie losowe
-    document.getElementById('randomBtn').onclick = () => {
-      const random = tasks[Math.floor(Math.random() * tasks.length)];
-      document.getElementById('randomTask').innerText = random;
+    // Page3 -> Video overlay
+    document.getElementById('next3').onclick=()=>{
+      const vids={Zwiadowca:'zwiadowca.1.mp4',Tkaczka:'tkaczka.1.mp4',Zielarka:'zielarka.1.mp4',Kupiec:'kupiec.1.mp4',Rzemieślnik:'rzemieslnik.1.mp4'};
+      const vid=document.getElementById('roleVideo');
+      vid.src=vids[role];
+      document.getElementById('videoOverlay').style.display='flex';
     };
 
-    document.getElementById('completeRandom').onclick = () => {
-      if (points < 4) {
-        points++;
-        document.getElementById('completeRandom').classList.add('clicked');
-        if (points >= 4) {
-          document.getElementById('toCouncil').disabled = false;
+    // Video -> Page4
+    document.getElementById('videoNext').onclick=()=>{
+      document.getElementById('videoOverlay').style.display='none';
+      show('page4');
+    };
+
+    // Side quest
+    document.getElementById('randomBtn').onclick=()=>{
+      document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
+    };
+
+    // Main tasks validation
+    document.querySelectorAll('.task-row').forEach(row=>{
+      const ans=row.dataset.ans;
+      const input=row.querySelector('input');
+      const btn=row.querySelector('.confirm');
+      btn.onclick=()=>{
+        if(input.value.trim().toUpperCase()===ans && !row.classList.contains('correct')){
+          row.classList.add('correct');
+          completed++;
+          document.getElementById('completedCount').innerText=completed;
+          if(completed>=4) document.getElementById('toCouncil').disabled=false;
         }
-      }
-    };
+      };
+    });
 
     // Page4 -> Page5
-    document.getElementById('toCouncil').onclick = () => show('page5');
+    document.getElementById('toCouncil').onclick=()=>show('page5');
 
-    // Rada Grodu -> Podsumowanie
-    document.querySelectorAll('#page5 .btn').forEach(btn => {
-      btn.onclick = () => {
-        const dec = btn.dataset.dec;
-        document.getElementById('outTeam').innerText = team;
-        document.getElementById('outRole').innerText = role;
-        document.getElementById('outDecision').innerText = dec;
-        document.getElementById('outPoints').innerText = points;
+    // Council -> Summary
+    document.querySelectorAll('#page5 .btn').forEach(b=>{
+      b.onclick=()=>{
+        document.getElementById('outTeam').innerText=team;
+        document.getElementById('outRole').innerText=role;
+        document.getElementById('outDecision').innerText=b.dataset.dec;
+        document.getElementById('outPoints').innerText=completed;
         show('page6');
       };
     });
