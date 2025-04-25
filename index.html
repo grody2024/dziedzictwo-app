@@ -38,7 +38,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop preload="auto" controls></audio>
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" muted autoplay loop preload="auto" controls></audio>
 
   <!-- 1: Rejestracja drużyny -->
   <div class="screen active" id="page1">
@@ -75,11 +75,11 @@
   <div class="screen" id="page3">
     <h2>Wybierz postać</h2>
     <div class="roles">
-      <div class="role" onclick="selectRole(this,'Zwiadowca')"><img src="zwiadowca.1.png" alt="Zwiadowca"><p>Zwiadowca</p></div>
-      <div class="role" onclick="selectRole(this,'Tkaczka')"><img src="tkaczka.1.png" alt="Tkaczka"><p>Tkaczka</p></div>
-      <div class="role" onclick="selectRole(this,'Zielarka')"><img src="zielarka.1.png" alt="Zielarka"><p>Zielarka</p></div>
-      <div class="role" onclick="selectRole(this,'Kupiec')"><img src="kupiec.1.png" alt="Kupiec"><p>Kupiec</p></div>
-      <div class="role" onclick="selectRole(this,'Rzemieślnik')"><img src="kowal.1.png" alt="Rzemieślnik"><p>Rzemieślnik</p></div>
+      <div class="role" onclick="selectRole(this,'Zwiadowca')"><img src="zwiadowca.1.png"><p>Zwiadowca</p></div>
+      <div class="role" onclick="selectRole(this,'Tkaczka')"><img src="tkaczka.1.png"><p>Tkaczka</p></div>
+      <div class="role" onclick="selectRole(this,'Zielarka')"><img src="zielarka.1.png"><p>Zielarka</p></div>
+      <div class="role" onclick="selectRole(this,'Kupiec')"><img src="kupiec.1.png"><p>Kupiec</p></div>
+      <div class="role" onclick="selectRole(this,'Rzemieślnik')"><img src="kowal.1.png"><p>Rzemieślnik</p></div>
     </div>
     <button class="btn" id="roleNext" onclick="nextPage(4)" disabled>Dalej</button>
   </div>
@@ -90,7 +90,7 @@
     <div id="randomTaskBox">
       <span><strong>Zadanie losowe:</strong> <span id="randomTask">Kliknij kostkę</span></span>
       <button id="randomBtn">🎲</button>
-      <button id="completeRandom" title="Oznacz jako wykonane">🎖</button>
+      <button id="completeRandom" title="Zrobione">✅</button>
     </div>
     <div id="progressPanel">
       <ul>
@@ -108,9 +108,9 @@
     <div class="tasks">
       <div class="task"><label>Brama Grodziska</label><input id="a1" type="text"><button onclick="check(1,'LAMELKA')">Zatwierdź</button></div>
       <div class="task"><label>Warsztat Kowala</label><input id="a2" type="text"><button onclick="check(2,'MIECH')">Zatwierdź</button></div>
-      <div class="task"><label>Zagroda</label><input id="a3" type="text"><button onclick="check(3,'ŻYТО')">Zatwierdź</button></div>
+      <div class="task"><label>Zagroda</label><input id="a3" type="text"><button onclick="check(3,'ŻYTO')">Zatwierdź</button></div>
       <div class="task"><label>Chata Tkaczki</label><input id="a4" type="text"><button onclick="check(4,'LEN')">Zatwierdź</button></div>
-      <div class="task"><label>Chata Zielarki</label><input id="a5" type="text"><button onclick="check(5,'POKRZYВА')">Zатwierdź</button></div>
+      <div class="task"><label>Chata Zielarki</label><input id="a5" type="text"><button onclick="check(5,'POKRZYWA')">Zatwierdź</button></div>
       <div class="task"><label>Chata Namiestnika</label><input id="a6" type="text"><button onclick="check(6,'DIRHEMY')">Zatwierdź</button></div>
     </div>
     <div class="instruction-box">
@@ -142,7 +142,7 @@
 
   <script>
     const bgMusic = document.getElementById('bgMusic');
-    window.addEventListener('load', ()=>{ bgMusic.play().catch(()=>{}); });
+    window.addEventListener('load', ()=>{ bgMusic.muted = false; bgMusic.play().catch(()=>{}); });
     const randomTasks = [
       'Mądrość Przodków – Wymyślcie jedno zdanie, jakby mówił je starzec z grodu.',
       'Krąg Zgody – Stańcie w kole i dotknijcie się dłońmi w środku.',
@@ -153,21 +153,16 @@
       'Szept Lasu – Każdy powie jedno słowo kojarzące się z dawnymi czasami.',
       'Głos Rodu – Jeden mówi "Jestem z Grodu", reszta odpowiada "My z Tobą!"'
     ];
-    let team='', role='', answers={}, correctCount=0;
-    let doneRandom = false;
+    let team='', role='', answers={}, correctCount=0, doneRandom=false;
     function nextPage(n){
       if(n===2){ const val=document.getElementById('teamName').value.trim(); if(!val){alert('Podaj nazwę drużyny');return;} team=val; }
       if(n===4){ document.getElementById('randomTask').innerText='Kliknij kostkę aby wylosować zadanie'; }
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById('page'+n).classList.add('active');
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById('page'+n).classList.add('active');
     }
     document.getElementById('randomBtn').addEventListener('click',()=>{ document.getElementById('randomTask').innerText=randomTasks[Math.floor(Math.random()*randomTasks.length)]; });
-    document.getElementById('completeRandom').addEventListener('click', ()=>{
-      if(!doneRandom) {
-        doneRandom = true;
-        correctCount++;
-        document.getElementById('completeRandom').textContent = '✓';
-        if(correctCount >= 4) document.getElementById('toCouncil').disabled = false;
-      }
+    document.getElementById('completeRandom').addEventListener('click',()=>{
+      if(!doneRandom){ doneRandom=true; correctCount++; document.getElementById('completeRandom').textContent='✅'; if(correctCount>=4) document.getElementById('toCouncil').disabled=false; }
     });
     function selectRole(el,r){ role=r; document.querySelectorAll('.role').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); document.getElementById('roleNext').disabled=false; }
     function check(id,code){ const val=document.getElementById('a'+id).value.trim().toUpperCase(); const li=document.getElementById('p'+id);
