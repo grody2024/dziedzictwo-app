@@ -213,7 +213,7 @@
       <p>Zadania główne: <strong><span id="resCount"></span>/6</strong></p>
       <div class="badges"><img src="medalion.1.png" alt="Medalion"><img src="korona.1.png" alt="Korona"></div>
       <div class="downloads"><a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a><a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a></div>
-      <p class="note">🔱 Korona losowego zadania przyznawana po realizacji!</p>
+      <p class="note">🏅 Odznaka korony za wykonanie zadania losowego</p>
     </div>
     <button class="btn" id="restartBtn">ZAGRAJ PONOWNIE</button>
   </div>
@@ -229,6 +229,7 @@
     ];
     const bgMusic = document.getElementById('bgMusic');
     bgMusic.src = musicTracks[Math.floor(Math.random() * musicTracks.length)];
+    bgMusic.load();
     
 
     let team = '', role = '', count = 0, sideDone = false;
@@ -252,9 +253,24 @@
       'Stań na jednej nodze i licz do 10 na głos.'
     ];
     const endings = {
-      handel: { name: 'Otwarcie na handel', desc: `...pełny opis...` },
-      granice: { name: 'Zamknięcie granic', desc: `...pełny opis...` },
-      prawo: { name: 'Wprowadzenie nowego prawa', desc: `...pełny opis...` }
+      handel: {
+        name: 'Otwarcie na handel',
+        desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw. Targowiska rozbłysły kolorami, a rzemieślnicy zyskali dostęp do nowych surowców i technik.
+
+Lecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?`,
+      },
+      granice: {
+        name: 'Zamknięcie granic',
+        desc: `Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.
+
+Jednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?`,
+      },
+      prawo: {
+        name: 'Wprowadzenie nowego prawa',
+        desc: `Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.
+
+Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku? A może reforma stanie się iskrą większego ognia?`,
+      }
     };
 
     function show(id) {
@@ -271,6 +287,7 @@
         team = input.value.trim();
         show('page2');
         // Odtwórz muzykę po geście użytkownika
+        bgMusic.muted = false;
         bgMusic.play().catch(() => {});
       }
     });
@@ -359,13 +376,28 @@
     }
 
     document.getElementById('restartBtn').addEventListener('click', () => {
-      team = role = '';
+      // reset state
+      team = '';
+      role = '';
       count = 0;
       sideDone = false;
       document.getElementById('teamName').value = '';
+      // reset tasks
       document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct','wrong'));
       document.querySelectorAll('.task-row input').forEach(i => i.value = '');
+      document.getElementById('randomTask').innerText = '';
+      // reset side button
+      const sideBtn = document.getElementById('sideBtn');
+      sideBtn.disabled = true;
+      sideBtn.style.background = '';
+      // reset role selection and disable next
+      document.querySelectorAll('.role').forEach(r => r.classList.remove('selected'));
+      document.getElementById('to4').disabled = true;
+      // reset council button
+      document.getElementById('toCouncil').disabled = true;
+      // update stats display
       updateStats();
+      // show first screen
       show('page1');
     });
   </script>
