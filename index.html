@@ -6,7 +6,6 @@
   <title>Grodowa Odyseja</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    /* Reset i style podstawowe */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body { font-family: 'MedievalSharp', cursive; background: url('tło gry.png') center/cover fixed; color: #f4f1e6; overflow: hidden; }
@@ -68,14 +67,17 @@
   <div id="page2" class="screen">
     <h2>Rok 972 – Czas Próby</h2>
     <div class="instruction-box">
-      <p>Rok 972.<br>
-      Mówi się, że to będzie ostatni spokojny rok. Ziemia wokół nas drży, jakby czuła zbliżające się przesilenie...</p>
-      <p>Ze wschodu słychać nową mowę – słowa jak syk żmii...</p>
-      <p>Z zachodu nadciąga inna fala – wiara, która każe...</p>
-      <p>A my? My wciąż trwamy tutaj, na wzgórzu...</p>
-      <p>Pamięta czasy, gdy żelazo nie było towarem...</p>
-      <p>Wezwano was, byście stanęli do Próby Dziedzictwa Żelaza...</p>
-      <p>A potem staniecie przed Radą i zadecydujecie...</p>
+      <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
+      <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
+      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyjskimi bóstwami, niosąc srebro i niepokój.</p>
+      <p>Z zachodu zaś unoszą się słowa o chrzcie i kaplicach kamiennych: mówią, że Dąbrówka przyniosła pokój, lecz czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
+      <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie tutaj pamięci przodków: w popiele ognisk, pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
+      <p>Was wezwano do Próby Dziedzictwa Żelaza. W ciągu godziny odnajdziecie trzy Ślady Przeszłości, by przy Radzie Starszych zadecydować:</p>
+      <ul>
+        <li>– Czy otworzyć Grodzisko na obce mowy, bogów i prawa…</li>
+        <li>– Czy zamknąć bramy na sto lat, strzegąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie.</li>
+      </ul>
+      <p>Oto wasza chwila – chwila strażników pamięci i kowali nowych losów. Wasza Odyseja Grodowa zaczyna się teraz.</p>
     </div>
     <button id="next2" class="btn">DALEJ</button>
   </div>
@@ -149,13 +151,13 @@
     document.addEventListener('DOMContentLoaded', () => {
       const bg = document.getElementById('bgMusic');
       document.body.addEventListener('click', () => bg.play().catch(), { once: true });
-      let team = '', role = '', completed = 0, sideDone = false;
+      let team='', role='', completed=0, sideDone=false;
       const vids = {
-        zwiadowca: 'zwiadowca.1.mp4',
-        tkaczka: 'tkaczka.1.mp4',
-        zielarka: 'zielarka.1.mp4',
-        kupiec: 'kupiec.1.mp4',
-        rzemieslnik: 'rzemieslnik.1.mp4'
+        zwiadowca:'zwiadowca.1.mp4',
+        tkaczka:'tkaczka.1.mp4',
+        zielarka:'zielarka.1.mp4',
+        kupiec:'kupiec.1.mp4',
+        rzemieslnik:'rzemieslnik.1.mp4'
       };
       const sideTasks = [
         'Znajdź coś zielonego i dotknij to.',
@@ -170,106 +172,23 @@
         'Stań na jednej nodze i licz do 10 na głos.'
       ];
       const endings = {
-        handel: { name: 'Otwarcie na handel', desc: 'Po dniach pełnych gorących dyskusji, ...' },
-        granice: { name: 'Zamknięcie granic', desc: 'Decyzja zapadła w ciszy, ...' },
-        prawo: { name: 'Wprowadzenie nowego prawa', desc: 'Głos Starszyzny niósł się echem ...' }
+        handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw. Targowiska rozbłysły kolorami, a rzemieślnicy zyskali dostęp do nowych surowców i technik.\n\nLecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?`},
+        granice:{name:'Zamknięcie granic',desc:`Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.\n\nJednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?`},
+        prawo:{name:'Wprowadzenie nowego prawa',desc:`Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.\n\nNowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku? A może reforma stanie się iskrą większego ognia?`}
       };
-      function show(id) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-      }
-      function updateStats() {
-        document.getElementById('completedCount').innerText = completed;
-        document.getElementById('toCouncil').disabled = completed < 4;
-      }
-
-      document.getElementById('next1').onclick = () => {
-        const v = document.getElementById('teamName').value.trim();
-        if (!v) return alert('Podaj nazwę drużyny');
-        team = v;
-        show('page2');
-      };
-      document.getElementById('next2').onclick = () => show('page3');
-      document.querySelectorAll('#page3 .role').forEach(el => el.onclick = () => {
-        document.querySelectorAll('#page3 .role').forEach(r => r.classList.remove('selected'));
-        el.classList.add('selected');
-        role = el.dataset.role;
-        document.getElementById('next3').disabled = false;
-      });
-      document.getElementById('next3').onclick = () => {
-        document.getElementById('roleVideo').src = vids[role];
-        document.getElementById('videoOverlay').style.display = 'flex';
-      };
-      document.getElementById('videoNext').onclick = () => {
-        document.getElementById('videoOverlay').style.display = 'none';
-        sideDone = false; completed = 0; updateStats();
-        show('page4');
-        document.getElementById('sideDone').disabled = true;
-        document.getElementById('sideDone').innerText = 'ZREALIZOWANE';
-        document.getElementById('sideDone').style.background = '';
-        document.getElementById('randomTask').innerText = '';
-        document.querySelectorAll('.task-row').forEach(r => {
-          r.classList.remove('correct','wrong');
-          r.querySelector('input').value = '';
-        });
-      };
-      document.getElementById('randomBtn').onclick = () => {
-        document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
-        document.getElementById('sideDone').disabled = false;
-      };
-      document.getElementById('sideDone').onclick = function() {
-        sideDone = true; this.innerText = 'ZREALIZOWANE'; this.style.background = 'lime';
-      };
-      document.querySelectorAll('.task-row').forEach(row => {
-        const ans = row.dataset.ans, inp = row.querySelector('input'),
-              btn = row.querySelector('.confirm'), clr = row.querySelector('.reset-icon');
-        btn.onclick = () => {
-          const v = inp.value.trim().toUpperCase();
-          if (v === ans) {
-            if (!row.classList.contains('correct')) { row.classList.remove('wrong'); row.classList.add('correct'); completed++; }
-          } else {
-            if (row.classList.contains('correct')) { row.classList.remove('correct'); completed--; }
-            row.classList.add('wrong');
-          }
-          updateStats();
-        };
-        clr.onclick = () => {
-          if (row.classList.contains('correct')) { row.classList.remove('correct'); completed--; }
-          row.classList.remove('wrong');
-          inp.value = '';
-          updateStats();
-        };
-      });
-      document.getElementById('toCouncil').onclick = () => show('page5');
-      document.querySelectorAll('#page5 .btn[data-dec]').forEach(b => b.onclick = () => {
-        const key = b.dataset.dec;
-        document.getElementById('outTeam').innerText = team;
-        document.getElementById('outRole').innerText = role;
-        document.getElementById('outDecisionName').innerText = endings[key].name;
-        document.getElementById('outDecisionDesc').innerText = endings[key].desc;
-        document.getElementById('outPortrait').src = `${role}.png`;
-        document.getElementById('outSideDone').innerText = sideDone ? 'TAK' : 'NIE';
-        document.getElementById('outPoints').innerText = completed;
-        const badges = document.querySelector('.badges');
-        badges.innerHTML = sideDone ? `<img src="korona.1.png" alt="Korona zadań">` : ``;
-        const dl = document.querySelector('.downloads');
-        dl.innerHTML = sideDone ? `<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>` : ``;
-        show('page6');
-      }));
-      document.getElementById('restart').onclick = () => {
-        team = ''; role = ''; completed = 0; sideDone = false;
-        document.getElementById('teamName').value = '';
-        document.getElementById('next3').disabled = true;
-        document.getElementById('sideDone').disabled = true;
-        document.getElementById('sideDone').innerText = 'ZREALIZOWANE';
-        document.getElementById('sideDone').style.background = '';
-        document.getElementById('completedCount').innerText = '0';
-        document.getElementById('randomTask').innerText = '';
-        document.querySelectorAll('.task-row').forEach(r => { r.classList.remove('correct','wrong'); r.querySelector('input').value = ''; });
-        document.querySelector('.badges').innerHTML = '';
-        document.querySelector('.downloads').innerHTML = '';
-        show('page1');
-      };
+      function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+      function updateStats(){document.getElementById('completedCount').innerText=completed;document.getElementById('toCouncil').disabled=completed<4;}
+      document.getElementById('next1').onclick=()=>{const v=document.getElementById('teamName').value.trim();if(!v)return alert('Podaj nazwę drużyny');team=v;show('page2');};
+      document.getElementById('next2').onclick=()=>show('page3');
+      document.querySelectorAll('#page3 .role').forEach(el=>el.onclick=()=>{document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected'));el.classList.add('selected');role=el.dataset.role;document.getElementById('next3').disabled=false;});
+      document.getElementById('next3').onclick=()=>{document.getElementById('roleVideo').src=vids[role];document.getElementById('videoOverlay').style.display='flex';};
+      document.getElementById('videoNext').onclick=()=>{document.getElementById('videoOverlay').style.display='none';sideDone=false;completed=0;updateStats();show('page4');document.getElementById('sideDone').disabled=true;document.getElementById('sideDone').innerText='ZREALIZOWANE';document.getElementById('sideDone').style.background='';document.getElementById('randomTask').innerText='';document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong');r.querySelector('input').value='';});};
+      document.getElementById('randomBtn').onclick=()=>{document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)];document.getElementById('sideDone').disabled=false;};
+      document.getElementById('sideDone').onclick=function(){sideDone=true;this.innerText='ZREALIZOWANE';this.style.background='lime';};
+      document.querySelectorAll('.task-row').forEach(row=>{const ans=row.dataset.ans,inp=row.querySelector('input'),btn=row.querySelector('.confirm'),clr=row.querySelector('.reset-icon');btn.onclick=()=>{const v=inp.value.trim().toUpperCase();if(v===ans){if(!row.classList.contains('correct')){row.classList.remove('wrong');row.classList.add('correct');completed++;}}else{if(row.classList.contains('correct')){row.classList.remove('correct');completed--;}row.classList.add('wrong');}updateStats();};clr.onclick=()=>{if(row.classList.contains('correct')){row.classList.remove('correct');completed--;}row.classList.remove('wrong');inp.value='';updateStats();};});
+      document.getElementById('toCouncil').onclick=()=>show('page5');
+      document.querySelectorAll('#page5 .btn[data-dec]').forEach(b=>b.onclick=()=>{const key=b.dataset.dec;document.getElementById('outTeam').innerText=team;document.getElementById('outRole').innerText=role;document.getElementById('outDecisionName').innerText=endings[key].name;document.getElementById('outDecisionDesc').innerText=endings[key].desc;document.getElementById('outPortrait').src=`${role}.png`;document.getElementById('outSideDone').innerText=sideDone?'TAK':'NIE';document.getElementById('outPoints').innerText=completed;const badges=document.querySelector('.badges');badges.innerHTML=sideDone?`<img src="korona.1.png" alt="Korona zadań">`:``;const dl=document.querySelector('.downloads');dl.innerHTML=sideDone?`<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`:``;show('page6');});
+      document.getElementById('restart').onclick=()=>{team='';role='';completed=0;sideDone=false;document.getElementById('teamName').value='';document.getElementById('next3').disabled=true;document.getElementById('sideDone').disabled=true;document.getElementById('sideDone').innerText='ZREALIZOWANE';document.getElementById('sideDone').style.background='';document.getElementById('completedCount').innerText='0';document.getElementById('randomTask').innerText='';document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong');r.querySelector('input').value='';});document.querySelector('.badges').innerHTML='';document.querySelector('.downloads').innerHTML='';show('page1');};
     });
   </script>
 </body>
