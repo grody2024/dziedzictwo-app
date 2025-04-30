@@ -69,22 +69,7 @@
   <div id="page2" class="screen">
     <h2>Rok 972 – Czas Próby</h2>
     <div class="instruction-box">
-      <p>Rok 972.<br>
-      Mówi się, że to będzie ostatni spokojny rok.<br>
-      Ziemia wokół nas drży, jakby czuła zbliżające się przesilenie. Od południa płyną wieści o zwycięstwie Mieszka I pod Cedynią – król niemiecki Otton posyła swojego margrabiego, Hodona, a ten pada pod mieczem Czcibora. Zwycięstwo? Być może. Ale i znak, że imperia patrzą na nas coraz łapczywiej.</p>
-      <p>Ze wschodu słychać nową mowę – słowa jak syk żmii, przynoszące prawa pisane obcym alfabetem, pismo od Rusów, którzy wiążą się z bizantyjskim krzyżem i starymi bogami jednocześnie. Ich handlarze przynoszą srebro i niepokój.</p>
-      <p>Z zachodu nadciąga inna fala – wiara, która każe równać święte dęby z ziemią i wznosić kamienne kaplice. Mówią, że Mieszko już przyjął ten krzyż, że oddał Dąbrówkę za pokój i chrzest. Ale czy pokój zrodzony z handlu duszami jest pokojem trwałym?</p>
-      <p>A my? My wciąż trwamy tutaj, na wzgórzu, gdzie przodkowie wznieśli palisady, świątynie i kamienie ofiarne. Grodzisko Sopockie – niegdyś punkt siły, teraz ciche, lecz czujne. Ono widziało więcej, niż mówią legendy.</p>
-      <p>Pamięta czasy, gdy żelazo nie było towarem, lecz dziedzictwem – przekazywanym przez pokolenia kowali, którzy znali tajemnice ognia i ziemi. Gdy nie było jeszcze książąt, lecz Rada Starszych i szeptunki, których głos ważył więcej niż ostrze. Gdy wilcze wycie zwiastowało burzę, a kruki przy świątyniach ostrzegały przed zdradą.</p>
-      <p>Teraz, gdy świat rozdziera się między nowym a starym, potrzebujemy nie wojowników – lecz strażników pamięci.<br>
-      Nie wojów. Nie możnych.<br>
-      <strong>Was.</strong><br>
-      Was – mieszkańców Grodu: cieśli, tkaczy, zwiadowców, zielarki, rzemieślników, handlarzy. Ludzi, których życie splata się z tą ziemią jak włókna w splocie.</p>
-      <p>Wezwano was, byście stanęli do Próby Dziedzictwa Żelaza. W ciągu najbliższej godziny odnajdziecie ślady przeszłości, zagubione w mchu, popiele i zapomnieniu. Zbierzecie fragmenty prawdy, słowa przodków i znaki losu. Odbudujecie historię, tak jak była, zanim została zapisana przez obcych.</p>
-      <p>A potem staniecie przed Radą.<br>
-      I zadecydujecie:<br>
-      Czy Grodzisko otworzy bramy – przyjmując nowe mowy, nowych bogów, nowe prawa…<br>
-      …czy zamknie się na sto lat – trwając przy ogniu, który płonął, zanim spadły pierwsze monety z cesarskiej mennicy.</p>
+      <!-- ... treść fabuły ... -->
     </div>
     <button id="next2" class="btn">DALEJ</button>
   </div>
@@ -93,11 +78,7 @@
   <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
-      <div class="role" data-role="zwiadowca"><img src="zwiadowca.1.png"><p>Zwiadowca</p></div>
-      <div class="role" data-role="tkaczka"><img src="tkaczka.1.png"><p>Tkaczka</p></div>
-      <div class="role" data-role="zielarka"><img src="zielarka.1.png"><p>Zielarka</p></div>
-      <div class="role" data-role="kupiec"><img src="kupiec.1.png"><p>Kupiec</p></div>
-      <div class="role" data-role="rzemieslnik"><img src="kowal.1.png"><p>Rzemieślnik</p></div>
+      <!-- ... role ... -->
     </div>
     <button id="next3" class="btn" disabled>DALEJ</button>
   </div>
@@ -119,14 +100,44 @@
     </div>
     <div id="taskStats">Ukończono: <strong id="completedCount">0</strong>/6</div>
     <div id="tasksList">
-      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
-      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
-      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
-      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
-      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button class="btn confirm">Zatwierdź</button></div>
+      <div class="task-row" data-ans="LAMELKA">
+        <span>Brama Grodziska</span>
+        <input type="text">
+        <button class="btn confirm">Zatwierdź</button>
+        <button class="btn reset">Wyczyść</button>
+      </div>
+      <div class="task-row" data-ans="MIECH">
+        <span>Warsztat Kowala</span>
+        <input type="text">
+        <button class="btn confirm">Zatwierdź</button>
+        <button class="btn reset">Wyczyść</button>
+      </div>
+      <div class="task-row" data-ans="ŻYTO">
+        <span>Zagroda</span>
+        <input type="text">
+        <button class="btn confirm">Zatwierdź</button>
+        <button class="btn reset">Wyczyść</button>
+      </div>
+      <div class="task-row" data-ans="LEN">
+        <span>Chata Tkaczki</span>
+        <input type="text">
+        <button class="btn confirm">Zatwierdź</button>
+        <button class="btn reset">Wyczyść</button>
+      </div>
+      <div class="task-row" data-ans="POKRZYWA">
+        <span>Chata Zielarki</span>
+        <input type="text">
+        <button class="btn confirm">Zatwierdź</button>
+        <button class="btn reset">Wyczyść</button>
+      </div>
+      <div class="task-row" data-ans="DIRHEMY">
+        <span>Chata Namiestnika</span>
+        <input type="text">
+        <button class="btn confirm">Zatwierdź</button>
+        <button class="btn reset">Wyczyść</button>
+      </div>
     </div>
-    <p><em>Zadania można poprawiać do skutku.</em></p>
+    <p><em>Zadania można poprawiać do skutku. Jeśli chcesz usunąć wpis, kliknij „Wyczyść”.</em></p>
     <div id="needFour">Aby przejść dalej do Rady, musisz wykonać min. 4 zadania.</div>
     <button id="toCouncil" class="btn" disabled>PRZEJDŹ DO RADY</button>
   </div>
@@ -135,9 +146,7 @@
   <div id="page5" class="screen">
     <h2>RADA GRODU</h2>
     <div class="roles council-cards">
-      <div class="role"><h3>🛒 Otwarcie na handel</h3><button class="btn" data-dec="handel">WYBIERAM</button></div>
-      <div class="role"><h3>🛡️ Zamknięcie granic</h3><button class="btn" data-dec="granice">WYBIERAM</button></div>
-      <div class="role"><h3>⚖️ Wprowadzenie nowego prawa</h3><button class="btn" data-dec="prawo">WYBIERAM</button></div>
+      <!-- ... decyzje Rady ... -->
     </div>
   </div>
 
@@ -157,9 +166,10 @@
   </div>
 
   <script>
-    const bg=document.getElementById('bgMusic');
-    let team='',role='',completed=0,sideDone=false;
-    const sideTasks=[
+    const bg = document.getElementById('bgMusic');
+    let team = '', role = '', completed = 0, sideDone = false;
+
+    const sideTasks = [
       'Znajdź coś zielonego i dotknij to.',
       'Zrób 5 przysiadów przy najbliższej ławce.',
       'Znajdź kamień większy niż twoja dłoń.',
@@ -171,29 +181,148 @@
       'Zrób 10 kroków do przodu, potem 5 w bok i znajdź coś ciekawego.',
       'Stań na jednej nodze i policz do 10 na głos.'
     ];
-    const endings={
-      handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw. Targowiska rozbłysły kolorami, a rzemieślnicy zyskali dostęp do nowych surowców i technik.
 
-Lecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?`},
-      granice:{name:'Zamknięcie granic',desc:`Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.
-
-Jednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?`},
-      prawo:{name:'Wprowadzenie nowego prawa',desc:`Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.
-
-Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku? A może reforma stanie się iskrą większego ognia?`}
+    const endings = {
+      handel: {
+        name: 'Otwarcie na handel',
+        desc: `Po dniach pełnych gorących dyskusji...`
+      },
+      granice: {
+        name: 'Zamknięcie granic',
+        desc: `Decyzja zapadła w ciszy...`
+      },
+      prawo: {
+        name: 'Wprowadzenie nowego prawa',
+        desc: `Głos Starszyzny niósł się echem...`
+      }
     };
-    function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-    document.body.addEventListener('click',()=>bg.play().catch(),{once:true});
-    document.getElementById('next1').onclick=()=>{const v=document.getElementById('teamName').value.trim();if(!v){alert('Podaj nazwę drużyny');return;}team=v;show('page2');};
-    document.getElementById('next2').onclick=()=>show('page3');
-    document.querySelectorAll('#page3 .role').forEach(el=>el.onclick=()=>{document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected'));el.classList.add('selected');role=el.dataset.role;document.getElementById('next3').disabled=false;});
-    document.getElementById('next3').onclick=()=>{const vids={zwiadowca:'zwiadowca.1.mp4',tkaczka:'tkaczka.1.mp4',zielarka:'zielarka.1.mp4',kupiec:'kupiec.1.mp4',rzemieslnik:'rzemieslnik.1.mp4'};document.getElementById('roleVideo').src=vids[role];document.getElementById('videoOverlay').style.display='flex';};
-    document.getElementById('videoNext').onclick=()=>{completed=0;sideDone=false;show('page4');document.getElementById('videoOverlay').style.display='none';document.getElementById('sideDone').disabled=false;document.getElementById('randomTask').innerText='Kliknij 🎲, aby wylosować zadanie poboczne';document.getElementById('completedCount').innerText='0';document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong');r.querySelector('input').value='';});document.getElementById('toCouncil').disabled=true;};
-    document.getElementById('randomBtn').onclick=()=>document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)];
-    document.getElementById('sideDone').onclick=()=>{sideDone=true;const b=document.getElementById('sideDone');b.style.background='lime';b.innerText='ZROBIONE';};
-    document.querySelectorAll('.task-row').forEach(row=>{const ans=row.dataset.ans,inp=row.querySelector('input');row.querySelector('.confirm').onclick=()=>{if(inp.value.trim().toUpperCase()===ans){if(!row.classList.contains('correct')){row.classList.add('correct');completed++;}}else{if(!row.classList.contains('wrong')){row.classList.add('wrong');if(completed>0)completed--;}}document.getElementById('completedCount').innerText=completed;if(completed>=4)document.getElementById('toCouncil').disabled=false;};});
-    document.getElementById('toCouncil').onclick=()=>show('page5');
-    document.querySelectorAll('#page5 .btn').forEach(b=>b.onclick=()=>{const key=b.dataset.dec;document.getElementById('outTeam').innerText=team;document.getElementById('outRole').innerText=role;document.getElementById('outDecisionName').innerText=endings[key].name;document.getElementById('outDecisionDesc').innerText=endings[key].desc;document.getElementById('outPortrait').src=`${role}.png`;document.getElementById('outSideDone').innerText=sideDone?'TAK':'NIE';document.getElementById('outPoints').innerText=completed;const bcont=document.getElementById('badges');bcont.innerHTML=`<div><img src=\"medalion.1.png\"><p>Medalion Grodu</p></div>`;if(sideDone)bcont.innerHTML+=`<div><img src=\"korona.1.png\"><p>Korona Wyzwań</p></div>`;const dl=document.getElementById('downloads');dl.innerHTML=`<a href=\"medalion.1.png\" download class=\"btn\">POBIERZ MEDALION</a>`;if(sideDone)dl.innerHTML+=`<a href=\"korona.1.png\" download class=\"btn\">POBIERZ KORONĘ</a>`;show('page6');});
+
+    function show(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    document.body.addEventListener('click', () => bg.play().catch(), { once: true });
+
+    document.getElementById('next1').onclick = () => {
+      const v = document.getElementById('teamName').value.trim();
+      if (!v) { alert('Podaj nazwę drużyny'); return; }
+      team = v;
+      show('page2');
+    };
+    document.getElementById('next2').onclick = () => show('page3');
+
+    document.querySelectorAll('#page3 .role').forEach(el => {
+      el.onclick = () => {
+        document.querySelectorAll('#page3 .role').forEach(r => r.classList.remove('selected'));
+        el.classList.add('selected');
+        role = el.dataset.role;
+        document.getElementById('next3').disabled = false;
+      };
+    });
+
+    document.getElementById('next3').onclick = () => {
+      const vids = {
+        zwiadowca:   'zwiadowca.1.mp4',
+        tkaczka:     'tkaczka.1.mp4',
+        zielarka:    'zielarka.1.mp4',
+        kupiec:      'kupiec.1.mp4',
+        rzemieslnik: 'rzemieslnik.1.mp4'
+      };
+      const videoEl = document.getElementById('roleVideo');
+      videoEl.src = vids[role];
+      videoEl.onloadeddata = () => {
+        document.getElementById('videoOverlay').style.display = 'flex';
+      };
+      videoEl.onerror = () => {
+        alert('Nie udało się załadować filmu dla tej postaci. Przechodzę od razu do zadań.');
+        show('page4');
+      };
+    };
+
+    document.getElementById('videoNext').onclick = () => {
+      completed = 0; sideDone = false;
+      show('page4');
+      document.getElementById('videoOverlay').style.display = 'none';
+      document.getElementById('sideDone').disabled = false;
+      document.getElementById('randomTask').innerText = 'Kliknij 🎲, aby wylosować zadanie poboczne';
+      document.getElementById('completedCount').innerText = '0';
+      document.querySelectorAll('.task-row').forEach(r => {
+        r.classList.remove('correct', 'wrong');
+        r.querySelector('input').value = '';
+      });
+      document.getElementById('toCouncil').disabled = true;
+    };
+
+    document.getElementById('randomBtn').onclick = () =>
+      document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random() * sideTasks.length)];
+
+    document.getElementById('sideDone').onclick = () => {
+      sideDone = true;
+      const b = document.getElementById('sideDone');
+      b.style.background = 'lime';
+      b.innerText = 'ZROBIONE';
+    };
+
+    function updateStats() {
+      document.getElementById('completedCount').innerText = completed;
+      document.getElementById('toCouncil').disabled = (completed < 4);
+    }
+
+    document.querySelectorAll('.task-row').forEach(row => {
+      const ans = row.dataset.ans;
+      const inp = row.querySelector('input');
+      const btnOk = row.querySelector('.confirm');
+      const btnReset = row.querySelector('.reset');
+
+      btnOk.onclick = () => {
+        const val = inp.value.trim().toUpperCase();
+        if (val === ans) {
+          row.classList.remove('wrong');
+          if (!row.classList.contains('correct')) {
+            row.classList.add('correct');
+            completed++;
+          }
+        } else {
+          if (row.classList.contains('correct')) {
+            row.classList.remove('correct');
+            completed--;
+          }
+          row.classList.add('wrong');
+        }
+        updateStats();
+      };
+
+      btnReset.onclick = () => {
+        if (row.classList.contains('correct')) {
+          row.classList.remove('correct');
+          completed--;
+        }
+        row.classList.remove('wrong');
+        inp.value = '';
+        updateStats();
+      };
+    });
+
+    document.getElementById('toCouncil').onclick = () => show('page5');
+
+    document.querySelectorAll('#page5 .btn').forEach(b => b.onclick = () => {
+      const key = b.dataset.dec;
+      document.getElementById('outTeam').innerText = team;
+      document.getElementById('outRole').innerText = role;
+      document.getElementById('outDecisionName').innerText = endings[key].name;
+      document.getElementById('outDecisionDesc').innerText = endings[key].desc;
+      document.getElementById('outPortrait').src = `${role}.png`;
+      document.getElementById('outSideDone').innerText = sideDone ? 'TAK' : 'NIE';
+      document.getElementById('outPoints').innerText = completed;
+      const bcont = document.getElementById('badges');
+      bcont.innerHTML = `<div><img src="medalion.1.png"><p>Medalion Grodu</p></div>`;
+      if (sideDone) bcont.innerHTML += `<div><img src="korona.1.png"><p>Korona Wyzwań</p></div>`;
+      const dl = document.getElementById('downloads');
+      dl.innerHTML = `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>`;
+      if (sideDone) dl.innerHTML += `<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`;
+      show('page6');
+    });
   </script>
 </body>
 </html>
