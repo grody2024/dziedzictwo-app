@@ -20,88 +20,58 @@
     h1,h2,h3{text-align:center;
               font-family:'Uncial Antiqua',cursive;
               text-shadow:2px 2px 4px rgba(0,0,0,.6);
-              margin-bottom:12px}
-    input[type=text]{width:100%;padding:10px;margin:8px 0;
-                     border:none;border-radius:6px;font-size:16px}
-    .btn{width:100%;padding:12px;margin:8px 0;
-         font-size:18px;border:none;border-radius:8px;
+              margin-bottom:1rem}
+    input[type=text]{width:100%;padding:0.5rem;margin:0.5rem 0;
+                     border:none;border-radius:6px;font-size:1rem}
+    .btn{width:100%;padding:0.75rem;margin:0.5rem 0;
+         font-size:1rem;border:none;border-radius:8px;
          background:linear-gradient(to bottom,#c49e5b,#8b6237);
          color:#fff9e6;cursor:pointer}
     .btn:disabled{opacity:.6;cursor:default}
     .instruction-box{background:rgba(0,0,0,.6);
                      border:2px solid #8d744a;border-radius:8px;
-                     padding:12px;margin:12px 0;font-size:14px;
+                     padding:1rem;margin:1rem 0;font-size:0.9rem;
                      line-height:1.4}
-    .instruction-box ul{list-style:disc inside;margin-left:16px}
-
+    .instruction-box ul{list-style:disc inside;margin-left:1rem}
     /* Roles */
-    .roles{display:grid;
-           grid-template-columns:repeat(auto-fit,minmax(100px,1fr));
-           gap:16px;justify-items:center}
-    .role{background:rgba(0,0,0,.5);padding:8px;
-          border-radius:12px;text-align:center;
-          cursor:pointer;transition:transform .2s}
-    .role img{width:100px;height:100px;object-fit:cover;
-              object-position:top center;border-radius:12px;
-              border:3px solid transparent}
+    .roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:1rem;justify-items:center}
+    .role{background:rgba(0,0,0,.5);padding:0.5rem;border-radius:8px;text-align:center;cursor:pointer;transition:transform .2s}
+    .role img{width:80px;height:80px;object-fit:cover;border-radius:8px;border:3px solid transparent}
+    .role.selected{transform:scale(1.1)}
     .role.selected img{border-color:gold;box-shadow:0 0 8px gold}
-
     /* Video overlay */
-    #videoOverlay{position:fixed;top:0;left:0;width:100%;height:100%;
-                  background:rgba(0,0,0,.9);display:none;
-                  align-items:center;justify-content:center;
-                  flex-direction:column;z-index:1000;padding:16px}
+    #videoOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:1000;padding:1rem}
     #videoOverlay video{width:90%;max-width:480px;border-radius:12px}
-
     /* Tasks */
-    .task-row{display:flex;gap:8px;align-items:center;margin:8px 0}
-    .task-row span{flex:1}
-    .task-row input{flex:1 1 100px;padding:6px;
-                    border:2px solid #444;border-radius:4px}
-    .task-row.correct input{border-color:lime;
-                             background:rgba(0,128,0,.2)}
-    .task-row.wrong input{border-color:crimson;
-                           background:rgba(255,0,0,.2)}
-    .reset-icon{background:none;border:none;
-                font-size:20px;cursor:pointer}
-
+    .task-row{display:flex;gap:0.5rem;align-items:center;margin:0.5rem 0}
+    .task-row span{flex:1;font-size:0.9rem}
+    .task-row input{flex:1 1 80px;padding:0.5rem;border:2px solid #444;border-radius:4px;font-size:0.9rem}
+    .task-row.correct input{border-color:lime;background:rgba(0,128,0,.2)}
+    .task-row.wrong input{border-color:crimson;background:rgba(255,0,0,.2)}
+    .reset-icon{background:none;border:none;font-size:1.2rem;cursor:pointer}
     /* Final screen */
-    #page6{display:flex;flex-direction:column;
-           align-items:center;text-align:center;
-           padding:24px;background:rgba(0,0,0,.6);
-           border-radius:12px;box-shadow:0 0 16px rgba(0,0,0,.8);
-           height:100vh;overflow-y:auto}
-    .museum-logo{width:100px;margin-bottom:12px;
-                 border:3px solid gold;padding:4px;
-                 border-radius:8px}
-    #finalPortrait img{width:120px;height:auto;
-                       max-height:200px;object-fit:cover;
-                       object-position:top center;
-                       border-radius:12px;border:4px solid gold;
-                       padding:2px}
-    .badges{display:flex;gap:16px;margin:12px 0}
-    .badges img{width:60px;height:auto;object-fit:contain}
-    .downloads{display:flex;gap:8px;margin:12px 0}
-    #restart{margin-top:16px}
-
-    @media(max-width:400px){
-      .btn{font-size:16px;padding:10px}
-      .role img{max-width:80px;height:80px}
-    }
-  </style>
+    #page6{display:flex;flex-direction:column;align-items:center;text-align:center;padding:2rem;background:rgba(0,0,0,0.8);width:100%;height:100vh;overflow-y:auto;color:#fff}
+    #page6 h1{font-size:8vw;color:#ffd700;margin-bottom:1rem}
+    #page6 p{margin:0.5rem 0;font-size:4vw;line-height:1.4;width:90%;max-width:360px;text-align:left}
+    #resDesc{margin:1rem 0;padding:1rem;background:rgba(0,0,0,0.5);border-radius:8px;font-size:4vw;line-height:1.4;width:90%;max-width:360px;text-align:left}
+    .museum-logo{width:20vw;max-width:120px;margin-bottom:1rem;border:3px solid gold;padding:0.5rem;border-radius:12px}
+    #finalPortrait{margin:1rem 0}
+    #finalPortrait img{width:30vw;max-width:100px;border-radius:50%;border:3px solid gold}
+    .badges{display:flex;gap:1rem;margin:1rem 0}
+    .badges img{width:15vw;max-width:60px}
+    .downloads{display:flex;gap:0.5rem;flex-wrap:wrap;margin:1rem 0}
+    .downloads .btn{width:48%;font-size:4vw;padding:0.5rem}
+    #restart{margin-top:2rem;padding:1rem; font-size:5vw;width:80%}
+    @media (min-width:400px){#page6 h1{font-size:2.5rem}#page6 p,#resDesc{font-size:1rem;width:100%;max-width:400px}.museum-logo{width:100px}#finalPortrait img{width:100px}.badges img{width:60px}.downloads .btn{width:auto;padding:0.75rem;font-size:1rem}#restart{font-size:1.25rem;width:auto}}</style>
 </head>
 <body onclick="const bg=document.getElementById('bgMusic');bg.muted=false;bg.play().catch(()=>{});">
-
-  <!-- Start Overlay -->
+  <!-- 0. Start -->
   <div id="start" class="screen active">
     <h1>GRODOWA ODYSEJA</h1>
     <p class="instruction-box">Kliknij <strong>START</strong>, aby rozpocząć i odtworzyć muzykę w tle.</p>
     <button id="startBtn" class="btn">START</button>
   </div>
-
-  <!-- autoplay muted loop -->
   <audio id="bgMusic" src="celtic-glory-307625.mp3" muted autoplay loop></audio>
-
   <!-- 1. Rejestracja -->
   <div id="page1" class="screen">
     <h1>GRODOWA ODYSEJA</h1>
@@ -119,14 +89,13 @@
       </ul>
     </div>
     <input id="teamName" type="text" placeholder="Nazwa drużyny">
-    <button class="btn" onclick="if(!teamName.value.trim()){alert('Podaj nazwę drużyny');} else { team=teamName.value.trim(); show('page2'); }">DALEJ</button>
+    <button class="btn" onclick="if(!teamName.value.trim())alert('Podaj nazwę drużyny');else{team=teamName.value.trim();show('page2')}" >DALEJ</button>
   </div>
-
-  <!-- 2. Pełna fabuła -->
+  <!-- 2. Fabuła -->
   <div id="page2" class="screen">
     <h2>Rok 972 – Czas Próby</h2>
     <div class="instruction-box">
-      <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby nadciągało przesilenie.</p>
+      <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
       <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
       <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyjskimi bóstwami, niosąc srebro i niepokój.</p>
       <p>Z zachodu zaś unoszą się słowa o chrzcie i kaplicach kamiennych: mówią, że Dąbrówka przyniosła pokój, lecz czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
@@ -140,119 +109,104 @@
     </div>
     <button class="btn" onclick="show('page3')">DALEJ</button>
   </div>
-
   <!-- 3. Wybór postaci -->
   <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
-      <div class="role" data-role="zwiadowca" onclick="pick('zwiadowca')"><img src="zwiadowca.1.png" alt="Zwiadowca"><p>Zwiadowca</p></div>
-      <div class="role" data-role="tkaczka" onclick="pick('tkaczka')"><img src="tkaczka.1.png" alt="Tkaczka"><p>Tkaczka</p></div>
-      <div class="role" data-role="zielarka" onclick="pick('zielarka')"><img src="zielarka.1.png" alt="Zielarka"><p>Zielarka</p></div>
-      <div class="role" data-role="kupiec" onclick="pick('kupiec')"><img src="kupiec.1.png" alt="Kupiec"><p>Kupiec</p></div>
-      <div class="role" data-role="rzemieslnik" onclick="pick('rzemieslnik')"><img src="kowal.1.png" alt="Rzemieślnik"><p>Rzemieślnik</p></div>
+      <div class="role" data-role="zwiadowca"><img src="zwiadowca.1.png" alt><p>Zwiadowca</p></div>
+      <div class="role" data-role="tkaczka"><img src="tkaczka.1.png" alt><p>Tkaczka</p></div>
+      <div class="role" data-role="zielarka"><img src="zielarka.1.png" alt><p>Zielarka</p></div>
+      <div class="role" data-role="kupiec"><img src="kupiec.1.png" alt><p>Kupiec</p></div>
+      <div class="role" data-role="rzemieslnik"><img src="kowal.1.png" alt><p>Rzemieślnik</p></div>
     </div>
-    <button id="btn3" class="btn" disabled onclick="showVideo()">DALEJ</button>
+    <button id="btn3" class="btn" disabled>DALEJ</button>
   </div>
-
-  <!-- 4. Filmik inicjacyjny -->
-  <div id="videoOverlay">
+  <!-- 4. Film -->
+  <div id="videoOverlay" class="screen">
     <video id="roleVideo" controls></video>
-    <button class="btn" onclick="hideVideoAndNext()">DALEJ DO ZADAŃ</button>
+    <button class="btn">DALEJ DO ZADAŃ</button>
   </div>
-
   <!-- 5. Zadania -->
   <div id="page4" class="screen">
     <h2>ZADANIA</h2>
     <div class="instruction-box">
-      <button class="btn" onclick="draw()">🎲 LOSUJ</button>
+      <button id="drawBtn" class="btn">🎲 LOSUJ</button>
       <p id="randomTask"></p>
-      <button id="sideBtn" class="btn" disabled onclick="markSide()">ZREALIZOWANE</button>
+      <button id="sideBtn" class="btn" disabled>ZREALIZOWANE</button>
     </div>
     <p>Ukończono: <span id="count">0</span>/6</p>
     <div id="tasksList">
       <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
       <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="ŻYITO"><span>Zagroda</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
       <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="POKRZIWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
       <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
     </div>
-    <button id="toCouncil" class="btn" disabled onclick="show('page5')">PRZEJDŹ DO RADY</button>
+    <button id="toCouncil" class="btn" disabled>PRZEJDŹ DO RADY</button>
   </div>
-
   <!-- 6. Rada -->
   <div id="page5" class="screen">
     <h2>RADA GRODU</h2>
-    <button class="btn" onclick="finish('handel')">🛒 Otwarcie na handel</button>
-    <button class="btn" onclick="finish('granice')">🛡️ Zamkniႈcie granic</button>
-    <button class="btn" onclick="finish('prawo')">⚖️ Wprowadzње nowego prawa</button>
+    <button class="btn">🛒 Otwarcie na handel</button>
+    <button class="btn">🛡️ Zamknięcie granic</button>
+    <button class="btn">⚖️ Wprowadzenie nowego prawa</button>
   </div>
-
   <!-- 7. Gratulacje -->
   <div id="page6" class="screen">
     <img src="logo.1.png" class="museum-logo" alt="Muzeum">
     <h1>GRATULACJE!</h1>
     <div id="finalPortrait"><img id="avatar" alt="Twoja postać"></div>
-    <p>Drużyna: <span id="resTeam"></span></p>
-    <p>Postać: <span id="resRole"></span></p>
-    <p>Decyzja: <span id="resDec"></span></p>
-    <p id="resDesc" style="white-space:pre-wrap;max-width:400px; margin:auto;"></p>
-    <p>Zadanie poboczne: <span id="resSide"></span></p>
-    <p>Ukończono: <span id="resCount"></span>/6</p>
+    <p><strong>Drużyna:</strong> <span id="resTeam"></span></p>
+    <p><strong>Postać:</strong> <span id="resRole"></span></p>
+    <p><strong>Decyzja:</strong> <span id="resDec"></span></p>
+    <div id="resDesc"></div>
+    <p><strong>Zadanie poboczne:</strong> <span id="resSide"></span></p>
+    <p><strong>Ukończono zadań głównych:</strong> <span id="resCount"></span>/6</p>
     <div class="badges"></div>
     <div class="downloads"></div>
-    <button class="btn" onclick="restart()">ZAGRAJ PONOWNIE</button>
+    <button id="restart" class="btn" onclick="restart()">ZAGRAJ PONOWNIE</button>
   </div>
-
   <script>
-    let team='', role='', count=0, sideDone=false;
-    const vids={ zwiadowca:'zwiadowca.1.mp4', tkaczka:'tkaczka.1.mp4', zielarka:'zielarka.1.mp4', kupiec:'kupiec.1.mp4', rzemieslnik:'rzemieslnik.1.mp4'};
-    const sideTasks=[
-      'Znajdź coś zielonego i dotknij to.',
-      'Zrób 5 przysiadów przy ławce.',
-      'Znajdź kamień większy niż dłń.',
-      'Zrób zdjęcie czegoś okrągłego.',
-      'Znajdź coś na literę P.',
-      'Podskocz 3 razy w cieniu.',
-      'Ułóż literę A z patyków.',
-      'Opisz kolor liścia.',
-      'Zrób 10 kroków do przodu i 5 w bok.',
-      'Stań na jednej nodze i licz do 10 na głos.'
-    ];
+    const screens=['start','page1','page2','page3','videoOverlay','page4','page5','page6'];
+    function show(id){screens.forEach(s=>document.getElementById(s).classList.remove('active'));document.getElementById(id).classList.add('active');}
+    let team='',role='',count=0,sideDone=false;
+    const vids={zwiadowca:'zwiadowca.1.mp4',tkaczka:'tkaczka.1.mp4',zielarka:'zielarka.1.mp4',kupiec:'kupiec.1.mp4',rzemieslnik:'rzemieslnik.1.mp4'};
+    const sideTasks=['Znajdź coś zielonego i dotknij to.','Zrób 5 przysiadów przy ławce.','Znajdź kamień większy niż dłń.','Zrób zdjęcie czegoś okrągłego.','Znajdź coś na literę P.','Podskocz 3 razy w cieniu.','Ułóż literę A z patyków.','Opisz kolor liścia.','Zrób 10 kroków do przodu i 5 w bok.','Stań na jednej nodze i licz do 10 na głos.'];
     const endings = {
-      handel: {
-        name: 'Otwarcie na handel',
-        desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw. Targowiska rozbłysły kolorami, a rzemieślnicy zyskali dostęp do nowych surowców i technik.
+    handel: {
+      name: 'Otwarcie na handel',
+      desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw. Targowiska rozbłysły kolorami, a rzemieślnicy zyskali dostęp do nowych surowców i technik.
 
 Lecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?`,
-      },
-      granice: {
-        name: 'Zamknięcie granic',
-        desc: `Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.
+    },
+    granice: {
+      name: 'Zamknięcie granic',
+      desc: `Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.
 
 Jednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?`,
-      },
-      prawo: {
-        name: 'Wprowadzenie nowego prawa',
-        desc: `Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.
+    },
+    prawo: {
+      name: 'Wprowadzenie nowego prawa',
+      desc: `Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.
 
 Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku? A może reforma stanie się iskrą większego ognia?`,
-      }
-    };
-    function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+    }
+  };
     document.getElementById('startBtn').onclick=()=>{const bg=document.getElementById('bgMusic');bg.play().catch(()=>{});bg.muted=false;show('page1');};
-    document.querySelector('#page1 .btn').onclick=()=>{if(!teamName.value.trim())alert('Podaj nazwę drużyny');else{team=teamName.value.trim();show('page2')}};
+    document.querySelector('#page1 .btn').onclick=()=>{const v=document.getElementById('teamName').value.trim();if(!v)return alert('Podaj nazwę drużyny');team=v;show('page2');};
     document.querySelector('#page2 .btn').onclick=()=>show('page3');
-    function pick(r){role=r;document.querySelectorAll('.role').forEach(el=>el.classList.toggle('selected',el.dataset-role===r));document.getElementById('btn3').disabled=false;}
-    function showVideo(){document.getElementById('roleVideo').src=vids[role];show('videoOverlay');}
-    function hideVideoAndNext(){show('page4');}
-    function updateStats(){document.getElementById('count').innerText=count;document.getElementById('toCouncil').disabled=count<4;}
-    document.querySelectorAll('.confirm').forEach(btn=>btn.onclick=()=>{const row=btn.closest('.task-row');const ans=row.dataset.ans;const val=row.querySelector('input').value.trim().toUpperCase();if(val===ans&&!row.classList.contains('correct')){row.classList.remove('wrong');row.classList.add('correct');count++}else if(val!==ans&&row.classList.contains('correct')){row.classList.remove('correct');count--,row.classList.add('wrong')}else if(val!==ans)row.classList.add('wrong');updateStats();});
-    document.querySelectorAll('.reset-icon').forEach(btn=>btn.onclick=()=>{const row=btn.closest('.task-row');if(row.classList.contains('correct'))count--;row.classList.remove('correct','wrong');row.querySelector('input').value='';updateStats();});
-    function draw(){document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)];document.getElementById('sideBtn').disabled=false;}
-    function markSide(){sideDone=true;document.getElementById('sideBtn').style.background='lime';}
-    function finish(dec){document.getElementById('resTeam').innerText=team;document.getElementById('resRole').innerText=role;const e=endings[dec];document.getElementById('resDec').innerText=e.name;document.getElementById('resDesc').innerText=e.desc;document.getElementById('avatar').src=role+'.png';document.getElementById('resSide').innerText=sideDone?'TAK':'NIE';document.querySelector('.badges').innerHTML=`<img src="medalion.1.png" alt="Medalion">`+(sideDone?`<img src="korona.1.png" alt="Korona">`:'');document.querySelector('.downloads').innerHTML=`<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>`+(sideDone?`<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`:'');document.getElementById('resCount').innerText=count;show('page6');}
-    function restart(){team=role='';count=0;sideDone=false;document.getElementById('teamName').value='';document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong');r.querySelector('input').value=''});updateStats();show('page1');}
+    document.querySelectorAll('.role').forEach(el=>el.onclick=()=>{role=el.dataset.role;document.querySelectorAll('.role').forEach(r=>r.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;});
+    document.getElementById('btn3').onclick=()=>{document.getElementById('roleVideo').src=vids[role];show('videoOverlay');};
+    document.querySelector('#videoOverlay .btn').onclick=()=>show('page4');
+    document.getElementById('drawBtn').onclick=()=>{document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)];document.getElementById('sideBtn').disabled=false;};
+    document.getElementById('sideBtn').onclick=(()=>{sideDone=true;document.getElementById('sideBtn').innerText='ZREALIZOWANE';});
+    function updateCount(){document.getElementById('count').innerText=count;document.getElementById('toCouncil').disabled=count<4;}
+    document.querySelectorAll('.confirm').forEach(btn=>btn.onclick=()=>{const row=btn.closest('.task-row');const ans=row.dataset.ans;const val=row.querySelector('input').value.trim().toUpperCase();if(val===ans){row.classList.remove('wrong');if(!row.classList.contains('correct')){row.classList.add('correct');count++;}}else{if(row.classList.contains('correct')){row.classList.remove('correct');count--;}row.classList.add('wrong');}updateCount();});
+    document.querySelectorAll('.reset-icon').forEach(btn=>btn.onclick=(()=>{const row=btn.closest('.task-row');if(row.classList.contains('correct'))count--;row.classList.remove('correct','wrong');row.querySelector('input').value='';updateCount();}));
+    document.getElementById('toCouncil').onclick=()=>show('page5');
+    document.querySelectorAll('#page5 .btn').forEach(btn=>btn.onclick=()=>{const dec=btn.textContent.includes('hand')?'handel':btn.textContent.includes('granice')?'granice':'prawo';const e=endings[dec];document.getElementById('resTeam').innerText=team;document.getElementById('resRole').innerText=role;document.getElementById('resDec').innerText=e.name;document.getElementById('resDesc').innerText=e.desc;document.getElementById('avatar').src=role+'.png';document.getElementById('resSide').innerText=sideDone?'TAK':'NIE';document.getElementById('resCount').innerText=count;document.querySelector('.badges').innerHTML=`<img src="medalion.1.png" alt="Medalion">`+(sideDone?`<img src="korona.1.png" alt="Korona">`:``);document.querySelector('.downloads').innerHTML=`<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>`+(sideDone?`<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`:``);show('page6');});
+    document.getElementById('restart').onclick=(()=>{team=role='';count=0;sideDone=false;document.getElementById('teamName').value='';document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong');r.querySelector('input').value='';});updateCount();show('start');});
   </script>
 </body>
 </html>
