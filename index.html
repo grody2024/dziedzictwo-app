@@ -229,7 +229,7 @@
     ];
     const bgMusic = document.getElementById('bgMusic');
     bgMusic.src = musicTracks[Math.floor(Math.random() * musicTracks.length)];
-    bgMusic.play().catch(() => {});
+    
 
     let team = '', role = '', count = 0, sideDone = false;
     const vids = {
@@ -270,6 +270,8 @@
       } else {
         team = input.value.trim();
         show('page2');
+        // Odtwórz muzykę po geście użytkownika
+        bgMusic.play().catch(() => {});
       }
     });
 
@@ -338,9 +340,10 @@
     document.getElementById('toCouncil').addEventListener('click', () => show('page5'));
 
     // Council decisions
-    ['endTrade','endClose','endLaw'].forEach(id => {
-      document.getElementById(id).addEventListener('click', () => finish(id.replace(/^end/, '').toLowerCase()));
-    });
+    // Rada Grodu: wybór zakończenia
+    document.getElementById('endTrade').addEventListener('click', () => finish('handel'));
+    document.getElementById('endClose').addEventListener('click', () => finish('granice'));
+    document.getElementById('endLaw').addEventListener('click', () => finish('prawo'));
 
     function finish(dec) {
       document.getElementById('resTeam').innerText = team;
