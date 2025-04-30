@@ -6,6 +6,7 @@
   <title>Grodowa Odyseja</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
+    /* Reset i style podstawowe */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body { font-family: 'MedievalSharp', cursive; background: url('tło gry.png') center/cover fixed; color: #f4f1e6; overflow: hidden; }
@@ -43,43 +44,43 @@
 <body>
   <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop></audio>
 
-  <!-- Page 1: Rejestracja -->
+  <!-- 1. Rejestracja -->
   <div id="page1" class="screen active">
     <h1>GRODOWA ODYSEJA</h1>
     <div class="instruction-box">
       <ul>
-        <li>Wpisz nazwę drużyny → DALEJ</li>
-        <li>Przeczytaj fabułę → DALEJ</li>
-        <li>Wybierz postać → DALEJ</li>
-        <li>Obejrzyj filmik → DALEJ</li>
-        <li>Wylosuj zadanie poboczne → 🎲 LOSUJ</li>
-        <li>Po realizacji otrzymujesz koronę zadań → ZREALIZOWANE</li>
-        <li>Wykonaj min. 4 zadania główne</li>
-        <li>Zatwierdź i resetuj błędy 🔄</li>
-        <li>Kliknij PRZEJDŹ DO RADY</li>
+        <li>1. Wpisz nazwę drużyny → <strong>DALEJ</strong></li>
+        <li>2. Przeczytaj fabułę → <strong>DALEJ</strong></li>
+        <li>3. Wybierz postać → <strong>DALEJ</strong></li>
+        <li>4. Obejrzyj filmik → <strong>DALEJ</strong></li>
+        <li>5. Wylosuj zadanie poboczne → <strong>🎲 LOSUJ</strong></li>
+        <li>6. Po realizacji otrzymujesz koronę zadań → <strong>ZREALIZOWANE</strong></li>
+        <li>7. Wykonaj min. 4 zadania główne</li>
+        <li>8. Zatwierdź i resetuj błędy 🔄</li>
+        <li>9. Kliknij <strong>PRZEJDŹ DO RADY</strong></li>
       </ul>
     </div>
     <input id="teamName" type="text" placeholder="Nazwa drużyny">
     <button id="next1" class="btn">DALEJ</button>
   </div>
 
-  <!-- Page 2: Fabula -->
+  <!-- 2. Fabula -->
   <div id="page2" class="screen">
     <h2>Rok 972 – Czas Próby</h2>
     <div class="instruction-box">
       <p>Rok 972.<br>
-      Mówi się, że to będzie ostatni spokojny rok. Ziemia wokół nas drży, jakby czuła zbliżające się przesilenie. Od południa płyną wieści o zwycięstwie Mieszka I pod Cedynią – król niemiecki Otton posłał swego margrabiego Hodona, a ten padł pod mieczem Czcibora.</p>
-      <p>Ze wschodu słychać nową mowę – słowa jak syk żmii, przynoszące prawa pisane obcym alfabetem...</p>
-      <p>Z zachodu nadciąga inna fala – wiara, która każe równać święte dęby...</p>
+      Mówi się, że to będzie ostatni spokojny rok. Ziemia wokół nas drży, jakby czuła zbliżające się przesilenie...</p>
+      <p>Ze wschodu słychać nową mowę – słowa jak syk żmii...</p>
+      <p>Z zachodu nadciąga inna fala – wiara, która każe...</p>
       <p>A my? My wciąż trwamy tutaj, na wzgórzu...</p>
       <p>Pamięta czasy, gdy żelazo nie było towarem...</p>
-      <p>Wezwano was, byście stanęli do Próby Dziedzictwa Želaza...</p>
+      <p>Wezwano was, byście stanęli do Próby Dziedzictwa Żelaza...</p>
       <p>A potem staniecie przed Radą i zadecydujecie...</p>
     </div>
     <button id="next2" class="btn">DALEJ</button>
   </div>
 
-  <!-- Page 3: Wybór postaci -->
+  <!-- 3. Wybór postaci -->
   <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
@@ -92,13 +93,13 @@
     <button id="next3" class="btn" disabled>DALEJ</button>
   </div>
 
-  <!-- Page 4: Filmik -->
+  <!-- 4. Filmik inicjacyjny -->
   <div id="videoOverlay">
     <video id="roleVideo" controls></video>
     <button id="videoNext" class="btn">DALEJ DO ZADAŃ</button>
   </div>
 
-  <!-- Page 5: Zadania -->
+  <!-- 5. Zadania -->
   <div id="page4" class="screen">
     <h2>ZADANIA</h2>
     <div class="instruction-box">
@@ -118,19 +119,20 @@
     <button id="toCouncil" class="btn" disabled>PRZEJDŹ DO RADY</button>
   </div>
 
-  <!-- Page 6: Rada -->
+  <!-- 6. Rada -->
   <div id="page5" class="screen">
     <h2>RADA GRODU</h2>
     <div class="roles">
       <div class="role"><button class="btn" data-dec="handel">🛒 Otwarcie na handel</button></div>
       <div class="role"><button class="btn" data-dec="granice">🛡️ Zamknięcie granic</button></div>
-      <div class="role"><button class="btn" data-dec="prawo">⚖️ Nowe prawo</button></div>
+      <div class="role"><button class="btn" data-dec="prawo">⚖️ Wprowadzenie nowego prawa</button></div>
     </div>
   </div>
 
-  <!-- Page 7: Gratulacje -->
+  <!-- 7. Gratulacje -->
   <div id="page6" class="screen">
-    <img src="logo.1.png" class="museum-logo" alt="Muzeum"><h1>GRATULACJE!</h1>
+    <img src="logo.1.png" class="museum-logo" alt="Muzeum">
+    <h1>GRATULACJE!</h1>
     <div id="finalPortrait"><img id="outPortrait" alt="Twoja postać"></div>
     <p>Drużyna: <strong id="outTeam"></strong></p>
     <p>Postać: <strong id="outRole"></strong></p>
@@ -148,26 +150,126 @@
       const bg = document.getElementById('bgMusic');
       document.body.addEventListener('click', () => bg.play().catch(), { once: true });
       let team = '', role = '', completed = 0, sideDone = false;
-      const vids = { zwiadowca:'zwiadowca.1.mp4', tkaczka:'tkaczka.1.mp4', zielarka:'zielarka.1.mp4', kupiec:'kupiec.1.mp4', rzemieslnik:'rzemieslnik.1.mp4' };
-      const sideTasks = ['Znajdź coś zielonego i dotknij to.','Zrób 5 przysiadów przy ławce.','Znajdź kamień większy niż dłонь.','Zrób zdjęcie czegoś okrągłego.','Znajdź coś na literę P.','Podskocz 3 razy w cieniu.','Ułóż literę A z patyków.','Opisz kolor liścia.','Zrób 10 kroków, potem 5 w bok.','Stań na jednej nodze i licz do 10 na głos.'];
-      const endings = {
-        handel: { name: 'Otwarcie na handel', desc: `Po dniach pełnych gorących...` },
-        granice: { name: 'Zamknięcie granic', desc: `Decyzja zapadła w ciszy...` },
-        prawo: { name: 'Wprowadzenie nowego prawa', desc: `Głos Starszyzny niósł się echem...` }
+      const vids = {
+        zwiadowca: 'zwiadowca.1.mp4',
+        tkaczka: 'tkaczka.1.mp4',
+        zielarka: 'zielarka.1.mp4',
+        kupiec: 'kupiec.1.mp4',
+        rzemieslnik: 'rzemieslnik.1.mp4'
       };
-      function show(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-      function updateStats() { document.getElementById('completedCount').innerText = completed; document.getElementById('toCouncil').disabled = completed < 4; }
-      document.getElementById('next1').onclick = () => { const v = document.getElementById('teamName').value.trim(); if (!v) return alert('Podaj nazwę drużyny'); team = v; show('page2'); };
+      const sideTasks = [
+        'Znajdź coś zielonego i dotknij to.',
+        'Zrób 5 przysiadów przy ławce.',
+        'Znajdź kamień większy niż dłń.',
+        'Zrób zdjęcie czegoś okrągłego.',
+        'Znajdź coś na literę P.',
+        'Podskocz 3 razy w cieniu.',
+        'Ułóż literę A z patyków.',
+        'Opisz kolor liścia.',
+        'Zrób 10 kroków do przodu i 5 w bok.',
+        'Stań na jednej nodze i licz do 10 na głos.'
+      ];
+      const endings = {
+        handel: { name: 'Otwarcie na handel', desc: 'Po dniach pełnych gorących dyskusji, ...' },
+        granice: { name: 'Zamknięcie granic', desc: 'Decyzja zapadła w ciszy, ...' },
+        prawo: { name: 'Wprowadzenie nowego prawa', desc: 'Głos Starszyzny niósł się echem ...' }
+      };
+      function show(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+      }
+      function updateStats() {
+        document.getElementById('completedCount').innerText = completed;
+        document.getElementById('toCouncil').disabled = completed < 4;
+      }
+
+      document.getElementById('next1').onclick = () => {
+        const v = document.getElementById('teamName').value.trim();
+        if (!v) return alert('Podaj nazwę drużyny');
+        team = v;
+        show('page2');
+      };
       document.getElementById('next2').onclick = () => show('page3');
-      document.querySelectorAll('#page3 .role').forEach(el => el.onclick = () => { document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected')); el.classList.add('selected'); role=el.dataset.role; document.getElementById('next3').disabled=false; });
-      document.getElementById('next3').onclick = () => { document.getElementById('roleVideo').src = vids[role]; document.getElementById('videoOverlay').style.display = 'flex'; };
-      document.getElementById('videoNext').onclick = () => { document.getElementById('videoOverlay').style.display='none'; sideDone=false; completed=0; updateStats(); show('page4'); document.getElementById('sideDone').disabled=true; document.getElementById('sideDone').innerText='ZREALIZOWANE'; document.getElementById('sideDone').style.background=''; document.getElementById('randomTask').innerText=''; document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong'); r.querySelector('input').value='';}); };
-      document.getElementById('randomBtn').onclick = () => { document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)]; document.getElementById('sideDone').disabled=false; };
-      document.getElementById('sideDone').onclick = function() { sideDone=true; this.innerText='ZREALIZOWANE'; this.style.background='lime'; };
-      document.querySelectorAll('.task-row').forEach(row => { const ans=row.dataset.ans, inp=row.querySelector('input'), btn=row.querySelector('.confirm'), clr=row.querySelector('.reset-icon'); btn.onclick = () => { const v=inp.value.trim().toUpperCase(); if(v===ans){ if(!row.classList.contains('correct')){row.classList.remove('wrong'); row.classList.add('correct'); completed++; }} else { if(row.classList.contains('correct')){row.classList.remove('correct'); completed--;} row.classList.add('wrong'); } updateStats(); }; clr.onclick=()=>{ if(row.classList.contains('correct')){row.classList.remove('correct'); completed--;} row.classList.remove('wrong'); inp.value=''; updateStats(); }; });
+      document.querySelectorAll('#page3 .role').forEach(el => el.onclick = () => {
+        document.querySelectorAll('#page3 .role').forEach(r => r.classList.remove('selected'));
+        el.classList.add('selected');
+        role = el.dataset.role;
+        document.getElementById('next3').disabled = false;
+      });
+      document.getElementById('next3').onclick = () => {
+        document.getElementById('roleVideo').src = vids[role];
+        document.getElementById('videoOverlay').style.display = 'flex';
+      };
+      document.getElementById('videoNext').onclick = () => {
+        document.getElementById('videoOverlay').style.display = 'none';
+        sideDone = false; completed = 0; updateStats();
+        show('page4');
+        document.getElementById('sideDone').disabled = true;
+        document.getElementById('sideDone').innerText = 'ZREALIZOWANE';
+        document.getElementById('sideDone').style.background = '';
+        document.getElementById('randomTask').innerText = '';
+        document.querySelectorAll('.task-row').forEach(r => {
+          r.classList.remove('correct','wrong');
+          r.querySelector('input').value = '';
+        });
+      };
+      document.getElementById('randomBtn').onclick = () => {
+        document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
+        document.getElementById('sideDone').disabled = false;
+      };
+      document.getElementById('sideDone').onclick = function() {
+        sideDone = true; this.innerText = 'ZREALIZOWANE'; this.style.background = 'lime';
+      };
+      document.querySelectorAll('.task-row').forEach(row => {
+        const ans = row.dataset.ans, inp = row.querySelector('input'),
+              btn = row.querySelector('.confirm'), clr = row.querySelector('.reset-icon');
+        btn.onclick = () => {
+          const v = inp.value.trim().toUpperCase();
+          if (v === ans) {
+            if (!row.classList.contains('correct')) { row.classList.remove('wrong'); row.classList.add('correct'); completed++; }
+          } else {
+            if (row.classList.contains('correct')) { row.classList.remove('correct'); completed--; }
+            row.classList.add('wrong');
+          }
+          updateStats();
+        };
+        clr.onclick = () => {
+          if (row.classList.contains('correct')) { row.classList.remove('correct'); completed--; }
+          row.classList.remove('wrong');
+          inp.value = '';
+          updateStats();
+        };
+      });
       document.getElementById('toCouncil').onclick = () => show('page5');
-      document.querySelectorAll('#page5 .btn[data-dec]').forEach(b => b.onclick = () => { const key=b.dataset.dec; document.getElementById('outTeam').innerText=team; document.getElementById('outRole').innerText=role; document.getElementById('outDecisionName').innerText=endings[key].name; document.getElementById('outDecisionDesc').innerText=endings[key].desc; document.getElementById('outPortrait').src=`${role}.png`; document.getElementById('outSideDone').innerText = sideDone?'TAK':'NIE'; document.getElementById('outPoints').innerText = completed; const badges=document.querySelector('.badges'); badges.innerHTML=sideDone?`<img src="korona.1.png" alt="Korona">`:``; const dl=document.querySelector('.downloads'); dl.innerHTML=sideDone?`<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`:``; show('page6'); });
-      document.getElementById('restart').onclick = () => { team=''; role=''; completed=0; sideDone=false; document.getElementById('teamName').value=''; document.getElementById('next3').disabled=true; document.getElementById('sideDone').disabled=true; document.getElementById('sideDone').innerText='ZREALIZOWANE'; document.getElementById('sideDone').style.background=''; document.getElementById('completedCount').innerText='0'; document.getElementById('randomTask').innerText=''; document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong'); r.querySelector('input').value='';}); document.querySelector('.badges').innerHTML=''; document.querySelector('.downloads').innerHTML=''; show('page1'); };
+      document.querySelectorAll('#page5 .btn[data-dec]').forEach(b => b.onclick = () => {
+        const key = b.dataset.dec;
+        document.getElementById('outTeam').innerText = team;
+        document.getElementById('outRole').innerText = role;
+        document.getElementById('outDecisionName').innerText = endings[key].name;
+        document.getElementById('outDecisionDesc').innerText = endings[key].desc;
+        document.getElementById('outPortrait').src = `${role}.png`;
+        document.getElementById('outSideDone').innerText = sideDone ? 'TAK' : 'NIE';
+        document.getElementById('outPoints').innerText = completed;
+        const badges = document.querySelector('.badges');
+        badges.innerHTML = sideDone ? `<img src="korona.1.png" alt="Korona zadań">` : ``;
+        const dl = document.querySelector('.downloads');
+        dl.innerHTML = sideDone ? `<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>` : ``;
+        show('page6');
+      }));
+      document.getElementById('restart').onclick = () => {
+        team = ''; role = ''; completed = 0; sideDone = false;
+        document.getElementById('teamName').value = '';
+        document.getElementById('next3').disabled = true;
+        document.getElementById('sideDone').disabled = true;
+        document.getElementById('sideDone').innerText = 'ZREALIZOWANE';
+        document.getElementById('sideDone').style.background = '';
+        document.getElementById('completedCount').innerText = '0';
+        document.getElementById('randomTask').innerText = '';
+        document.querySelectorAll('.task-row').forEach(r => { r.classList.remove('correct','wrong'); r.querySelector('input').value = ''; });
+        document.querySelector('.badges').innerHTML = '';
+        document.querySelector('.downloads').innerHTML = '';
+        show('page1');
+      };
     });
   </script>
 </body>
