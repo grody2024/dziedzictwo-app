@@ -38,7 +38,7 @@
     .downloads{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}.downloads .btn{padding:8px;font-size:14px;}
     .note{font-size:12px;color:#ddd;margin-top:8px}
     @media(max-width:400px){.btn{font-size:14px;padding:8px}h1{font-size:24px}h2{font-size:20px}.instruction-box{font-size:12px}}
-    #startScreen{display:flex;align-items:center;justify-content:center;flex-direction:column;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000}
+    
     #startScreen .btn{max-width:180px;padding:10px;font-size:16px}
   </style>
 </head>
@@ -46,11 +46,6 @@
   <audio id="bgMusic" src="celtic-glory-307625.mp3" autoplay loop></audio>
 
   <!-- 0. Start -->
-  <div id="startScreen">
-    <h1>GRODOWA ODYSEJA</h1>
-    <button class="btn" id="startBtn">SUPER COOL START</button>
-  </div>
-
   <!-- 1. Rejestracja -->
   <div id="page1" class="screen">
     <h1>GRODOWA ODYSEJA</h1>
@@ -179,7 +174,7 @@ Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też poku
     };
     function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
     function pick(r){role=r;document.querySelectorAll('.role').forEach(el=>el.classList.toggle('selected',el.dataset.role===r));document.getElementById('to4').disabled=false;}
-    document.getElementById('startBtn').onclick=()=>{document.getElementById('startScreen').style.display='none';show('page1');};
+    
     document.getElementById('to2').onclick=()=>{if(!document.getElementById('teamName').value.trim()){alert('Podaj nazwę');}else{team=document.getElementById('teamName').value.trim();show('page2');}};
     document.getElementById('to3').onclick=()=>show('page3');
     document.getElementById('to4').onclick=()=>{document.getElementById('roleVideo').src=vids[role];document.getElementById('videoOverlay').style.display='flex';};
@@ -191,6 +186,7 @@ Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też poku
     document.getElementById('endTrade').onclick=()=>{/*...*/};document.getElementById('endClose').onclick=()=>{/*...*/};document.getElementById('endLaw').onclick=()=>{/*...*/};
     function finish(dec){/*...*/}
     document.getElementById('restartBtn').onclick=()=>{/*...*/};
-  </script>
+    document.addEventListener('DOMContentLoaded', ()=>{ document.getElementById('bgMusic').play().catch(()=>{}); show('page1'); });
+</script>
 </body>
 </html>
