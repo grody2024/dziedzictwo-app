@@ -10,7 +10,7 @@
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{font-family:'MedievalSharp',cursive;
-         background:url('tło gry.png')center/cover fixed;
+         background:url('tło gry.png') center/cover fixed;
          color:#f4f1e6;overflow:hidden}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     .screen{display:none;animation:fadeIn .4s;
@@ -90,9 +90,12 @@
     }
   </style>
 </head>
-<body>
+<body onclick="
+  const bg=document.getElementById('bgMusic');
+  bg.muted=false; bg.play().catch(()=>{});
+">
 
-  <!-- Autoplay muted audio, odblokowuje się przy tapnięciu -->
+  <!-- autoplay muted loop, odblokowanie przy tapnięciu -->
   <audio id="bgMusic" src="celtic-glory-307625-1.mp3" muted autoplay loop></audio>
 
   <!-- 1. Rejestracja -->
@@ -113,11 +116,6 @@
     </div>
     <input id="teamName" type="text" placeholder="Nazwa drużyny">
     <button class="btn" onclick="
-      // unmute & play
-      const bg=document.getElementById('bgMusic');
-      bg.muted=false;
-      bg.play().catch(()=>{});
-      // next
       if(!teamName.value.trim()){ alert('Podaj nazwę drużyny'); }
       else { team=teamName.value.trim(); show('page2'); }
     ">DALEJ</button>
@@ -165,7 +163,7 @@
     <button id="btn3" class="btn" disabled onclick="showVideo()">DALEJ</button>
   </div>
 
-  <!-- 4. Filmik -->
+  <!-- 4. Filmik inicjacyjny -->
   <div id="videoOverlay">
     <video id="roleVideo" controls></video>
     <button class="btn" onclick="hideVideoAndNext()">DALEJ DO ZADAŃ</button>
@@ -181,7 +179,42 @@
     </div>
     <p>Ukończono: <span id="count">0</span>/6</p>
     <div id="tasksList">
-      <!-- tu wstaw swoje task-row -->
+      <div class="task-row" data-ans="LAMELKA">
+        <span>Brama Grodziska</span>
+        <input type="text">
+        <button class="btn confirm">ZATWIERDŹ</button>
+        <button class="reset-icon">🔄</button>
+      </div>
+      <div class="task-row" data-ans="MIECH">
+        <span>Warsztat Kowala</span>
+        <input type="text">
+        <button class="btn confirm">ZATWIERDŹ</button>
+        <button class="reset-icon">🔄</button>
+      </div>
+      <div class="task-row" data-ans="ŻYTO">
+        <span>Zagroda</span>
+        <input type="text">
+        <button class="btn confirm">ZATWIERDŹ</button>
+        <button class="reset-icon">🔄</button>
+      </div>
+      <div class="task-row" data-ans="LEN">
+        <span>Chata Tkaczki</span>
+        <input type="text">
+        <button class="btn confirm">ZATWIERDŹ</button>
+        <button class="reset-icon">🔄</button>
+      </div>
+      <div class="task-row" data-ans="POKRZYWA">
+        <span>Chata Zielarki</span>
+        <input type="text">
+        <button class="btn confirm">ZATWIERDŹ</button>
+        <button class="reset-icon">🔄</button>
+      </div>
+      <div class="task-row" data-ans="DIRHEMY">
+        <span>Chata Namiestnika</span>
+        <input type="text">
+        <button class="btn confirm">ZATWIERDŹ</button>
+        <button class="reset-icon">🔄</button>
+      </div>
     </div>
     <button id="toCouncil" class="btn" disabled onclick="show('page5')">PRZEJDŹ DO RADY</button>
   </div>
@@ -212,11 +245,40 @@
 
   <script>
     let team='', role='', count=0, sideDone=false;
-    const endings = {
-      handel: { name:'Otwarcie na handel', desc:`Po dniach...` },
-      granice:{ name:'Zamknięcie granic', desc:`Decyzja zapadła...` },
-      prawo:  { name:'Wprowadzenie nowego prawa', desc:`Głos Starszyzny...` }
+    const vids = {
+      zwiadowca:'zwiadowca.1.mp4',
+      tkaczka:'tkaczka.1.mp4',
+      zielarka:'zielarka.1.mp4',
+      kupiec:'kupiec.1.mp4',
+      rzemieslnik:'rzemieslnik.1.mp4'
     };
+    const sideTasks = [
+      'Znajdź coś zielonego i dotknij to.',
+      'Zrób 5 przysiadów przy ławce.',
+      'Znajdź kamień większy niż dłń.',
+      'Zrób zdjęcie czegoś okrągłego.',
+      'Znajdź coś na literę P.',
+      'Podskocz 3 razy w cieniu.',
+      'Ułóż literę A z patyków.',
+      'Opisz kolor liścia.',
+      'Zrób 10 kroków do przodu i 5 w bok.',
+      'Stań na jednej nodze i licz do 10 na głos.'
+    ];
+    const endings = {
+      handel:{
+        name:'Otwarcie na handel',
+        desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw. Targowiska rozbłysły kolorami, a rzemieślnicy zyskali dostęp do nowych surowców i technik.\n\nLecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?`
+      },
+      granice:{
+        name:'Zamknięcie granic',
+        desc:`Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.\n\nJednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?`
+      },
+      prawo:{
+        name:'Wprowadzenie nowego prawa',
+        desc:`Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.\n\nNowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku? A może reforma stanie się iskrą większego ognia?`
+      }
+    };
+
     function show(id){
       document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
@@ -224,29 +286,60 @@
     function pick(r){
       role=r;
       document.querySelectorAll('#page3 .role')
-        .forEach(el=>el.classList.toggle('selected',el.dataset.role===r));
+        .forEach(el=>el.classList.toggle('selected',el.dataset-role===r));
       document.getElementById('btn3').disabled=false;
     }
     function showVideo(){
-      document.getElementById('roleVideo').src = role + '.1.mp4';
+      document.getElementById('roleVideo').src=vids[role];
       document.getElementById('videoOverlay').style.display='flex';
     }
     function hideVideoAndNext(){
       document.getElementById('videoOverlay').style.display='none';
       show('page4');
     }
+    function updateStats(){
+      document.getElementById('count').innerText=count;
+      document.getElementById('toCouncil').disabled = count<4;
+    }
+    document.querySelectorAll('.confirm').forEach(btn=>{
+      btn.onclick=()=>{
+        const row=btn.closest('.task-row');
+        const ans=row.dataset.ans, inp=row.querySelector('input');
+        const val=inp.value.trim().toUpperCase();
+        if(val===ans){
+          if(!row.classList.contains('correct')){
+            row.classList.remove('wrong');
+            row.classList.add('correct');
+            count++;
+          }
+        } else {
+          if(row.classList.contains('correct')){
+            row.classList.remove('correct');
+            count--;
+          }
+          row.classList.add('wrong');
+        }
+        updateStats();
+      };
+    });
+    document.querySelectorAll('.reset-icon').forEach(btn=>{
+      btn.onclick=()=>{
+        const row=btn.closest('.task-row');
+        if(row.classList.contains('correct')){row.classList.remove('correct');count--;}
+        row.classList.remove('wrong');
+        row.querySelector('input').value='';
+        updateStats();
+      };
+    });
     function draw(){
-      const tasks=[/*...*/];
-      document.getElementById('randomTask').innerText =
-        tasks[Math.floor(Math.random()*tasks.length)];
+      document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
       document.getElementById('sideBtn').disabled=false;
     }
     function markSide(){
-      sideDone=true;
-      document.getElementById('sideBtn').style.background='lime';
+      sideDone=true; document.getElementById('sideBtn').style.background='lime';
     }
     function finish(dec){
-      team=document.getElementById('teamName').value.trim();
+      team=document.getElementById('teamName').value;
       document.getElementById('resTeam').innerText=team;
       document.getElementById('resRole').innerText=role;
       document.getElementById('resDec').innerText=endings[dec].name;
@@ -254,17 +347,17 @@
       document.getElementById('avatar').src=role+'.png';
       document.getElementById('resSide').innerText=sideDone?'TAK':'NIE';
       document.getElementById('resCount').innerText=count;
-      document.querySelector('.badges').innerHTML=
-        `<img src="medalion.1.png" alt="Medalion">`+
-        (sideDone?`<img src="korona.1.png" alt="Korona">`:'');
-      document.querySelector('.downloads').innerHTML=
-        `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>`+
-        (sideDone?`<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`:'');
+      document.querySelector('.badges').innerHTML =
+        `<img src="medalion.1.png" alt="Medalion">` + (sideDone?`<img src="korona.1.png" alt="Korona">`:'');
+      document.querySelector('.downloads').innerHTML =
+        `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>` + (sideDone?`<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`:'');
       show('page6');
     }
     function restart(){
       team=role=''; count=0; sideDone=false;
       document.getElementById('teamName').value='';
+      document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong');r.querySelector('input').value='';});
+      updateStats();
       show('page1');
     }
   </script>
