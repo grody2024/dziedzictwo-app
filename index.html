@@ -2,40 +2,139 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
   <title>Grodowa Odyseja</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    /* Reset i podstawowy układ */
+    /* Reset i układ */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-    body { font-family: 'MedievalSharp', cursive; background: url('tło gry.png') center/cover fixed; color: #f4f1e6; }
-    .screen { display: none; padding: 16px; min-height: 100vh; max-width: 480px; margin: auto; animation: fadeIn 0.5s; }
+    body { 
+      font-family: 'MedievalSharp', cursive;
+      background: url('tło gry.png') center/cover fixed;
+      color: #f4f1e6;
+    }
+    .screen {
+      display: none;
+      padding: 16px;
+      min-height: 100vh;
+      max-width: 480px;
+      margin: auto;
+      animation: fadeIn 0.5s;
+    }
     .active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    h1, h2, h3 { text-align: center; font-family: 'Uncial Antiqua', cursive; text-shadow: 2px 2px 4px rgba(0,0,0,0.6); margin-bottom: 12px; }
-    input[type=text] { width: 100%; padding: 10px; margin: 8px 0; font-size: 16px; border-radius: 6px; border: none; }
-    .btn { display: block; width: 100%; background: linear-gradient(to bottom,#c49e5b,#8b6237); color: #fff9e6; padding: 12px; border: none; border-radius: 8px; font-size: 18px; margin: 8px 0; cursor: pointer; }
+    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+
+    h1,h2,h3 {
+      text-align: center;
+      font-family: 'Uncial Antiqua', cursive;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+      margin-bottom: 12px;
+    }
+    .instruction-box {
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #8d744a;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .instruction-box ul {
+      list-style: disc inside;
+      margin-left: 16px;
+    }
+    input[type=text] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      margin: 8px 0;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(to bottom,#c49e5b,#8b6237);
+      color: #fff9e6;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      margin: 8px 0;
+      cursor: pointer;
+    }
     .btn:disabled { opacity: 0.6; cursor: default; }
-    .instruction-box { background: rgba(0,0,0,0.6); border: 2px solid #8d744a; border-radius: 8px; padding: 12px; margin: 12px 0; }
-    .instruction-box p, .instruction-box ul { margin-bottom: 8px; font-size: 14px; line-height: 1.4; }
-    .roles { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 12px 0; }
-    .role { flex: 1 1 100px; text-align: center; cursor: pointer; }
-    .role img { width: 100%; max-width: 120px; height: auto; border-radius: 50%; border: 3px solid transparent; transition: border 0.3s, box-shadow 0.3s; }
-    .role.selected img { border-color: gold; box-shadow: 0 0 8px gold; }
-    #videoOverlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; flex-direction:column; align-items:center; justify-content:center; padding:16px; z-index:1000; }
-    #videoOverlay video { width:100%; max-width:480px; border-radius:12px; }
-    .task-row { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
-    .task-row span { flex: 1; }
-    .task-row input { flex: 1 1 100px; padding: 6px; border: 2px solid #444; border-radius: 4px; }
-    .task-row.correct input { border-color: lime; background: rgba(0,128,0,0.2); }
-    .task-row.wrong input { border-color: crimson; background: rgba(255,0,0,0.2); }
-    .reset-icon { background: none; border: none; font-size: 20px; cursor: pointer; }
-    #needFour { text-align: center; margin: 12px 0; font-style: italic; }
-    .badges { display: flex; gap: 16px; justify-content: center; margin: 16px 0; }
-    .badges img { width: 80px; }
-    #finalPortrait img { display: block; margin: 0 auto 12px; width: 120px; height: auto; border-radius: 50%; }
-    @media (max-width:400px) { .role img { max-width:80px; } .btn { font-size:16px; padding:10px; } }
+
+    .roles {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center; margin: 12px 0;
+    }
+    .role {
+      flex: 1 1 100px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .role img {
+      width: 100%; max-width: 120px;
+      height: auto;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+    .role.selected img {
+      border-color: gold;
+      box-shadow: 0 0 8px gold;
+    }
+
+    #videoOverlay {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.9);
+      display:none; align-items:center; justify-content:center;
+      flex-direction:column; z-index:1000; padding:16px;
+    }
+    #videoOverlay video {
+      width:90%; max-width:480px; border-radius:12px;
+    }
+
+    #tasksList { margin-top:12px; }
+    .task-row {
+      display:flex; gap:8px; align-items:center; margin:8px 0;
+    }
+    .task-row span { flex:1; }
+    .task-row input {
+      flex:1 1 100px; padding:6px;
+      border:2px solid #444; border-radius:4px;
+    }
+    .task-row.correct input {
+      border-color:lime; background:rgba(0,128,0,0.2);
+    }
+    .task-row.wrong input {
+      border-color:crimson; background:rgba(255,0,0,0.2);
+    }
+    .reset-icon {
+      background:none; border:none;
+      font-size:20px; cursor:pointer;
+    }
+    #needFour {
+      text-align:center; font-style:italic; margin:12px 0;
+    }
+
+    .badges {
+      display:flex; gap:16px; justify-content:center; margin:16px 0;
+    }
+    .badges img { width:80px; }
+
+    #finalPortrait img {
+      display:block; margin:0 auto 12px;
+      width:120px; height:auto; border-radius:50%;
+    }
+
+    @media (max-width:400px) {
+      .role img { max-width:80px; }
+      .btn { font-size:16px; padding:10px; }
+    }
   </style>
 </head>
 <body>
@@ -45,7 +144,12 @@
   <div id="page1" class="screen active">
     <h1>GRODOWA ODYSEJA</h1>
     <div class="instruction-box">
-      <p>Podaj nazwę drużyny, aby rozpocząć przygodę.</p>
+      <ul>
+        <li>Wpisz nazwę drużyny → <strong>DALEJ</strong></li>
+        <li>Przeczytaj fabułę → <strong>DALEJ</strong></li>
+        <li>Wybierz postać → <strong>DALEJ</strong></li>
+        <li>Obejrzyj filmik → <strong>ZADAJ</strong></li>
+      </ul>
     </div>
     <input id="teamName" type="text" placeholder="Nazwa drużyny">
     <button id="next1" class="btn">DALEJ</button>
@@ -57,8 +161,20 @@
     <div class="instruction-box">
       <p>Rok 972.<br>
       Mówi się, że to będzie ostatni spokojny rok.<br>
-      Ziemia wokół nas drży...<br>
-      [Pełna fabuła z PRZECZYTAJ MNIE.md]</p>
+      Ziemia wokół nas drży, jakby czuła zbliżające się przesilenie. Od południa płyną wieści o zwycięstwie Mieszka I pod Cedynią – król niemiecki Otton posłał swego margrabiego Hodona, który padł pod mieczem Czcibora. Zwycięstwo? Być może. Ale i znak, że imperia patrzą na nas coraz łapczywiej.</p>
+      <p>Ze wschodu słychać nową mowę – słowa jak syk żmii, przynoszące prawa pisane obcym alfabetem, pismo od Rusów, którzy wiążą się z bizantyjskim krzyżem i starymi bogami jednocześnie. Ich handlarze przynoszą srebro i niepokój.</p>
+      <p>Z zachodu nadciąga inna fala – wiara, która każe równać święte dęby z ziemią i wznosić kamienne kaplice. Mówią, że Mieszko już przyjął ten krzyż, że oddał Dąbrówkę za pokój i chrzest. Ale czy pokój zrodzony z handlu duszami jest trwały?</p>
+      <p>A my? Wciąż trwamy na wzgórzu, gdzie przodkowie wznosili palisady, świątynie i kamienie ofiarne. Grodzisko Sopockie – dawniej punkt siły, teraz ciche, lecz czujne. Ono widziało więcej niż legendy.</p>
+      <p>Pamięta czasy, gdy żelazo nie było towarem, lecz dziedzictwem – przekazywanym przez pokolenia kowali, którzy znali tajemnice ognia i ziemi. Gdy nie było jeszcze książąt, ale Rada Starszych i szeptunki, których głos ważył więcej niż ostrze. Gdy wilcze wycie zwiastowało burzę, a kruki przy świątyniach ostrzegały przed zdradą.</p>
+      <p>Teraz, gdy świat rozdziera się między nowym a starym, potrzebujemy nie wojowników – lecz strażników pamięci.<br>
+      Nie wojów. Nie możnych.<br>
+      <strong>Was.</strong><br>
+      Mieszkańców Grodu: cieśli, tkaczy, zwiadowców, zielarki, rzemieślników, handlarzy. Ludzi, których życie splata się z tą ziemią jak włókna we wspólnym splocie.</p>
+      <p>Wezwano was, byście stanęli do Próby Dziedzictwa Żelaza. W ciągu najbliższej godziny odnajdziecie ślady przeszłości, zagubione w mchu, popiele i zapomnieniu. Zbierzecie fragmenty prawdy, słowa przodków i znaki losu. Odbudujecie historię taką, jaka była, zanim została spisana przez obcych.</p>
+      <p>A potem staniecie przed Radą.<br>
+      I zadecydujecie:<br>
+      Czy Grodzisko otworzy bramy – przyjmując nowe mowy, nowych bogów, nowe prawa…<br>
+      …czy zamknie się na sto lat – trwając przy ogniu, który płonął, zanim spadły pierwsze monety z cesarskiej mennicy.</p>
     </div>
     <button id="next2" class="btn">DALEJ</button>
   </div>
@@ -67,11 +183,11 @@
   <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
-      <div class="role" data-role="zwiadowca"><img src="zwiadowca.1.png" alt="Zwiadowca"><p>Zwiadowca</p></div>
-      <div class="role" data-role="tkaczka"><img src="tkaczka.1.png" alt="Tkaczka"><p>Tkaczka</p></div>
-      <div class="role" data-role="zielarka"><img src="zielarka.1.png" alt="Zielarka"><p>Zielarka</p></div>
-      <div class="role" data-role="kupiec"><img src="kupiec.1.png" alt="Kupiec"><p>Kupiec</p></div>
-      <div class="role" data-role="rzemieslnik"><img src="rzemieslnik.1.png" alt="Rzemieślnik"><p>Rzemieślnik</p></div>
+      <div class="role" data-role="zwiadowca"><img src="zwiadowca.1.png" alt=""><p>Zwiadowca</p></div>
+      <div class="role" data-role="tkaczka"><img src="tkaczka.1.png" alt=""><p>Tkaczka</p></div>
+      <div class="role" data-role="zielarka"><img src="zielarka.1.png" alt=""><p>Zielarka</p></div>
+      <div class="role" data-role="kupiec"><img src="kupiec.1.png" alt=""><p>Kupiec</p></div>
+      <div class="role" data-role="rzemieslnik"><img src="rzemieslnik.1.png" alt=""><p>Rzemieślnik</p></div>
     </div>
     <button id="next3" class="btn" disabled>DALEJ</button>
   </div>
@@ -86,19 +202,19 @@
   <div id="page4" class="screen">
     <h2>ZADANIA</h2>
     <div class="instruction-box">
-      <p>Wykonuj samodzielnie – nic nie wpisujesz.</p>
-      <p id="randomTask">Kliknij 🎲, aby wylosować zadanie poboczne</p>
-      <button id="randomBtn" class="btn">🎲 LOSUJ</button>
+      <p>Wykonuj samodzielnie – nikt nic nie wpisuje.</p>
+      <button id="randomBtn" class="btn">🎲 Wylosuj</button>
+      <p id="randomTask"></p>
       <button id="sideDone" class="btn" disabled>ZROBIONE</button>
     </div>
     <div id="taskStats">Ukończono: <strong id="completedCount">0</strong>/6</div>
     <div id="tasksList">
-      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
     </div>
     <p id="needFour">Aby przejść dalej, wykonaj min. 4 zadania.</p>
     <button id="toCouncil" class="btn" disabled>PRZEJDŹ DO RADY</button>
@@ -108,36 +224,36 @@
   <div id="page5" class="screen">
     <h2>RADA GRODU</h2>
     <div class="roles council-cards">
-      <div class="role"><h3>🛒 Otwarcie na handel</h3><button class="btn" data-dec="handel">WYBIERAM</button></div>
-      <div class="role"><h3>🛡️ Zamknięcie granic</h3><button class="btn" data-dec="granice">WYBIERAM</button></div>
-      <div class="role"><h3>⚖️ Wprowadzenie nowego prawa</h3><button class="btn" data-dec="prawo">WYBIERAM</button></div>
+      <div class="role"><button class="btn" data-dec="handel">🛒 Otwarcie na handel</button></div>
+      <div class="role"><button class="btn" data-dec="granice">🛡 Zamknięcie granic</button></div>
+      <div class="role"><button class="btn" data-dec="prawo">⚖️ Wprowadzenie nowego prawa</button></div>
     </div>
   </div>
 
   <!-- 7. Podsumowanie -->
   <div id="page6" class="screen">
     <h1>GRATULACJE!</h1>
-    <img src="logo.1.png" class="logo" alt="Logo">
-    <div id="finalPortrait"><img id="outPortrait" alt="Twoja postać"></div>
+    <img src="logo.1.png" class="logo" alt="">
+    <div id="finalPortrait"><img id="outPortrait" alt=""></div>
     <p>Drużyna: <strong id="outTeam"></strong></p>
     <p>Postać: <strong id="outRole"></strong></p>
     <p>Decyzja: <strong id="outDecisionName"></strong></p>
     <p id="outDecisionDesc" style="line-height:1.4; max-width:480px; margin:auto"></p>
     <p>Zadanie poboczne: <strong id="outSideDone"></strong></p>
     <p>Ukończono: <strong id="outPoints"></strong>/6</p>
-    <div id="badges" class="badges"></div>
+    <div class="badges" id="badges"></div>
     <div id="downloads" style="text-align:center;"></div>
     <button id="restart" class="btn">ZAGRAJ PONOWNIE</button>
   </div>
 
   <script>
-    var bg = document.getElementById('bgMusic');
+    const bg = document.getElementById('bgMusic');
     let team='', role='', completed=0, sideDone=false;
     const vids = {
-      zwiadowca: 'zwiadowca.1.mp4',
-      tkaczka:   'tkaczka.1.mp4',
-      zielarka:  'zielarka.1.mp4',
-      kupiec:    'kupiec.1.mp4',
+      zwiadowca:'zwiadowca.1.mp4',
+      tkaczka:  'tkaczka.1.mp4',
+      zielarka: 'zielarka.1.mp4',
+      kupiec:   'kupiec.1.mp4',
       rzemieslnik:'rzemieslnik.1.mp4'
     };
     const sideTasks = [
@@ -147,107 +263,133 @@
       'Zrób zdjęcie czegoś okrągłego.',
       'Znajdź coś na literę P.',
       'Podskocz 3 razy w cieniu.',
-      'Ułóż z patyków literę A.',
+      'Ułóż literę A z patyków.',
       'Opisz kolor liścia.',
-      'Zrób 10 kroków do przodu i pokaż coś interesującego.',
+      'Zrób 10 kroków do przodu i pokaż coś ciekawego.',
       'Stań na jednej nodze i policz do 10.'
     ];
     const endings = {
-      handel: { name:'Otwarcie na handel', desc:`Po gorących naradach bramy otwarto...` },
-      granice:{ name:'Zamknięcie granic', desc:`Mury wzmocniono...` },
-      prawo:  { name:'Wprowadzenie nowego prawa', desc:`Nowe ustawy...` }
+      handel:  { name:'Otwarcie na handel', desc:'Po gorących naradach bramy otwarto...' },
+      granice: { name:'Zamknięcie granic',     desc:'Mury wzmocniono i straż rozmnożono...' },
+      prawo:   { name:'Wprowadzenie nowego prawa',desc:'Nowe ustawy wprowadzono...' }
     };
+
     function show(id){
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
-    document.body.addEventListener('click', () => bg.play().catch(), { once:true });
-    document.getElementById('next1').onclick = () => {
+
+    // Muzyka po pierwszym kliknięciu
+    document.body.addEventListener('click', ()=>bg.play().catch(), { once:true });
+
+    // 1→2
+    document.getElementById('next1').onclick = ()=>{
       const v = document.getElementById('teamName').value.trim();
       if(!v) return alert('Podaj nazwę drużyny');
       team = v;
       show('page2');
     };
-    document.getElementById('next2').onclick = () => show('page3');
-    document.querySelectorAll('#page3 .role').forEach(el => el.onclick = () => {
-      document.querySelectorAll('#page3 .role').forEach(r => r.classList.remove('selected'));
-      el.classList.add('selected');
-      role = el.dataset.role;
-      document.getElementById('next3').disabled = false;
-    });
-    document.getElementById('next3').onclick = () => {
-      const videoEl = document.getElementById('roleVideo');
-      videoEl.src = vids[role];
-      videoEl.onloadeddata = () => document.getElementById('videoOverlay').style.display = 'flex';
-      videoEl.onerror = () => show('page4');
+    // 2→3
+    document.getElementById('next2').onclick = ()=> show('page3');
+    // wybór postaci
+    document.querySelectorAll('#page3 .role').forEach(el=>
+      el.onclick = ()=>{
+        document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected'));
+        el.classList.add('selected');
+        role = el.dataset.role;
+        document.getElementById('next3').disabled = false;
+      }
+    );
+    // 3→video
+    document.getElementById('next3').onclick = ()=>{
+      const vid = document.getElementById('roleVideo');
+      vid.src = vids[role];
+      vid.onloadeddata = ()=> document.getElementById('videoOverlay').style.display = 'flex';
+      vid.onerror = ()=> show('page4');
     };
-    document.getElementById('videoNext').onclick = () => {
-      completed = 0;
-      sideDone = false;
+    document.getElementById('videoNext').onclick = ()=>{
+      sideDone = false; completed=0;
       show('page4');
-      document.getElementById('videoOverlay').style.display = 'none';
-      document.getElementById('completedCount').innerText = '0';
+      document.getElementById('videoOverlay').style.display='none';
+      document.getElementById('completedCount').innerText='0';
+      document.getElementById('sideDone').disabled = false;
+      document.getElementById('randomTask').innerText = '';
       document.getElementById('toCouncil').disabled = true;
-      document.querySelectorAll('.task-row').forEach(r => {
+      document.querySelectorAll('.task-row').forEach(r=>{
         r.classList.remove('correct','wrong');
         r.querySelector('input').value = '';
       });
     };
-    document.getElementById('randomBtn').onclick = () => {
+    // losowanie pobocznych
+    document.getElementById('randomBtn').onclick = ()=>{
       document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
     };
-    document.getElementById('sideDone').onclick = () => {
+    document.getElementById('sideDone').onclick = ()=>{
       sideDone = true;
       const b = document.getElementById('sideDone');
-      b.innerText = 'ZROBIONE';
-      b.style.background = 'lime';
+      b.innerText = 'ZROBIONE'; b.style.background='lime';
     };
+    // zadania główne
     function updateStats(){
       document.getElementById('completedCount').innerText = completed;
       document.getElementById('toCouncil').disabled = (completed < 4);
     }
-    document.querySelectorAll('.task-row').forEach(row => {
+    document.querySelectorAll('.task-row').forEach(row=>{
       const ans = row.dataset.ans;
       const inp = row.querySelector('input');
       const ok  = row.querySelector('.confirm');
       const clr = row.querySelector('.reset-icon');
-      ok.onclick = () => {
+      ok.onclick = ()=>{
         const v = inp.value.trim().toUpperCase();
         if(v === ans){
           row.classList.remove('wrong');
-          if(!row.classList.contains('correct')){ row.classList.add('correct'); completed++; }
+          if(!row.classList.contains('correct')){
+            row.classList.add('correct');
+            completed++;
+          }
         } else {
-          if(row.classList.contains('correct')){ row.classList.remove('correct'); completed--; }
+          if(row.classList.contains('correct')){
+            row.classList.remove('correct');
+            completed--;
+          }
           row.classList.add('wrong');
         }
         updateStats();
       };
-      clr.onclick = () => {
-        if(row.classList.contains('correct')){ row.classList.remove('correct'); completed--; }
+      clr.onclick = ()=>{
+        if(row.classList.contains('correct')){
+          row.classList.remove('correct');
+          completed--;
+        }
         row.classList.remove('wrong');
         inp.value = '';
         updateStats();
       };
     });
-    document.getElementById('toCouncil').onclick = () => show('page5');
-    document.querySelectorAll('#page5 .btn[data-dec]').forEach(b => b.onclick = () => {
-      const key = b.dataset.dec;
-      document.getElementById('outTeam').innerText = team;
-      document.getElementById('outRole').innerText = role;
-      document.getElementById('outDecisionName').innerText = endings[key].name;
-      document.getElementById('outDecisionDesc').innerText = endings[key].desc;
-      document.getElementById('outPortrait').src = role + '.png';
-      document.getElementById('outSideDone').innerText = sideDone ? 'TAK' : 'NIE';
-      document.getElementById('outPoints').innerText = completed;
-      const bc = document.getElementById('badges');
-      bc.innerHTML = `<div><img src="medalion.1.png"><p>Medalion Grodu</p></div>`;
-      if(sideDone) bc.innerHTML += `<div><img src="korona.1.png"><p>Korona Wyzwań</p></div>`;
-      const dl = document.getElementById('downloads');
-      dl.innerHTML = `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>`;
-      if(sideDone) dl.innerHTML += `<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`;
-      show('page6');
-    });
-    document.getElementById('restart').onclick = () => location.reload();
+    document.getElementById('toCouncil').onclick = ()=> show('page5');
+
+    // Rada
+    document.querySelectorAll('#page5 .btn[data-dec]').forEach(b=>
+      b.onclick = ()=>{
+        const key = b.dataset.dec;
+        document.getElementById('outTeam').innerText = team;
+        document.getElementById('outRole').innerText = role;
+        document.getElementById('outDecisionName').innerText = endings[key].name;
+        document.getElementById('outDecisionDesc').innerText = endings[key].desc;
+        document.getElementById('outPortrait').src = `${role}.png`;
+        document.getElementById('outSideDone').innerText = sideDone ? 'TAK' : 'NIE';
+        document.getElementById('outPoints').innerText = completed;
+        const bc = document.getElementById('badges');
+        bc.innerHTML = `<img src="medalion.1.png"><img src="korona.1.png">`;
+        const dl = document.getElementById('downloads');
+        dl.innerHTML = `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>
+                        <a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`;
+        show('page6');
+      }
+    );
+
+    // restart
+    document.getElementById('restart').onclick = ()=> location.reload();
   </script>
 </body>
 </html>
