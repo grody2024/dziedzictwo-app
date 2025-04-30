@@ -31,7 +31,7 @@
     .task-row.wrong input { border-color:crimson; background:rgba(255,0,0,0.2); }
     .reset-icon { background:none; border:none; font-size:20px; cursor:pointer; }
 
-    /* finale screen */
+    /* final screen */
     #page6 { display:flex; flex-direction:column; align-items:center; text-align:center; padding:24px; background:rgba(0,0,0,0.6); border-radius:12px; box-shadow:0 0 16px rgba(0,0,0,0.8); height:100vh; overflow-y:auto; }
     .museum-logo { width:100px; margin-bottom:12px; border:3px solid gold; padding:4px; border-radius:8px; }
     #finalPortrait img { width:120px; height:auto; max-height:200px; object-fit:contain; border-radius:12px; border:4px solid gold; padding:2px; }
@@ -45,8 +45,8 @@
 </head>
 <body>
 
-  <!-- audio bez muted -->
-  <audio id="bgMusic" src="celtic-glory-307625-1.mp3" loop controls></audio>
+  <!-- autoplay audio bez kontrolera -->
+  <audio id="bgMusic" src="celtic-glory-307625-1.mp3" autoplay loop></audio>
 
   <!-- 1. Start -->
   <div id="page1" class="screen active">
@@ -67,9 +67,10 @@
     <input id="teamName" type="text" placeholder="Nazwa drużyny">
     <!-- inline onclick dla pewności -->
     <button class="btn" onclick="
-      const bg= document.getElementById('bgMusic');
+      const bg = document.getElementById('bgMusic');
       bg.play().catch(()=>{});
-      if(!teamName.value.trim()){ alert('Podaj nazwę drużyny'); } else { show('page2'); }
+      if(!teamName.value.trim()){ alert('Podaj nazwę drużyny'); }
+      else { show('page2'); }
     ">DALEJ</button>
   </div>
 
@@ -131,7 +132,7 @@
     </div>
     <p>Ukończono: <span id="count">0</span>/6</p>
     <div id="tasksList">
-      <!-- analogicznie zadania… -->
+      <!-- dodaj task-row według wzoru -->
     </div>
     <button id="toCouncil" class="btn" disabled onclick="show('page5')">PRZEJDŹ DO RADY</button>
   </div>
@@ -146,9 +147,9 @@
 
   <!-- 7. Gratulacje -->
   <div id="page6" class="screen">
-    <img src="logo.1.png" class="museum-logo">
+    <img src="logo.1.png" class="museum-logo" alt="Muzeum">
     <h1>GRATULACJE!</h1>
-    <div id="finalPortrait"><img id="avatar"></div>
+    <div id="finalPortrait"><img id="avatar" alt="Twoja postać"></div>
     <p>Drużyna: <span id="resTeam"></span></p>
     <p>Postać: <span id="resRole"></span></p>
     <p>Decyzja: <span id="resDec"></span></p>
@@ -161,9 +162,11 @@
   </div>
 
   <script>
-    // global state
     let team='', role='', count=0, sideDone=false;
-    function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+    function show(id){
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
     function pick(r){
       role=r;
       document.querySelectorAll('#page3 .role').forEach(el=>el.classList.toggle('selected',el.dataset.role===r));
@@ -174,7 +177,7 @@
       document.getElementById('videoOverlay').style.display='flex';
     }
     function draw(){
-      const tasks = ['Zielone','Kamień','Zdjęcie','Litera A','Kolor liścia'];
+      const tasks=['Zielone','Kamień','Zdjęcie','Litera A','Kolor liścia'];
       document.getElementById('randomTask').innerText = tasks[Math.floor(Math.random()*tasks.length)];
       document.getElementById('sideBtn').disabled=false;
     }
@@ -183,18 +186,19 @@
       document.getElementById('sideBtn').style.background='lime';
     }
     function finish(dec){
-      document.getElementById('resTeam').innerText = document.getElementById('teamName').value;
+      team = document.getElementById('teamName').value;
+      document.getElementById('resTeam').innerText = team;
       document.getElementById('resRole').innerText = role;
       document.getElementById('resDec').innerText = dec;
       document.getElementById('avatar').src = role + '.png';
       document.getElementById('resSide').innerText = sideDone?'TAK':'NIE';
       document.getElementById('resCount').innerText = count;
-      // badges & downloads
-      document.querySelector('.badges').innerHTML = '<img src="medalion.1.png">';
-      if(sideDone) document.querySelector('.badges').innerHTML += '<img src="korona.1.png">';
-      const d = document.querySelector('.downloads');
-      d.innerHTML = '<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>';
-      if(sideDone) d.innerHTML += '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>';
+      document.querySelector('.badges').innerHTML = 
+        '<img src="medalion.1.png" alt="Medalion Odyseja Grodowa">' +
+        (sideDone? '<img src="korona.1.png" alt="Korona Zadań">':'');
+      document.querySelector('.downloads').innerHTML =
+        '<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>' +
+        (sideDone? '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>':'');
       show('page6');
     }
     function restart(){
