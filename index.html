@@ -48,7 +48,15 @@
     /* Gratulacje */
     #page6 { display:flex; flex-direction:column; align-items:center; text-align:center; padding:24px; background:rgba(0,0,0,0.6); border-radius:12px; box-shadow:0 0 16px rgba(0,0,0,0.8); height:100vh; overflow-y:auto; }
     .museum-logo { width:100px; margin-bottom:12px; border:3px solid gold; padding:4px; border-radius:8px; }
-    #finalPortrait img { width:120px; height:120px; object-fit:cover; border-radius:50%; margin-bottom:12px; border:4px solid gold; padding:2px; }
+    #finalPortrait img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 12px;
+      border: 4px solid gold;
+      padding: 2px;
+    }
     .badges { display:flex; gap:16px; margin:12px 0; }
     .badges img { width:60px; }
     .downloads { display:flex; gap:8px; margin:12px 0; }
@@ -199,21 +207,41 @@
       document.getElementById('next1').onclick=()=>{ const v=document.getElementById('teamName').value.trim(); if(!v)return alert('Podaj nazwę drużyny'); team=v; show('page2'); };
       document.getElementById('next2').onclick=()=>show('page3');
       document.querySelectorAll('#page3 .role').forEach(el=>el.onclick=()=>{ document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected')); el.classList.add('selected'); role=el.dataset.role; document.getElementById('next3').disabled=false; });
-      document.getElementById('next3').onclick=()=>{ document.getElementById('roleVideo').src=vids[role]; show('videoOverlay'); };
-      document.getElementById('videoNext').onclick=()=>{ sideDone=false; completed=0; updateStats(); show('page4'); document.getElementById('sideDone').disabled=true; document.getElementById('randomTask').innerText=''; document.querySelectorAll('.task-row').forEach(r=>{r.classList.remove('correct','wrong');r.querySelector('input').value='';}); document.getElementById('videoOverlay').style.display='none'; };
-      // Losowanie
+      document.getElementById('next3').onclick = () => {
+        document.getElementById('roleVideo').src = vids[role];
+        document.getElementById('videoOverlay').style.display = 'flex';
+      };
+        overlay.style.display = 'flex';
+      }; show('videoOverlay'); };
+      document.getElementById('videoNext').onclick = () => {
+        // Schowaj filmik i przejdź do zadań
+        document.getElementById('videoOverlay').style.display = 'none';
+        sideDone = false;
+        completed = 0;
+        updateStats();
+        show('page4');
+        const sd = document.getElementById('sideDone');
+        sd.disabled = true;
+        sd.innerText = 'ZREALIZOWANE';
+        sd.style.background = '';
+        document.getElementById('randomTask').innerText = '';
+        document.querySelectorAll('.task-row').forEach(r => { r.classList.remove('correct','wrong'); r.querySelector('input').value = ''; });
+      };
+            // Losowanie
       document.getElementById('randomBtn').onclick = () => {
         document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
-        document.getElementById('sideDone').disabled = false;
-        document.getElementById('sideDone').style.background = '';
+        const sd = document.getElementById('sideDone');
+        sd.disabled = false;
+        sd.style.background = ''; // reset kolor
       };
-      // Losowanie
+      
+      // Zadanie poboczne - jeden handler
       document.getElementById('sideDone').onclick = function() {
         sideDone = true;
         this.innerText = 'ZREALIZOWANE';
         this.style.background = 'lime';
       };
-      document.getElementById('sideDone').onclick=()=>{ sideDone=true; document.getElementById('sideDone').innerText='ZREALIZOWANE'; };
+
       // Zadania główne
       document.querySelectorAll('.task-row').forEach(row=>{
         const ans=row.dataset.ans, inp=row.querySelector('input'), btn=row.querySelector('.confirm'), clr=row.querySelector('.reset-icon');
