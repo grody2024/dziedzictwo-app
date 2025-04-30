@@ -32,7 +32,7 @@
   <div id="page1" class="screen">
     <h1>Wpisz nazwę drużyny</h1>
     <input id="team" placeholder="Nazwa drużyny">
-    <button id="btn1" class="btn">Dalej</button>
+    <button class="btn" onclick="const t=document.getElementById('team').value.trim(); if(t){ team=t; show('page2'); } else alert('Podaj nazwę drużyny')">Dalej</button>
   </div>
 
   <div id="page2" class="screen">
@@ -40,9 +40,18 @@
     <div style="background:rgba(0,0,0,.6);padding:12px;border-radius:8px;line-height:1.4">
       <!-- pełna fabuła -->
       <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
-      <!-- pozostałe paragrafy... -->
+      <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
+      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyjskimi bóstwami, niosąc srebro i niepokój.</p>
+      <p>Z zachodu zaś unoszą się słowa o chrzcie i kaplicach kamiennych: mówią, że Dąbrówka przyniosła pokój, lecz czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
+      <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie tutaj pamięci przodków: w popiele ognisk, pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
+      <p>Was wezwano do Próby Dziedzictwa Żelaza. W ciągu godziny odnajdziecie trzy Ślady Przeszłości, by przy Radzie Starszych zadecydować:</p>
+      <ul style="list-style:disc inside;margin-left:16px">
+        <li>Czy otworzyć Grodzisko na obce mowy, bogów i prawa…</li>
+        <li>Czy zamknąć bramy na sto lat, strzegąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie.</li>
+      </ul>
+      <p>Oto wasza chwila – chwila strażników pamięci i kowali nowych losów. Wasza Odyseja Grodowa zaczyna się teraz.</p>
     </div>
-    <button id="btn2" class="btn">Dalej</button>
+    <button class="btn" onclick="show('page3')">Dalej</button>
   </div>
 
   <div id="page3" class="screen">
