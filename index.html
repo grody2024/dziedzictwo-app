@@ -2,61 +2,60 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grodowa Odyseja</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'MedievalSharp',cursive;background:url('tło gry.png') center/cover fixed;color:#f4f1e6;overflow:hidden}
-    .screen{display:none;padding:16px;max-width:480px;margin:auto;height:100vh;overflow-y:auto;animation:fadeIn .4s}
-    .active{display:block}
-    h1,h2{font-family:'Uncial Antiqua',cursive;text-align:center;text-shadow:2px 2px 4px rgba(0,0,0,.6);margin-bottom:12px}
-    .btn,input{width:100%;padding:10px;margin:8px 0;border:none;border-radius:6px;font-size:16px}
-    .btn{background:linear-gradient(to bottom,#c49e5b,#8b6237);color:#fff9e6;cursor:pointer}
-    .btn:disabled{opacity:.6;cursor:default}
-    .overlay, .ending{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.85);z-index:1000;flex-direction:column;text-align:center;padding:16px}
-    .ending{background:rgba(0,0,0,.7);border:2px solid gold;border-radius:8px;max-width:400px;overflow-y:auto}
-    .roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:12px;justify-items:center;margin-bottom:12px}
-    .roles img{width:80px;height:80px;object-fit:cover;border:3px solid transparent;border-radius:8px;cursor:pointer;transition:transform .2s}
-    .roles img.selected{border-color:gold;transform:scale(1.05)}
-    .badges{margin-top:12px;display:flex;gap:12px;justify-content:center}
-    .badges img{width:60px}
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'MedievalSharp', cursive; background: url('tło gry.png') center/cover fixed; color: #f4f1e6; overflow: hidden; }
+    .screen { display: none; padding: 16px; max-width: 480px; margin: auto; height: 100vh; overflow-y: auto; animation: fadeIn .4s; }
+    .active { display: block; }
+    h1, h2 { font-family: 'Uncial Antiqua', cursive; text-align: center; text-shadow: 2px 2px 4px rgba(0,0,0,.6); margin-bottom: 12px; }
+    .btn, input[type=text] { width: 100%; padding: 10px; margin: 8px 0; border: none; border-radius: 6px; font-size: 16px; }
+    .btn { background: linear-gradient(to bottom, #c49e5b, #8b6237); color: #fff9e6; cursor: pointer; }
+    .btn:disabled { opacity: .6; cursor: default; }
+    .overlay, .ending { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.85); z-index: 1000; flex-direction: column; text-align: center; padding: 16px; }
+    .ending { background: rgba(0,0,0,.7); border: 2px solid gold; border-radius: 8px; max-width: 400px; overflow-y: auto; }
+    .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px,1fr)); gap: 12px; justify-items: center; margin-bottom: 12px; }
+    .roles img { width: 80px; height: 80px; object-fit: cover; border: 3px solid transparent; border-radius: 8px; cursor: pointer; transition: transform .2s; }
+    .roles img.selected { border-color: gold; transform: scale(1.05); }
+    .badges { margin-top: 12px; display: flex; gap: 12px; justify-content: center; }
+    .badges img { width: 60px; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 <body>
-  <!-- Start Overlay -->
+  <!-- Start -->
   <div id="start" class="overlay">
     <h1>GRODOWA ODYSEJA</h1>
     <button id="startBtn" class="btn">▶️ Start</button>
   </div>
-
-  <audio id="bg" src="celtic-glory-307625.mp3" loop playsinline muted autoplay></audio>
+  <audio id="bgMusic" src="celtic-glory-307625.mp3" loop playsinline muted autoplay></audio>
 
   <!-- 1. Registration -->
   <div id="page1" class="screen">
     <h1>Wpisz nazwę drużyny</h1>
-    <input id="team" placeholder="Nazwa drużyny">
-    <button class="btn" onclick="const t=team.value.trim(); if(t){teamName=t;show('page2')}else alert('Podaj nazwę drużyny')">Dalej</button>
+    <input id="teamInput" type="text" placeholder="Nazwa drużyny">
+    <button id="btn1" class="btn">Dalej</button>
   </div>
 
   <!-- 2. Story -->
   <div id="page2" class="screen">
     <h2>Rok 972 – Czas Próby</h2>
-    <div style="background:rgba(0,0,0,.6);padding:12px;border-radius:8px;line-height:1.4">
+    <div style="background: rgba(0,0,0,.6); padding: 12px; border-radius:8px; line-height:1.4;">
       <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
       <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
       <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyjskimi bóstwami, niosąc srebro i niepokój.</p>
       <p>Z zachodu zaś unoszą się słowa o chrzcie i kaplicach kamiennych: mówią, że Dąbrówka przyniosła pokój, lecz czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
       <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie tutaj pamięci przodków: w popiele ognisk, pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
       <p>Was wezwano do Próby Dziedzictwa Żelaza. W ciągu godziny odnajdziecie trzy Ślady Przeszłości, by przy Radzie Starszych zadecydować:</p>
-      <ul style="list-style:disc inside;margin-left:16px">
+      <ul style="list-style: disc inside; margin-left:16px;">
         <li>Czy otworzyć Grodzisko na obce mowy, bogów i prawa…</li>
         <li>Czy zamknąć bramy na sto lat, strzegąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie.</li>
       </ul>
       <p>Oto wasza chwila – chwila strażników pamięci i kowali nowych losów. Wasza Odyseja Grodowa zaczyna się teraz.</p>
     </div>
-    <button class="btn" onclick="show('page3')">Dalej</button>
+    <button id="btn2" class="btn">Dalej</button>
   </div>
 
   <!-- 3. Choose Role -->
@@ -69,31 +68,31 @@
       <img src="kupiec.png" alt="Kupiec" onclick="pick('Kupiec','kupiec.1.mp4','kupiec.png')">
       <img src="rzemieslnik.png" alt="Rzemieślnik" onclick="pick('Rzemieślnik','rzemieslnik.1.mp4','rzemieslnik.png')">
     </div>
-    <button id="next3" class="btn" disabled onclick="showVideo()">Dalej</button>
+    <button id="btn3" class="btn" disabled>Dalej</button>
   </div>
 
   <!-- 4. Video Overlay -->
-  <div id="videoOverlay" class="overlay" style="display:none">
-    <video id="roleVideo" controls style="width:90%;max-width:480px;border-radius:12px"></video>
-    <button class="btn" onclick="hideVideoAndNext()">Dalej do zadań</button>
+  <div id="videoOverlay" class="overlay" style="display:none;">
+    <video id="roleVideo" controls style="width:90%;max-width:480px;border-radius:12px;"></video>
+    <button id="btn4" class="btn">Dalej do zadań</button>
   </div>
 
   <!-- 5. Tasks -->
   <div id="page4" class="screen">
     <h2>Zadania</h2>
-    <button class="btn" onclick="draw()">🎲 Losuj poboczne</button>
+    <button id="drawBtn" class="btn">🎲 Losuj poboczne</button>
     <p id="randomTask"></p>
-    <button id="sideBtn" class="btn" disabled onclick="markSide()">Zrealizowane</button>
+    <button id="sideBtn" class="btn" disabled>Zrealizowane</button>
     <p>Ukończono: <span id="count">0</span>/6</p>
     <div id="tasksList">
-      <div data-ans="LAMELKA"><span>Brama Grodziska</span><input><button onclick="check(this)">Zatwierdź</button></div>
-      <div data-ans="MIECH"><span>Warsztat Kowala</span><input><button onclick="check(this)">Zatwierdź</button></div>
-      <div data-ans="ŻYTO"><span>Zagroda</span><input><button onclick="check(this)">Zatwierdź</button></div>
-      <div data-ans="LEN"><span>Chata Tkaczki</span><input><button onclick="check(this)">Zatwierdź</button></div>
-      <div data-ans="POKRZYWA"><span>Chata Zielarki</span><input><button onclick="check(this)">Zatwierdź</button></div>
-      <div data-ans="DIRHEMY"><span>Chata Namiestnika</span><input><button onclick="check(this)">Zatwierdź</button></div>
+      <div data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button onclick="check(this)">Zatwierdź</button></div>
+      <div data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button onclick="check(this)">Zatwierdź</button></div>
+      <div data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button onclick="check(this)">Zatwierdź</button></div>
+      <div data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button onclick="check(this)">Zatwierdź</button></div>
+      <div data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button onclick="check(this)">Zatwierdź</button></div>
+      <div data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button onclick="check(this)">Zatwierdź</button></div>
     </div>
-    <button id="toCouncil" class="btn" disabled onclick="show('page5')">Przejdź do Rady</button>
+    <button id="btn5" class="btn" disabled>Przejdź do Rady</button>
   </div>
 
   <!-- 6. Council -->
@@ -116,17 +115,17 @@
       <p>Ukończono: <strong id="resCount"></strong>/6</p>
       <div class="badges">
         <img src="medalion.1.png" alt="Medalion">
-        <img src="korona.1.png" id="badgeCrown" style="display:none">
+        <img src="korona.1.png" id="badgeCrown" style="display:none;">
       </div>
       <button class="btn" onclick="location.reload()">Zagraj ponownie</button>
     </div>
   </div>
 
   <script>
-    const pages=['page1','page2','page3','page4','page5','page6'];
-    function show(id){pages.forEach(p=>document.getElementById(p).classList.remove('active'));document.getElementById(id).classList.add('active');}
-    let teamName='',role='',roleVid='',roleImg='',count=0,sideDone=false;
-    const sideTasks=[
+    const pages = ['page1','page2','page3','page4','page5','page6'];
+    function show(id) { pages.forEach(p => document.getElementById(p).classList.remove('active')); document.getElementById(id).classList.add('active'); }
+    let teamName = '', role = '', roleVid = '', roleImg = '', count = 0, sideDone = false;
+    const sideTasks = [
       'Znajdź coś zielonego i dotknij to.',
       'Zrób 5 przysiadów przy ławce.',
       'Znajdź kamień większy niż dłń.',
@@ -138,19 +137,83 @@
       'Zrób 10 kroków do przodu i 5 w bok.',
       'Stań na jednej nodze i licz do 10 na głos.'
     ];
-    const endings={
-      handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosóww...`},
-      granice:{name:'Zamknięcie granic',desc:`Decyzja zapadła w ciszy...`},
-      prawo:{name:'Wprowadzenie nowego prawa',desc:`Głos Starszyzny...`}
+    const endings = {
+      handel: { name: 'Otwarcie na handel', desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw.
+
+Lecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?` },
+      granice: { name: 'Zamknięcie granic', desc: `Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.
+
+Jednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?` },
+      prawo: { name: 'Wprowadzenie nowego prawa', desc: `Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.
+
+Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku? A może reforma stanie się iskrą większego ognia?` }
     };
-    document.getElementById('startBtn').onclick=()=>{const bg=document.getElementById('bg');bg.play().catch();bg.muted=false;show('page1');document.getElementById('start').remove();};
-    function pick(r,v,i){role=r;roleVid=v;roleImg=i;document.querySelectorAll('.roles img').forEach(el=>el.classList.remove('selected'));event.target.classList.add('selected');document.getElementById('next3').disabled=false;}
-    function showVideo(){document.getElementById('roleVideo').src=roleVid;document.getElementById('videoOverlay').style.display='flex';}
-    function hideVideoAndNext(){document.getElementById('videoOverlay').style.display='none';show('page4');}
-    function draw(){const t=sideTasks[Math.floor(Math.random()*sideTasks.length)];document.getElementById('randomTask').innerText=t;document.getElementById('sideBtn').disabled=false;}
-    function markSide(){sideDone=true;document.getElementById('sideBtn').innerText='Zrealizowane';}
-    function check(btn){const row=btn.parentNode;const ans=row.getAttribute('data-ans');const val=row.querySelector('input').value.trim().toUpperCase();if(val===ans){count++;row.querySelector('input').disabled=true;btn.disabled=true;}else return;document.getElementById('count').innerText=count;document.getElementById('toCouncil').disabled=count<4;}
-    function finish(dec){document.getElementById('resTeam').innerText=teamName;document.getElementById('resRole').innerText=role;const e=endings[dec];document.getElementById('desc').innerHTML=`<h3>${e.name}</h3><p>${e.desc.replace(/\n\n/g,'</p><p>')}</p>`;document.getElementById('resSide').innerText=sideDone?'TAK':'NIE';if(sideDone){document.getElementById('crownMsg').innerText='Otrzymujesz koronę zadań!';document.getElementById('badgeCrown').style.display='inline';}document.getElementById('resCount').innerText=count;show('page6');}
+    // Start
+    document.getElementById('startBtn').onclick = () => {
+      const bg = document.getElementById('bgMusic'); bg.play().catch(() => {}); bg.muted = false;
+      show('page1'); document.getElementById('start').remove();
+    };
+    // Page1
+    document.getElementById('btn1').onclick = () => {
+      const val = document.getElementById('teamInput').value.trim();
+      if (!val) return alert('Podaj nazwę drużyny');
+      teamName = val; show('page2');
+    };
+    // Page2
+    document.getElementById('btn2').onclick = () => show('page3');
+    // Choose role
+    function pick(r, v, i) {
+      role = r; roleVid = v; roleImg = i;
+      document.querySelectorAll('.roles img').forEach(img => img.classList.remove('selected'));
+      event.target.classList.add('selected');
+      document.getElementById('btn3').disabled = false;
+    }
+    document.getElementById('btn3').onclick = () => showVideo();
+    // Video overlay
+    function showVideo() {
+      document.getElementById('roleVideo').src = roleVid;
+      document.getElementById('videoOverlay').style.display = 'flex';
+    }
+    document.getElementById('btn4').onclick = () => {
+      document.getElementById('videoOverlay').style.display = 'none';
+      show('page4');
+    };
+    // Tasks
+    document.getElementById('drawBtn').onclick = () => {
+      const task = sideTasks[Math.floor(Math.random()*sideTasks.length)];
+      document.getElementById('randomTask').innerText = task;
+      document.getElementById('sideBtn').disabled = false;
+    };
+    document.getElementById('sideBtn').onclick = () => {
+      sideDone = true;
+      document.getElementById('sideBtn').innerText = 'Zrealizowane';
+    };
+    function check(btn) {
+      const row = btn.parentNode;
+      const ans = row.dataset.ans;
+      const val = row.querySelector('input').value.trim().toUpperCase();
+      if (val !== ans) return alert('Spróbuj ponownie');
+      count++;
+      row.querySelector('input').disabled = true;
+      btn.disabled = true;
+      document.getElementById('count').innerText = count;
+      document.getElementById('btn5').disabled = count < 4;
+    }
+    document.getElementById('btn5').onclick = () => show('page5');
+    // Finish
+    function finish(dec) {
+      document.getElementById('resTeam').innerText = teamName;
+      document.getElementById('resRole').innerText = role;
+      const e = endings[dec];
+      document.getElementById('desc').innerHTML = `<h3>${e.name}</h3><p>${e.desc.replace(/\n\n/g,'</p><p>')}</p>`;
+      document.getElementById('resSide').innerText = sideDone ? 'TAK' : 'NIE';
+      if (sideDone) {
+        document.getElementById('crownMsg').innerText = 'Otrzymujesz koronę zadań!';
+        document.getElementById('badgeCrown').style.display = 'inline';
+      }
+      document.getElementById('resCount').innerText = count;
+      show('page6');
+    }
   </script>
 </body>
 </html>
