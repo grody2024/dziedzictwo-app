@@ -45,7 +45,7 @@
 
     /* Strona podsumowania */
     #page6 { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 24px; background: rgba(0,0,0,0.6); border-radius: 12px; box-shadow: 0 0 16px rgba(0,0,0,0.8); max-width: 480px; margin: auto; }
-    #page6 .logo { width: 80px; margin-bottom: 12px; }
+    #page6 .logo { width: 80px; margin: 0 0 12px; }
     #page6 #finalPortrait img { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; margin-bottom: 12px; }
     #page6 p { margin: 6px 0; }
     #page6 .badges { display: flex; gap: 24px; justify-content: center; margin: 16px 0; }
@@ -65,13 +65,13 @@
     <h1>GRODOWA ODYSEJA</h1>
     <div class="instruction-box">
       <ul>
-        <li>Wpisz nazwę drużyny → <strong>DALEJ</strong></li>
-        <li>Przeczytaj fabułę → <strong>DALEJ</strong></li>
-        <li>Wybierz postać (kliknij w okrąg) → <strong>DALEJ</strong></li>
-        <li>Obejrzyj filmik → <strong>ZADAJ</strong></li>
-        <li>Wykonaj min. 4 zadania główne</li>
-        <li>Zatwierdź odpowiedzi dużymi literami i użyj 🔄, aby resetować</li>
-        <li>Przejdź do Rady → <strong>WYBIERAM</strong></li>
+        <li>1. Wpisz nazwę drużyny → <strong>DALEJ</strong></li>
+        <li>2. Przeczytaj fabułę → <strong>DALEJ</strong></li>
+        <li>3. Wybierz postać (kliknij w okrąg) → <strong>DALEJ</strong></li>
+        <li>4. Obejrzyj filmik → <strong>DALEJ</strong></li>
+        <li>5. Wykonaj min. 4 zadania główne</li>
+        <li>6. Zatwierdź słowa dużymi literami, kliknij <strong>🔄</strong> obok, jeśli pomylisz się</li>
+        <li>7. Kliknij <strong>PRZEJDŹ DO RADY</strong></li>
       </ul>
     </div>
     <input id="teamName" type="text" placeholder="Nazwa drużyny">
@@ -85,9 +85,7 @@
       <p>Rok 972.<br>
       Mówi się, że to będzie ostatni spokojny rok.<br>
       Ziemia wokół nas drży, jakby czuła zbliżające się przesilenie. Od południa płyną wieści o zwycięstwie Mieszka I pod Cedynią – król niemiecki Otton posłał swego margrabiego Hodona, a ten padł pod mieczem Czcibora. Zwycięstwo? Być może. Ale i znak, że imperia patrzą na nas coraz łapczywiej.</p>
-      <p>Ze wschodu słychać nową mowę – słowa jak syk żmii, przynoszące prawa pisane obcym alfabetem, pismo od Rusów, którzy wiążą się z bizantyjskim krzyżem i starymi bogami jednocześnie. Ich handlarze przynoszą srebro i niepokój.</p>
-      <p>Z zachodu nadciąga inna fala – wiara, która każe równać święte dęby z ziemią i wznosić kamienne kaplice. Mówią, że Mieszko już przyjął ten krzyż, że oddał Dąbrówkę za pokój i chrzest. Ale czy pokój zrodzony z handlu duszami jest trwały?</p>
-      <p>My, strażnicy pamięci Grodziska Sopockiego, staniemy w Próbie Dziedzictwa Żelaza – zbierzemy fragmenty prawdy, odtworzymy przeszłość i zdecydujemy o przyszłości Grodu...</p>
+      <p>Ze wschodu słychać nową mowę – słowa jak syk żmii...</p>
     </div>
     <button id="next2" class="btn">DALEJ</button>
   </div>
@@ -108,7 +106,7 @@
   <!-- 4. Filmik inicjacyjny -->
   <div id="videoOverlay">
     <video id="roleVideo" controls></video>
-    <button id="videoNext" class="btn">DALEJ DO ZADAŃ</button>
+    <button id="videoNext" class="btn">DALEJ</button>
   </div>
 
   <!-- 5. Zadania -->
@@ -122,12 +120,12 @@
     </div>
     <div id="taskStats">Ukończono: <strong id="completedCount">0</strong>/6</div>
     <div id="tasksList">
-      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button class="btn confirm">Zatwierdź</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
     </div>
     <p id="needFour">Aby przejść dalej, wykonaj min. 4 zadania.</p>
     <button id="toCouncil" class="btn" disabled>PRZEJDŹ DO RADY</button>
@@ -160,38 +158,37 @@
   </div>
 
   <script>
-    // Muzyka
+    // Muzyka w tle
     const bg = document.getElementById('bgMusic');
     document.body.addEventListener('click',()=>bg.play().catch(),{once:true});
 
     let team='', role='', completed=0, sideDone=false;
-    const vids = { zwiadowca:'zwiadowca.1.mp4',tkaczka:'tkaczka.1.mp4',zielarka:'zielarka.1.mp4',kupiec:'kupiec.1.mp4',rzemieslnik:'rzemieslnik.1.mp4' };
+    const vids = { zwiadowca:'zwiadowca.1.mp4', tkaczka:'tkaczka.1.mp4', zielarka:'zielarka.1.mp4', kupiec:'kupiec.1.mp4', rzemieslnik:'rzemieslnik.1.mp4' };
     const sideTasks = ['Znajdź coś zielonego','Zrób 5 przysiadów','Znajdź kamień','Zrób zdjęcie','Znajdź literę P','Podskocz 3 razy','Ułóż literę A','Opisz liść','Zrób kroki','Stań na nodze'];
-    const endings = { handel:{name:'Otwarcie na handel',desc:'Po gorących naradach bramy otwarto...'},
-                     granice:{name:'Zamknięcie granic',desc:'Mury wzmocniono ...'},
-                     prawo:{name:'Nowe prawo',desc:'Wprowadzono nowe ustawy...'}};
+    const endings = { handel:{name:'Otwarcie na handel',desc:'Po gorących naradach bramy otwarto...'}, granice:{name:'Zamknięcie granic',desc:'Mury wzmocniono...'}, prawo:{name:'Wprowadzenie nowego prawa',desc:'Nowe ustawy...'} };
 
     function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
-    // 1: rejestracja → fabuła
+    // 1→2 Rejestracja
     document.getElementById('next1').onclick = ()=>{
-      const v = document.getElementById('teamName').value.trim();
+      const v=document.getElementById('teamName').value.trim();
       if(!v) return alert('Podaj nazwę drużyny');
-      team = v; show('page2');
+      team=v; show('page2');
     };
-    // 2: fabuła → wybór
+    // 2→3 Fabula
     document.getElementById('next2').onclick = ()=> show('page3');
-    // wybór postaci
+    // Wybór postaci
     document.querySelectorAll('#page3 .role').forEach(el=>el.onclick = ()=>{
       document.querySelectorAll('#page3 .role').forEach(r=>r.classList.remove('selected'));
-      el.classList.add('selected'); role = el.dataset.role; document.getElementById('next3').disabled=false;
+      el.classList.add('selected'); role=el.dataset.role;
+      document.getElementById('next3').disabled=false;
     });
-    // 3: wybór → video
+    // 3→Video overlay
     document.getElementById('next3').onclick = ()=>{
-      const vid = document.getElementById('roleVideo'); vid.src = vids[role];
-      vid.onloadeddata = ()=> document.getElementById('videoOverlay').style.display='flex';
-      vid.onerror = ()=> show('page4');
+      document.getElementById('videoOverlay').style.display='flex';
+      const vid=document.getElementById('roleVideo'); vid.src=vids[role];
     };
+    // 4→Zadania po video
     document.getElementById('videoNext').onclick = ()=>{
       sideDone=false; completed=0;
       show('page4'); document.getElementById('videoOverlay').style.display='none';
@@ -201,16 +198,11 @@
       document.getElementById('toCouncil').disabled=true;
       document.querySelectorAll('.task-row').forEach(r=>{ r.classList.remove('correct','wrong'); r.querySelector('input').value=''; });
     };
-    // poboczne
-    document.getElementById('randomBtn').onclick = ()=>
-      document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
+    // Zadania poboczne
+    document.getElementById('randomBtn').onclick = ()=> document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
     document.getElementById('sideDone').onclick = ()=>{ sideDone=true; document.getElementById('sideDone').innerText='ZROBIONE'; };
-
-    // główne
-    function updateStats(){
-      document.getElementById('completedCount').innerText=completed;
-      document.getElementById('toCouncil').disabled = (completed<4);
-    }
+    // Zadania główne
+    function updateStats(){ document.getElementById('completedCount').innerText=completed; document.getElementById('toCouncil').disabled=(completed<4); }
     document.querySelectorAll('.task-row').forEach(row=>{
       const ans=row.dataset.ans, inp=row.querySelector('input'), ok=row.querySelector('.confirm'), clr=row.querySelector('.reset-icon');
       ok.onclick = ()=>{
@@ -219,25 +211,27 @@
         else { if(row.classList.contains('correct')){ row.classList.remove('correct'); completed--; } row.classList.add('wrong'); }
         updateStats();
       };
-      clr.onclick = ()=>{ if(row.classList.contains('correct')){ row.classList.remove('correct'); completed--; } row.classList.remove('wrong'); inp.value=''; updateStats(); };
+      clr.onclick = ()=>{
+        if(row.classList.contains('correct')){ row.classList.remove('correct'); completed--; }
+        row.classList.remove('wrong'); inp.value=''; updateStats();
+      };
     });
     document.getElementById('toCouncil').onclick = ()=> show('page5');
-
-    // rada i podsumowanie
+    // Rada i podsumowanie
     document.querySelectorAll('#page5 .btn[data-dec]').forEach(b=>b.onclick = ()=>{
       const key=b.dataset.dec;
       document.getElementById('outTeam').innerText=team;
       document.getElementById('outRole').innerText=role;
       document.getElementById('outDecisionName').innerText=endings[key].name;
       document.getElementById('outDecisionDesc').innerText=endings[key].desc;
-      document.getElementById('outPortrait').src = `${role}.png`;
-      document.getElementById('outSideDone').innerText = sideDone?'TAK':'NIE';
-      document.getElementById('outPoints').innerText = completed;
-      const bc=document.getElementById('badges'); bc.innerHTML = `<img src="medalion.1.png"><img src="korona.1.png">`;
-      const dl=document.getElementById('downloads'); dl.innerHTML = `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a><a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`;
+      document.getElementById('outPortrait').src=`${role}.png`;
+      document.getElementById('outSideDone').innerText=sideDone?'TAK':'NIE';
+      document.getElementById('outPoints').innerText=completed;
+      const bc=document.getElementById('badges'); bc.innerHTML=`<img src="medalion.1.png"><img src="korona.1.png">`;
+      const dl=document.getElementById('downloads'); dl.innerHTML=`<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a><a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>`;
       show('page6');
     }));
-
+    // Restart
     document.getElementById('restart').onclick = ()=> location.reload();
   </script>
 </body>
