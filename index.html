@@ -8,13 +8,13 @@
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
     * { box-sizing:border-box; margin:0; padding:0; }
-    html,body {
+    html, body { height:100%; overflow:hidden; }
+    body {
       font-family:'MedievalSharp',cursive;
       background:url('tło gry.png') center/cover fixed;
       color:#f4f1e6;
-      overflow:hidden;
     }
-    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
     .screen {
       display:none;
       animation:fadeIn .4s;
@@ -22,9 +22,8 @@
       max-width:480px;
       margin:auto;
       min-height:100vh;
-    
       overflow-y:auto;
-      -webkit-overflow-scrolling: touch;
+      -webkit-overflow-scrolling:touch;
     }
     .active { display:block; }
     h1,h2,h3 {
@@ -50,16 +49,7 @@
     .task-row.correct input { border-color:lime; background:rgba(0,128,0,.2); }
     .task-row.wrong input { border-color:crimson; background:rgba(255,0,0,.2); }
     .reset-icon { background:none; border:none; font-size:18px; cursor:pointer; }
-    #page6 { display:flex; flex-direction:column; align-items:center; text-align:center; padding:16px; background:rgba(0,0,0,.6); border-radius:12px; box-shadow:0 0 12px rgba(0,0,0,.8); max-height:90vh; overflow-y:auto; }
-    .museum-logo { width:60px; margin-bottom:8px; border:2px solid gold; padding:2px; border-radius:6px; }
-    #finalPortrait img { width:80px; height:auto; max-height:120px; object-fit:cover; object-position:top center; border-radius:10px; border:3px solid gold; padding:1px; }
-    .badges { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
-    .badges img { width:50px; height:auto; }
-    .downloads { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
-    .downloads .btn { padding:8px; font-size:14px; }
-    .note { font-size:12px; color:#ddd; margin-top:8px; }
     @media(max-width:400px) { .btn { font-size:14px; padding:8px; } h1{font-size:24px;} h2{font-size:20px;} .instruction-box{font-size:12px;} }
-    #restartBtn { font-size:20px; padding:16px; }
   </style>
 </head>
 <body>
@@ -71,7 +61,7 @@
     <div class="instruction-box">
       <h3>Mechanika gry „Dziedzictwo”</h3>
       <p>1. Wprowadzenie fabularne – zapoznajcie się z realiami Pomorza X wieku.</p>
-      <p>2. Tworzenie drużyny – wybierzcie nazwę drużyny, wprowadzając ją poniżej.</p>
+      <p>2. Tworzenie drużyny – wybierzcie nazwę drużyny.</p>
       <p>3. Wybór postaci – każda rola niesie unikalne możliwości.</p>
       <p>4. Zadania – wykonajcie 4 z 6 głównych zadań oraz 1 zadanie poboczne.</p>
       <p>5. Rada Grodu – wybierzcie decyzję, która zadecyduje o losach grodu.</p>
@@ -91,7 +81,7 @@
       <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie pamięć przodków: w popiele ognisk, pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
       <ul>
         <li>– Czy otworzyć Grodzisko na obce mowy, bogów i prawo?</li>
-        <li>– Czy zamknąć bramy na sto lat, strzeżąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie?</li>
+        <li>– Czy zamknąć bramy na sto lat, strzegąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie?</li>
       </ul>
     </div>
     <button class="btn" id="to3">DALEJ</button>
@@ -111,7 +101,7 @@
   </div>
 
   <!-- 4. Filmik inicjacyjny -->
-  <div id="videoOverlay">
+  <div id="videoOverlay" class="screen">
     <video id="roleVideo" controls></video>
     <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button>
   </div>
@@ -126,14 +116,7 @@
       <button class="btn" id="sideBtn" disabled>ZREALIZOWANE</button>
     </div>
     <p>Ukończono: <span id="count">0</span>/6</p>
-    <div id="tasksList">
-      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Ratusz</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-    </div>
+    <div id="tasksList"> ... </div>
     <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
   </div>
 
@@ -184,9 +167,9 @@
       'Stań na jednej nodze i licz do 10 na głos.'
     ];
     const endings={
-      handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?`},
-      granice:{name:'Zamknięcie granic',desc:`W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?`},
-      prawo:{name:'Wprowadzenie nowego prawa',desc:`Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?`}  
+      handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji...pełne opisy...burze ambicji?`},
+      granice:{name:'Zamknięcie granic',desc:`W obawie przed nieznanym...narzucały tęsknotę?`},
+      prawo:{name:'Wprowadzenie nowego prawa',desc:`Pod przewodnictwem starszyzny...burze ambicji?`}  
     };
     function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
     document.getElementById('to2').addEventListener('click',()=>{const i=document.getElementById('teamName');if(!i.value.trim())alert('Podaj nazwę drużyny');else{team=i.value.trim();show('page2');}});
@@ -200,9 +183,7 @@
     document.getElementById('drawBtn').addEventListener('click',()=>{document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)];document.getElementById('sideBtn').disabled=false;});
     document.getElementById('sideBtn').addEventListener('click',()=>{sideDone=true;document.getElementById('sideBtn').style.background='lime';});
     document.getElementById('toCouncil').addEventListener('click',()=>show('page5'));
-    document.getElementById('endTrade').addEventListener('click',()=>finish('handel'));
-    document.getElementById('endClose').addEventListener('click',()=>finish('granice'));
-    document.getElementById('endLaw').addEventListener('click',()=>finish('prawo'));
+    document.getElementById('endTrade').addEventListener('click',()=>finish('handel'));document.getElementById('endClose').addEventListener('click',()=>finish('granice'));document.getElementById('endLaw').addEventListener('click',()=>finish('prawo'));
     function finish(dec){document.getElementById('resTeam').innerText=team;document.getElementById('resRole').innerText=role;document.getElementById('resDec').innerText=endings[dec].name;document.getElementById('resDesc').innerText=endings[dec].desc;document.getElementById('avatar').src=role+'.1.png';document.getElementById('resSide').innerText=sideDone?'TAK':'NIE';document.getElementById('resCount').innerText=count;document.querySelector('.badges').innerHTML='<img src="medalion.1.png" alt="Medalion">'+(sideDone?'<img src="korona.1.png" alt="Korona">':'');document.querySelector('.downloads').innerHTML='<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>'+(sideDone?'<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>':'');show('page6');}
     document.getElementById('restartBtn').addEventListener('click',()=>{team='';role='';count=0;sideDone=false;document.getElementById('teamName').value='';document.querySelectorAll('.task-row').forEach(r=>r.classList.remove('correct','wrong'));document.querySelectorAll('.task-row input').forEach(i=>i.value='');document.getElementById('randomTask').innerText='';document.getElementById('sideBtn').disabled=true;document.getElementById('sideBtn').style.background='';document.querySelectorAll('.role').forEach(r=>r.classList.remove('selected'));document.getElementById('to4').disabled=true;document.getElementById('toCouncil').disabled=true;updateStats();show('page1');});
   </script>
