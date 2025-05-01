@@ -10,86 +10,64 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       font-family: 'MedievalSharp', cursive;
-      /* Użyj nazwy pliku bez spacji i znaków diakrytycznych */
       background: url('tlo-gry.png') center/cover fixed;
       color: #f4f1e6;
       overflow: hidden;
+      border: 32px solid transparent;
+      border-image-source: url('ramka.png');
+      border-image-slice: 32;
+      border-image-width: 32px;
+      border-image-repeat: stretch;
     }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .screen {
-      display: none;
-      animation: fadeIn .4s;
-      padding: 16px;
-      max-width: 480px;
-      margin: auto;
-      min-height: 100vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
+    .screen { display: none; animation: fadeIn .4s; padding: 16px; max-width: 480px; margin: auto; min-height: 100vh; overflow-y: auto; }
     .active { display: block; }
-
-    h1, h2, h3 {
-      text-align: center;
-      font-family: 'Uncial Antiqua', cursive;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, .6);
-      margin-bottom: 12px;
-    }
-
+    h1, h2, h3 { text-align: center; font-family: 'Uncial Antiqua', cursive; text-shadow: 2px 2px 4px rgba(0,0,0,.6); margin-bottom: 12px; }
     input[type=text] { width: 100%; padding: 10px; margin: 8px 0; border: none; border-radius: 6px; font-size: 16px; }
-    .btn { width: 100%; padding: 12px; margin: 8px 0; font-size: 18px; border: none; border-radius: 8px; background: linear-gradient(to bottom, #c49e5b, #8b6237); color: #fff9e6; cursor: pointer; }
+    .btn { width: 100%; padding: 12px; margin: 8px 0; font-size: 18px; border: none; border-radius: 8px; background: linear-gradient(to bottom,#c49e5b,#8b6237); color: #fff9e6; cursor: pointer; }
     .btn:disabled { opacity: .6; cursor: default; }
-
-    .instruction-box, .final-box { background: rgba(0, 0, 0, .6); border: 2px solid #8d744a; border-radius: 8px; padding: 12px; margin: 12px 0; font-size: 14px; line-height: 1.4; }
-    .instruction-box ul { list-style: disc inside; margin-left: 16px; }
-
-    .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 12px; justify-items: center; }
-    .role { background: rgba(0, 0, 0, .5); padding: 6px; border-radius: 12px; text-align: center; cursor: pointer; transition: transform .2s; }
+    .instruction-box, .final-box { background: rgba(0,0,0,0.6); border: 2px solid #8d744a; border-radius: 8px; padding: 12px; margin: 12px 0; font-size: 14px; line-height: 1.4; }
+    .instruction-box ol, .instruction-box ul { margin-left: 16px; }
+    .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px,1fr)); gap: 12px; justify-items: center; }
+    .role { background: rgba(0,0,0,0.5); padding: 6px; border-radius: 12px; text-align: center; cursor: pointer; transition: transform .2s; }
     .role:hover { transform: translateY(-4px); }
-    .role img { width: 80px; height: 80px; object-fit: cover; object-position: top center; border-radius: 12px; border: 2px solid transparent; }
+    .role img { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 2px solid transparent; }
     .role.selected img { border-color: gold; box-shadow: 0 0 6px gold; }
-
-    #videoOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, .9); display: none; align-items: center; justify-content: center; flex-direction: column; z-index: 1000; padding: 16px; }
+    #musicToggle { position: fixed; top: 16px; right: 16px; font-size: 24px; color: blue; cursor: pointer; z-index: 1001; }
+    #musicToggle.muted { text-decoration: line-through; opacity: 0.6; }
+    #videoOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; flex-direction: column; z-index: 1000; padding: 16px; }
     #videoOverlay video { width: 90%; max-width: 360px; border-radius: 12px; }
-
     .task-row { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
     .task-row span { flex: 1; }
     .task-row input { flex: 1 1 100px; padding: 6px; border: 2px solid #444; border-radius: 4px; }
-    .task-row.correct input { border-color: lime; background: rgba(0, 128, 0, .2); }
-    .task-row.wrong input { border-color: crimson; background: rgba(255, 0, 0, .2); }
-    .reset-icon { background: none; border: none; font-size: 18px; cursor: pointer; }
-
-    #page6 { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 16px; background: rgba(0, 0, 0, .6); border-radius: 12px; box-shadow: 0 0 12px rgba(0, 0, 0, .8); max-height: 90vh; overflow-y: auto; }
+    .task-row.correct input { border-color: lime; background: rgba(0,128,0,0.2); }
+    .task-row.wrong input { border-color: crimson; background: rgba(255,0,0,0.2); }
+    .reset-icon { font-size: 18px; cursor: pointer; background: none; border: none; }
+    #page6 { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 16px; background: rgba(0,0,0,0.6); border-radius: 12px; box-shadow: 0 0 12px rgba(0,0,0,0.8); max-height: 90vh; overflow-y: auto; }
     .museum-logo { width: 60px; margin-bottom: 8px; border: 2px solid gold; padding: 2px; border-radius: 6px; }
-    #finalPortrait img { width: 80px; height: auto; max-height: 120px; object-fit: cover; object-position: top center; border-radius: 10px; border: 3px solid gold; padding: 1px; }
-    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
-    .badges img { width: 50px; height: auto; }
-    .downloads { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
-    .downloads .btn { padding: 8px; font-size: 14px; }
+    #finalPortrait img { width: 80px; max-height: 120px; object-fit: cover; border-radius: 10px; border: 3px solid gold; padding: 1px; }
+    .badges img { width: 50px; margin: 4px; }
+    .downloads .btn { padding: 8px; font-size: 14px; margin: 4px; }
     .note { font-size: 12px; color: #ddd; margin-top: 8px; }
-
-    @media (max-width: 400px) {
-      .btn { font-size: 14px; padding: 8px; }
-      h1 { font-size: 24px; }
-      h2 { font-size: 20px; }
-      .instruction-box { font-size: 12px; }
-    }
-
-    #restartBtn { font-size: 20px; padding: 16px; }
+    @media (max-width: 400px) { .btn { font-size: 14px; padding: 8px; } h1 { font-size: 24px; } h2 { font-size: 20px; } .instruction-box { font-size: 12px; } }
   </style>
 </head>
 <body>
-  <audio id="bgMusic" autoplay loop playsinline></audio>
+  <div id="musicToggle">🎵</div>
+  <audio id="bgMusic" src="celtic-festival-307626.mp3" autoplay loop></audio>
 
   <!-- 1. Instrukcja gry -->
   <div id="page1" class="screen active">
     <h1>GRODOWA ODYSEJA</h1>
     <div class="instruction-box">
       <h3>Mechanika gry „Dziedzictwo”</h3>
-      <p>1. Wprowadzenie fabularne – zapoznajcie się z realiami Pomorza X wieku.</p>
-      <p>2. Tworzenie drużyny – wybierzcie nazwę drużyny, wprowadzając ją poniżej.</p>
-      <p>3. Wybór postaci – każda rola niesie unikalne możliwości.</p>
-      <p>4. Zadania – wykonajcie 4 z 6 głównych zadań oraz 1 zadanie poboczne.</p>
-      <p>5. Rada Grodu – wybierzcie decyzję, która zadecyduje o losach grodu.</p>
+      <ol>
+        <li>Wprowadzenie fabularne – zapoznajcie się z realiami Pomorza X wieku.</li>
+        <li>Tworzenie drużyny – wpiszcie nazwę drużyny.</li>
+        <li>Wybór postaci – każda rola ma unikalne możliwości.</li>
+        <li>Zadania – wykonajcie 4 z 6 zadań głównych oraz 1 zadanie poboczne.</li>
+        <li>Rada Grodu – decyzja, która zdecyduje o przyszłości grodu.</li>
+      </ol>
     </div>
     <input id="teamName" type="text" placeholder="Nazwa drużyny">
     <button class="btn" id="to2">DALEJ</button>
@@ -99,14 +77,12 @@
   <div id="page2" class="screen">
     <h2>PEŁNA FABUŁA</h2>
     <div class="instruction-box">
-      <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
-      <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
-      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyckimi bóstwami, niosąc srebro i niepokój.</p>
-      <p>Z zachodu zaś unoszą się słowa o chrzcie i kamiennych kaplicach: mówią, że Dąbrówka przyniosła pokój, lecz czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
-      <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie pamięć przodków: w popiele ognisk, pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
+      <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – teraz jednak wyczuwa nadciągające przesilenie. Z południa nadciąga echo zwycięstwa pod Cedynią, książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenia kierują się ku naszym granicom.</p>
+      <p>Ze wschodu płynie mowa Rusi, łącząca bizantyjskie krzyże z pradawnymi bóstwami Bałtyku, niosąc srebro i niepokój. Z zachodu niesie wieść o chrzcie i kamiennych kaplicach – Dąbrówka przynosi pokój, lecz czy to dar czy kajdany?</p>
+      <p>Wy, tkacze, cieśle, zwiadowcy, zielarki, kowale i handlarze, strzeżecie pamięć przodków: w popiele ognisk, pod korzeniami starych dębów i w runach wyrytych na kamieniach.</p>
       <ul>
-        <li>– Czy otworzyć Grodzisko na obce mowy, bogów i prawo?</li>
-        <li>– Czy zamknąć bramy na sto lat, strzeżąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie?</li>
+        <li>Czy otworzyć Grodzisko na obce mowy i prawo?</li>
+        <li>Czy zamknąć bramy na sto lat, chroniąc tradycję?</li>
       </ul>
     </div>
     <button class="btn" id="to3">DALEJ</button>
@@ -135,21 +111,21 @@
   <div id="page4" class="screen">
     <h2>INTERAKTYWNE ZADANIA</h2>
     <div class="instruction-box">
-      <p>Wykonaj 4 główne zadania w lokacjach: Brama Grodziska, Warsztat Kowala, Chata Zielarki, Chata Tkaczki, Ratusz oraz Targowisko. Wylosuj i zrealizuj 1 zadanie poboczne.</p>
+      <p>Wykonajcie 4 główne zadania oraz 1 zadanie poboczne:</p>
       <button class="btn" id="drawBtn">🎲 LOSUJ ZADANIE POBOCZNE</button>
       <p id="randomTask"></p>
       <button class="btn" id="sideBtn" disabled>ZREALIZOWANE</button>
     </div>
+    <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
     <p>Ukończono: <span id="count">0</span>/6</p>
     <div id="tasksList">
-      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon" title="Resetuj">🔄</button></div>
-      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon" title="Resetuj">🔄</button></div>
-      <div class="task-row" data-ans="ŻYTO"><span>Targowisko</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon" title="Resetuj">🔄</button></div>
-      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon" title="Resetuj">🔄</button></div>
-      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon" title="Resetuj">🔄</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Ratusz</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon" title="Resetuj">🔄</button></div>
+      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="ŻYTO"><span>Targowisko</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="DIRHEMY"><span>Wiata</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
     </div>
-    <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
   </div>
 
   <!-- 6. Rada Grodu -->
@@ -162,7 +138,7 @@
 
   <!-- 7. Podsumowanie rozgrywki -->
   <div id="page6" class="screen">
-    <img src="logo.1.png" class="museum-logo" alt="Muzeum">
+    <img src="logo.png" class="museum-logo" alt="Muzeum">
     <h1>GRATULACJE!</h1>
     <div id="finalPortrait"><img id="avatar" alt="Twoja postać"></div>
     <div class="final-box">
@@ -171,28 +147,22 @@
       <p><strong>Zadania główne:</strong> <span id="resCount"></span>/6</p>
       <p><strong>Zadanie poboczne:</strong> <span id="resSide"></span></p>
       <p><strong>Decyzja Rady:</strong> <span id="resDec"></span></p>
-      <p id="resDesc" style="white-space: pre-wrap; margin-top: 8px"></p>
+      <p id="resDesc" style="white-space: pre-wrap; margin-top:8px"></p>
       <div class="badges"></div>
       <div class="downloads"></div>
-      <p class="note">🏅 Naklejkę korony otrzymuje ten, kto wykonał zadanie losowe.</p>
+      <p class="note">🏅 Naklejkę korony otrzymuje ten, kto wykonał zadanie poboczne.</p>
     </div>
     <button class="btn" id="restartBtn">ZAGRAJ PONOWNIE</button>
   </div>
 
   <script>
-    const musicTracks = ['celtic-festival-307626.mp3'];
+    const musicToggle = document.getElementById('musicToggle');
     const bgMusic = document.getElementById('bgMusic');
-    function startBackgroundMusic() { bgMusic.src = musicTracks[0]; bgMusic.load(); bgMusic.play().catch(() => {}); }
-    document.getElementById('teamName').addEventListener('input', startBackgroundMusic, { once: true });
-
+    musicToggle.addEventListener('click', () => {
+      if (bgMusic.paused) { bgMusic.play(); musicToggle.classList.remove('muted'); } else { bgMusic.pause(); musicToggle.classList.add('muted'); }
+    });
     let team = '', role = '', count = 0, sideDone = false;
-    const vids = {
-      zwiadowca: 'zwiadowca.1.mp4',
-      tkaczka: 'tkaczka.1.mp4',
-      zielarka: 'zielarka.1.mp4',
-      kupiec: 'kupiec.1.mp4',
-      rzemieslnik: 'rzemieslnik.1.mp4'
-    };
+    const vids = { zwiadowca: 'zwiadowca.mp4', tkaczka: 'tkaczka.mp4', zielarka: 'zielarka.mp4', kupiec: 'kupiec.mp4', rzemieslnik: 'rzemieslnik.mp4' };
     const sideTasks = [
       'Znajdź coś zielonego i dotknij to.',
       'Zrób 5 przysiadów przy ławce.',
@@ -206,116 +176,28 @@
       'Stań na jednej nodze i licz do 10 na głos.'
     ];
     const endings = {
-      handel:   { name: 'Otwarcie na handel', desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?` },
-      granice: { name: 'Zamknięcie granic',    desc: `W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?` },
-      prawo:   { name: 'Wprowadzenie nowego prawa', desc: `Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?` }
+      handel: { name: 'Otwarcie na handel', desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?` },
+      granice: { name: 'Zamknięcie granic', desc: `W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?` },
+      prawo: { name: 'Wprowadzenie nowego prawa', desc: `Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?` }
     };
-
-    function show(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-    document.getElementById('to2').addEventListener('click', () => {
-      const input = document.getElementById('teamName');
-      if (!input.value.trim()) alert('Podaj nazwę drużyny');
-      else { team = input.value.trim(); show('page2'); }
-    });
+    function show(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+    document.getElementById('to2').addEventListener('click', () => { const inp = document.getElementById('teamName'); if (!inp.value.trim()) alert('Wpisz nazwę drużyny'); else { team = inp.value.trim(); show('page2'); }});
     document.getElementById('to3').addEventListener('click', () => show('page3'));
-    document.querySelectorAll('.role').forEach(el => el.addEventListener('click', () => {
-      role = el.dataset.role;
-      document.querySelectorAll('.role').forEach(r => r.classList.toggle('selected', r === el));
-      document.getElementById('to4').disabled = false;
-    }));
-    document.getElementById('to4').addEventListener('click', () => {
-      document.getElementById('roleVideo').src = vids[role];
-      document.getElementById('videoOverlay').style.display = 'flex';
-    });
-    document.getElementById('videoNext').addEventListener('click', () => {
-      document.getElementById('videoOverlay').style.display = 'none';
-      show('page4');
-    });
-
-    function updateStats() {
-      document.getElementById('count').innerText = count;
-      document.getElementById('toCouncil').disabled = (count < 4);
-    }
-
-    // Funkcja usuwająca znaki diakrytyczne dla porównania
-    function stripDiacritics(str) {
-      return str.normalize('NFD').replace(/[̀-ͯ]/g, '');
-    }
-
-    document.querySelectorAll('.confirm').forEach(btn => btn.addEventListener('click', () => {
-      const row = btn.closest('.task-row');
-      const ans = row.dataset.ans;
-      const val = row.querySelector('input').value.trim().toUpperCase();
-      if (stripDiacritics(val) === stripDiacritics(ans)) {
-        if (!row.classList.contains('correct')) {
-          row.classList.remove('wrong');
-          row.classList.add('correct');
-          count++;
-        }
-      } else {
-        if (row.classList.contains('correct')) {
-          row.classList.remove('correct');
-          count--;
-        }
-        row.classList.add('wrong');
-      }
-      updateStats();
-    }));
-
-    document.querySelectorAll('.reset-icon').forEach(btn => btn.addEventListener('click', () => {
-      const row = btn.closest('.task-row');
-      if (row.classList.contains('correct')) {
-        row.classList.remove('correct');
-        count--;
-      }
-      row.classList.remove('wrong');
-      row.querySelector('input').value = '';
-      updateStats();
-    }));
-
-    document.getElementById('drawBtn').addEventListener('click', () => {
-      document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random() * sideTasks.length)];
-      document.getElementById('sideBtn').disabled = false;
-    });
-    document.getElementById('sideBtn').addEventListener('click', () => {
-      sideDone = true;
-      document.getElementById('sideBtn').style.background = 'lime';
-    });
+    document.querySelectorAll('.role').forEach(el => el.addEventListener('click', () => { role = el.dataset.role; document.querySelectorAll('.role').forEach(r => r.classList.toggle('selected', r === el)); document.getElementById('to4').disabled = false; }));
+    document.getElementById('to4').addEventListener('click', () => { document.getElementById('roleVideo').src = vids[role]; document.getElementById('videoOverlay').style.display = 'flex'; });
+    document.getElementById('videoNext').addEventListener('click', () => { document.getElementById('videoOverlay').style.display = 'none'; show('page4'); });
+    function updateStats() { document.getElementById('count').innerText = count; document.getElementById('toCouncil').disabled = count < 4; }
+    function stripDiacritics(str) { return str.normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+    document.querySelectorAll('.confirm').forEach(btn => btn.addEventListener('click', () => { const row = btn.closest('.task-row'), ans = row.dataset.ans, val = row.querySelector('input').value.trim().toUpperCase(); if (stripDiacritics(val) === stripDiacritics(ans)) { if (!row.classList.contains('correct')) { row.classList.add('correct'); row.classList.remove('wrong'); count++; } } else { if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; } row.classList.add('wrong'); } updateStats(); }));
+    document.querySelectorAll('.reset-icon').forEach(btn => btn.addEventListener('click', () => { const row = btn.closest('.task-row'); if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; } row.classList.remove('wrong'); row.querySelector('input').value = ''; updateStats(); }));
+    document.getElementById('drawBtn').addEventListener('click', () => { document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random() * sideTasks.length)]; document.getElementById('sideBtn').disabled = false; });
+    document.getElementById('sideBtn').addEventListener('click', () => { sideDone = true; document.getElementById('sideBtn').style.background = 'lime'; });
     document.getElementById('toCouncil').addEventListener('click', () => show('page5'));
     document.getElementById('endTrade').addEventListener('click', () => finish('handel'));
     document.getElementById('endClose').addEventListener('click', () => finish('granice'));
     document.getElementById('endLaw').addEventListener('click', () => finish('prawo'));
-
-    function finish(dec) {
-      document.getElementById('resTeam').innerText = team;
-      document.getElementById('resRole').innerText = role;
-      document.getElementById('resDec').innerText = endings[dec].name;
-      document.getElementById('resDesc').innerText = endings[dec].desc;
-      document.getElementById('avatar').src = role + '.1.png';
-      document.getElementById('resSide').innerText = sideDone ? 'TAK' : 'NIE';
-      document.getElementById('resCount').innerText = count;
-      document.querySelector('.badges').innerHTML = `<img src="medalion.1.png" alt="Medalion">${sideDone ? '<img src="korona.1.png" alt="Korona">' : ''}`;
-      document.querySelector('.downloads').innerHTML = `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>${sideDone ? '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>' : ''}`;
-      show('page6');
-    }
-
-    document.getElementById('restartBtn').addEventListener('click', () => {
-      team = ''; role = ''; count = 0; sideDone = false;
-      document.getElementById('teamName').value = '';
-      document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct', 'wrong'));
-      document.querySelectorAll('.task-row input').forEach(i => i.value = '');
-      document.getElementById('randomTask').innerText = '';
-      document.getElementById('sideBtn').disabled = true;
-      document.getElementById('sideBtn').style.background = '';
-      document.querySelectorAll('.role').forEach(r => r.classList.remove('selected'));
-      document.getElementById('to4').disabled = true;
-      document.getElementById('toCouncil').disabled = true;
-      updateStats();
-      show('page1');
-    });
+    function finish(dec) { document.getElementById('resTeam').innerText = team; document.getElementById('resRole').innerText = role; document.getElementById('resCount').innerText = count; document.getElementById('resSide').innerText = sideDone ? 'TAK' : 'NIE'; document.getElementById('resDec').innerText = endings[dec].name; document.getElementById('resDesc').innerText = endings[dec].desc; document.getElementById('avatar').src = role + '.png'; document.querySelector('.badges').innerHTML = `<img src="medalion.png" alt="Medalion">` + (sideDone ? `<img src="korona.png" alt="Korona">` : ''); document.querySelector('.downloads').innerHTML = `<a href="medalion.png" download class="btn">POBIERZ MEDALION</a>` + (sideDone ? `<a href="korona.png" download class=\"btn\">POBIERZ KORONĘ</a>` : ''); show('page6'); }
+    document.getElementById('restartBtn').addEventListener('click', () => { team = ''; role = ''; count = 0; sideDone = false; document.getElementById('teamName').value = ''; document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct', 'wrong')); document.querySelectorAll('.task-row input').forEach(i => i.value = ''); document.getElementById('randomTask').innerText = ''; document.getElementById('sideBtn').disabled = true; document.getElementById('sideBtn').style.background = ''; document.querySelectorAll('.role').forEach(r => r.classList.remove('selected')); document.getElementById('to4').disabled = true; document.getElementById('toCouncil').disabled = true; updateStats(); show('page1'); });
   </script>
 </body>
 </html>
