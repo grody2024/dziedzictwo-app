@@ -159,15 +159,8 @@
     currentTrack = (currentTrack + 1) % musicTracks.length;
     playTrack(currentTrack);
   });
-  window.addEventListener('DOMContentLoaded', () => {
-  const startMusic = () => {
-    startBackgroundMusic();
-    document.removeEventListener('click', startMusic);
-    document.removeEventListener('touchstart', startMusic);
-  };
-  document.addEventListener('click', startMusic);
-  document.addEventListener('touchstart', startMusic);
-});
+
+  window.addEventListener('DOMContentLoaded', startBackgroundMusic);
 
   let team = '', role = '', count = 0, sideDone = false;
   const vids = { zwiadowca: 'resources/mp4/zwiadowca.mp4', tkaczka: 'resources/mp4/tkaczka.mp4', zielarka: 'resources/mp4/zielarka.mp4', kupiec: 'resources/mp4/kupiec.mp4', kowal: 'resources/mp4/kowal.mp4' };
@@ -198,7 +191,7 @@
   document.getElementById('to2').addEventListener('click', () => {
     const input = document.getElementById('teamName');
     if (!input.value.trim()) alert('Podaj nazwę drużyny');
-    else { team = input.value.trim(); show('page2'); }
+    else { team = input.value.trim(); show('page2'); startBackgroundMusic(); }
   });
 
   document.getElementById('to3').addEventListener('click', () => show('page3'));
