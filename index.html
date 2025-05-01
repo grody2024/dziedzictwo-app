@@ -7,36 +7,161 @@
   <!-- Czcionki średniowieczne -->
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
+    /* RESET & BOX MODEL */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       font-family: 'MedievalSharp', cursive;
-      background: url('tło gry.png') center/cover fixed;
+      background: url('tlo-gry.png') center/cover fixed;
       color: #f4f1e6;
-      overflow: hidden;
+      overflow-x: hidden; /* blokujemy tylko poziomy overflow */
     }
+
+    /* ANIMACJA FADE IN */
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .screen { display: none; animation: fadeIn .4s; padding: 16px; max-width: 480px; margin: auto; min-height: 100vh; overflow-y: auto; }
-    .active { display: block; }
-    h1,h2,h3 { text-align: center; font-family: 'Uncial Antiqua', cursive; text-shadow: 2px 2px 4px rgba(0,0,0,.6); margin-bottom: 12px; }
-    input[type=text] { width: 100%; padding: 10px; margin: 8px 0; border: none; border-radius: 6px; font-size: 16px; }
-    .btn { width: 100%; padding: 12px; margin: 8px 0; font-size: 18px; border: none; border-radius: 8px; background: linear-gradient(to bottom,#c49e5b,#8b6237); color: #fff9e6; cursor: pointer; }
+
+    /* EKRANY */
+    .screen {
+      display: none;
+      animation: fadeIn .4s;
+      padding: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+    .screen.active { display: block; }
+
+    /* TYPOGRAFIA RESPONSYWNA */
+    h1, h2, h3 {
+      text-align: center;
+      font-family: 'Uncial Antiqua', cursive;
+      text-shadow: 2px 2px 4px rgba(0,0,0,.6);
+      margin-bottom: 12px;
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
+    }
+    input[type=text] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: clamp(1rem, 3.5vw, 1.125rem);
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(to bottom,#c49e5b,#8b6237);
+      color: #fff9e6;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      transition: transform .1s;
+    }
     .btn:disabled { opacity: .6; cursor: default; }
-    .instruction-box, .final-box { background: rgba(0,0,0,.6); border: 2px solid #8d744a; border-radius: 8px; padding: 12px; margin: 12px 0; font-size: 14px; line-height: 1.4; }
-    .instruction-box ol, .instruction-box ul { margin-left: 16px; }
-    .roles { display: grid; grid-template-columns: repeat(auto-fit,minmax(80px,1fr)); gap: 12px; justify-items: center; }
-    .role { background: rgba(0,0,0,.5); padding: 6px; border-radius: 12px; text-align: center; cursor: pointer; transition: transform .2s; }
+    .btn:active { transform: translateY(1px); }
+
+    /* POJEMNIKI INFORMACYJNE */
+    .instruction-box,
+    .final-box {
+      background: rgba(0,0,0,.6);
+      border: 2px solid #8d744a;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .instruction-box ol,
+    .instruction-box ul { margin-left: 16px; }
+
+    /* ROLE (WYBÓR POSTACI) */
+    .roles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px,1fr));
+      gap: 12px;
+      justify-items: center;
+    }
+    .role {
+      width: 80px;
+      height: 80px;
+      background: rgba(0,0,0,.5);
+      padding: 6px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .2s;
+    }
     .role:hover { transform: translateY(-4px); }
-    .role img { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 2px solid transparent; }
-    .role.selected img { border-color: gold; box-shadow: 0 0 6px gold; }
-    .task-row { background: rgba(0,0,0,.4); padding: 8px; border-radius: 6px; margin-bottom: 8px; }
-    .task-row p { margin-bottom: 6px; }
+    .role img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1/1;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      background: rgba(0,0,0,.2);
+    }
+    .role.selected img {
+      border-color: gold;
+      box-shadow: 0 0 6px gold;
+    }
+
+    /* ZADANIA */
+    .task-row {
+      background: rgba(0,0,0,.4);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
     .task-row.correct { border: 2px solid lime; }
-    .task-row.wrong { border: 2px solid red; }
-    #videoOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.9); display: none; align-items: center; justify-content: center; flex-direction: column; z-index: 1000; padding: 16px; }
-    #videoOverlay video { width: 90%; max-width: 360px; border-radius: 12px; }
-    /* nowy styl: przełącznik muzyki */
-    #musicToggle { position: fixed; top: 16px; right: 16px; font-size: 24px; cursor: pointer; z-index: 1100; }
+    .task-row.wrong   { border: 2px solid red; }
+    .task-row p       { margin-bottom: 6px; }
+
+    /* OVERLAY WIDEO */
+    #videoOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 1000;
+      padding: 16px;
+    }
+    #videoOverlay video {
+      width: 90%;
+      max-width: 360px;
+      border-radius: 12px;
+    }
+
+    /* PRZEŁĄCZNIK MUZYKI */
+    #musicToggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1100;
+    }
     #musicToggle.muted { opacity: .4; }
+
+    /* LICZNIK ZADAŃ */
+    #count {
+      font-weight: bold;
+      color: #c49e5b;
+    }
+
+    /* MEDIA QUERIES */
+    @media (max-width: 360px) {
+      .btn { padding: 10px; }
+      input[type=text] { padding: 8px; }
+      .roles { gap: 8px; }
+    }
   </style>
 </head>
 <body>
@@ -175,7 +300,7 @@
           const ans = row.dataset.ans;
           const val = row.querySelector('input').value.trim().toUpperCase();
           if (stripDiacritics(val) === stripDiacritics(ans.toUpperCase())) {
-            if (!row.classList.contains('correct')) { 
+            if (!row.classList.contains('correct')) {
               row.classList.add('correct'); row.classList.remove('wrong'); count++;
             }
           } else {
@@ -202,7 +327,7 @@
       if (!input.value.trim()) {
         alert('Podaj nazwę drużyny');
       } else {
-        team = input.value.trim(); 
+        team = input.value.trim();
         show('page2');
       }
     });
@@ -248,15 +373,15 @@
     const endings = {
       handel: {
         name: 'Otwarcie na handel',
-        desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany...`
+        desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany towarów i idei. Kupcy z dalekich krain wjechali na nasze ulice, a stragany zapełniły się barwnymi tkaninami, przyprawami i rzemiosłem. Dzięki odwadze oraz otwartości mieszkańców, grodzisko stało się centrum handlu, które rozkwitło jak nigdy dotąd.`
       },
       granice: {
         name: 'Zamknięcie granic',
-        desc: `W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów...`
+        desc: `W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów i zaostrzeniu straży. Choć serca spragnione były nowych doświadczeń, priorytetem stało się bezpieczeństwo. Zaklęte w kamieniu mury wróciły do swej dawnej świetności, a życie wewnątrz osiedla toczyło się w harmonii tradycji. Kiedy przychodził wieczór, ogniska jaśniały ciepłym blaskiem, świadcząc o jedności i czujności mieszkańców.`
       },
       prawo: {
         name: 'Wprowadzenie nowego prawa',
-        desc: `Pod przewodnictwem starszyzny wprowadzono świeże ustawy...`
+        desc: `Pod przewodnictwem starszyzny wprowadzono świeże ustawy mające na celu zrównoważenie tradycji ze zmianami płynącymi z zewnątrz. Ustanowiono prawo regulujące handel, obyczaje i ziemię – każdy mieszkaniec otrzymał jasno określone prawa i obowiązki. Nowe kodeksy rycerskie, handlowe i sądownicze umacniały spójność społeczności, a grodzisko zyskało miano miejsca mądrości i sprawiedliwości.`
       }
     };
 
@@ -291,11 +416,11 @@
       document.getElementById('resDesc').innerText = endings[dec].desc;
       document.getElementById('avatar').src = role + '.1.png';
       document.querySelector('.badges').innerHTML =
-        `<img src="medalion.1.png" alt="Medalion">` +
-        (sideDone ? `<img src="korona.1.png" alt="Korona">` : '');
+        `<img src=\"medalion.1.png\" alt=\"Medalion\">` +
+        (sideDone ? `<img src=\"korona.1.png\" alt=\"Korona\">` : '');
       document.querySelector('.downloads').innerHTML =
-        `<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>` +
-        (sideDone ? `<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>` : '');
+        `<a href=\"medalion.1.png\" download class=\"btn\">POBIERZ MEDALION</a>` +
+        (sideDone ? `<a href=\"korona.1.png\" download class=\"btn\">POBIERZ KORONĘ</a>` : '');
       show('page6');
     }
 
@@ -308,7 +433,6 @@
       document.querySelectorAll('.role').forEach(r => r.classList.remove('selected'));
       document.getElementById('to4').disabled = true;
       document.getElementById('toCouncil').disabled = true;
-      // reset zadań głównych
       document.querySelectorAll('.task-row').forEach(r => {
         r.classList.remove('correct','wrong');
         r.querySelector('input').value = '';
