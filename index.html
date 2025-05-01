@@ -91,7 +91,9 @@
     .reset-icon { background: none; border: none; font-size: 18px; cursor: pointer; }
     #page6 { padding: 16px; overflow-y: auto; height: 100vh; }
     .final-box p { margin: 4px 0; font-size: 13px; }
-    .museum-logo { width: 50px; margin-bottom: 8px; border: 2px solid gold; padding: 2px; border-radius: 6px; }
+    .museum-logo { width: 40px; margin: 8px auto; border: 2px solid gold; padding: 2px; border-radius: 6px; }
+    .avatar-frame { width: 80px; margin: 8px auto; border: 2px solid gold; padding: 2px; border-radius: 10px; }
+    .avatar-frame img { width: 100%; display: block; border-radius: 8px; }
     @media(max-width:500px) {
       .btn { font-size: 16px; padding: 10px; }
       h1 { font-size: 22px; }
@@ -179,7 +181,10 @@
 
   <div id="page6" class="screen">
     <h1>GRATULACJE!</h1>
-    <div id="finalPortrait"><img id="avatar" alt="Twoja postać"></div>
+    <!-- Muzeum logo w złotej ramce -->
+    <img src="logo.1.png" class="museum-logo" alt="Muzeum">
+    <!-- Awatar w złotej ramce -->
+    <div id="finalPortrait" class="avatar-frame"><img id="avatar" alt="Twoja postać"></div><img id="avatar" alt="Twoja postać"></div>
     <div class="final-box">
       <p><strong>Drużyna:</strong> <span id="resTeam"></span></p>
       <p><strong>Postać:</strong> <span id="resRole"></span></p>
@@ -194,6 +199,15 @@
   </div>
 
   <script>
+    // background music setup
+    const musicTracks = ['celtic-festival-307626.mp3'];
+    const bgMusic = document.getElementById('bgMusic');
+    function startBackgroundMusic() {
+      bgMusic.src = musicTracks[0];
+      bgMusic.load();
+      bgMusic.play().catch(() => {});
+    }
+    document.getElementById('teamName').addEventListener('input', startBackgroundMusic, { once: true });
     const vids={zwiadowca:'zwiadowca.1.mp4',tkaczka:'tkaczka.1.mp4',zielarka:'zielarka.1.mp4',kupiec:'kupiec.1.mp4',rzemieslnik:'rzemieslnik.1.mp4'};
     const sideTasks=['Znajdź coś zielonego i dotknij to.','Zrób 5 przysiadów przy ławce.'];
     const endings={handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?`},granice:{name:'Zamknięcie granic',desc:`W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?`},prawo:{name:'Wprowadzenie nowego prawa',desc:`Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?`}};
