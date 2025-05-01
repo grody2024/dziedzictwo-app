@@ -13,10 +13,20 @@
       font-family:'MedievalSharp',cursive;
       background:url('tło gry.png') center/cover fixed;
       color:#f4f1e6;
-      overflow:hidden;
+      overflow-x:hidden;
+      overflow-y:auto;
     }
     @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-    .screen { display:none; animation:fadeIn .4s; padding:16px; max-width:480px; margin:auto; min-height:100vh; overflow-y:auto; }
+    .screen {
+      display:none;
+      animation:fadeIn .4s;
+      padding:16px;
+      max-width:480px;
+      margin:auto;
+      min-height:100vh;
+      overflow-y:auto;
+      -webkit-overflow-scrolling: touch;
+    }
     .active { display:block; }
     h1,h2,h3 {
       text-align:center;
@@ -50,7 +60,7 @@
     .downloads .btn { padding:8px; font-size:14px; }
     .note { font-size:12px; color:#ddd; margin-top:8px; }
     @media(max-width:400px) { .btn { font-size:14px; padding:8px; } h1{font-size:24px;} h2{font-size:20px;} .instruction-box{font-size:12px;} }
-      #restartBtn { font-size:20px; padding:16px; }
+    #restartBtn { font-size:20px; padding:16px; }
   </style>
 </head>
 <body>
@@ -77,18 +87,18 @@
     <div class="instruction-box">
       <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
       <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
-      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyjskimi bóstwami, niosąc srebro i niepokój.</p>
+      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyckimi bóstwami, niosąc srebro i niepokój.</p>
       <p>Z zachodu zaś unoszą się słowa o chrzcie i kamiennych kaplicach: mówią, że Dąbrówka przyniosła pokój, lecz czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
       <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie pamięć przodków: w popiele ognisk, pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
       <ul>
         <li>– Czy otworzyć Grodzisko na obce mowy, bogów i prawo?</li>
-        <li>– Czy zamknąć bramy na sto lat, strzegąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie?</li>
+        <li>– Czy zamknąć bramy na sto lat, strzeżąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie?</li>
       </ul>
     </div>
-    <button class="btn" id="to3">DALEJ</button></button>
+    <button class="btn" id="to3">DALEJ</button>
   </div>
 
-  <!-- 3. Wybór postaci --> Wybór postaci -->
+  <!-- 3. Wybór postaci -->
   <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
@@ -102,7 +112,10 @@
   </div>
 
   <!-- 4. Filmik inicjacyjny -->
-  <div id="videoOverlay"><video id="roleVideo" controls></video><button class="btn" id="videoNext">DALEJ DO ZADAŃ</button></div>
+  <div id="videoOverlay">
+    <video id="roleVideo" controls></video>
+    <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button>
+  </div>
 
   <!-- 5. Interaktywne zadania -->
   <div id="page4" class="screen">
@@ -123,7 +136,7 @@
       <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
       <div class="task-row" data-ans="DIRHEMY"><span>Ratusz</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
     </div>
-    <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
+    <!-- usunięty duplikat przycisku -->
   </div>
 
   <!-- 6. Rada Grodu -->
@@ -189,7 +202,9 @@
     document.getElementById('drawBtn').addEventListener('click',()=>{document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)];document.getElementById('sideBtn').disabled=false;});
     document.getElementById('sideBtn').addEventListener('click',()=>{sideDone=true;document.getElementById('sideBtn').style.background='lime';});
     document.getElementById('toCouncil').addEventListener('click',()=>show('page5'));
-    document.getElementById('endTrade').addEventListener('click',()=>finish('handel'));document.getElementById('endClose').addEventListener('click',()=>finish('granice'));document.getElementById('endLaw').addEventListener('click',()=>finish('prawo'));
+    document.getElementById('endTrade').addEventListener('click',()=>finish('handel'));
+    document.getElementById('endClose').addEventListener('click',()=>finish('granice'));
+    document.getElementById('endLaw').addEventListener('click',()=>finish('prawo'));
     function finish(dec){document.getElementById('resTeam').innerText=team;document.getElementById('resRole').innerText=role;document.getElementById('resDec').innerText=endings[dec].name;document.getElementById('resDesc').innerText=endings[dec].desc;document.getElementById('avatar').src=role+'.1.png';document.getElementById('resSide').innerText=sideDone?'TAK':'NIE';document.getElementById('resCount').innerText=count;document.querySelector('.badges').innerHTML='<img src="medalion.1.png" alt="Medalion">'+(sideDone?'<img src="korona.1.png" alt="Korona">':'');document.querySelector('.downloads').innerHTML='<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>'+(sideDone?'<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>':'');show('page6');}
     document.getElementById('restartBtn').addEventListener('click',()=>{team='';role='';count=0;sideDone=false;document.getElementById('teamName').value='';document.querySelectorAll('.task-row').forEach(r=>r.classList.remove('correct','wrong'));document.querySelectorAll('.task-row input').forEach(i=>i.value='');document.getElementById('randomTask').innerText='';document.getElementById('sideBtn').disabled=true;document.getElementById('sideBtn').style.background='';document.querySelectorAll('.role').forEach(r=>r.classList.remove('selected'));document.getElementById('to4').disabled=true;document.getElementById('toCouncil').disabled=true;updateStats();show('page1');});
   </script>
