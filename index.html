@@ -182,18 +182,172 @@
   </div>
 
   <script>
-    const musicTracks = ['celtic-festival-307626.mp3'];
-    const bgMusic = document.getElementById('bgMusic');
-    const musicToggle = document.getElementById('musicToggle');
-    musicToggle.onclick = () => {
-      if (bgMusic.paused) { bgMusic.play(); musicToggle.textContent = '🔇'; }
-      else { bgMusic.pause(); musicToggle.textContent = '🎵'; }
-    };
-    document.getElementById('teamName').addEventListener('input', () => {
-      bgMusic.src = musicTracks[0]; bgMusic.load(); bgMusic.play().catch(() => {});
-      musicToggle.textContent = '🔇';
-    }, { once: true });
-    // ... pozostały skrypt, włącznie z show(), wyborem, confirm, finish, etc.
-  </script>
+  // Muzyka i toggle
+  const musicTracks = ['celtic-festival-307626.mp3'];
+  const bgMusic = document.getElementById('bgMusic');
+  const musicToggle = document.getElementById('musicToggle');
+  musicToggle.onclick = () => {
+    if (bgMusic.paused) { bgMusic.play(); musicToggle.textContent = '🔇'; }
+    else { bgMusic.pause(); musicToggle.textContent = '🎵'; }
+  };
+  document.getElementById('teamName').addEventListener('input', () => {
+    bgMusic.src = musicTracks[0]; bgMusic.load(); bgMusic.play().catch(() => {});
+    musicToggle.textContent = '🔇';
+  }, { once: true });
+
+  // Dane globalne
+  const vids = {
+    zwiadowca: 'zwiadowca.1.mp4',
+    tkaczka: 'tkaczka.1.mp4',
+    zielarka: 'zielarka.1.mp4',
+    kupiec: 'kupiec.1.mp4',
+    rzemieslnik: 'rzemieslnik.1.mp4'
+  };
+  const sideTasks = [
+    'Znajdź coś zielonego i dotknij to.',
+    'Zrób 5 przysiadów przy ławce.',
+    'Znajdź kamień większy niż dłoń.',
+    'Zrób zdjęcie czegoś okrągłego.',
+    'Znajdź coś na literę P.',
+    'Podskocz 3 razy w cieniu.',
+    'Ułóż literę A z patyków.',
+    'Opisz kolor liścia.',
+    'Zrób 10 kroków do przodu i 5 w bok.',
+    'Stań na jednej nodze i licz do 10 na głos.'
+  ];
+  const endings = {
+    handel: {
+      name: 'Otwarcie na handel',
+      desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu – czy zyskało dzięki temu swe prawdziwe dziedzictwo?`
+    },
+    granice: {
+      name: 'Zamknięcie granic',
+      desc: `W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?`
+    },
+    prawo: {
+      name: 'Wprowadzenie nowego prawa',
+      desc: `Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?`
+    }
+  };
+
+  let team = '';
+  let role = '';
+  let count = 0;
+  let sideDone = false;
+
+  // Funkcja przełączania ekranów
+  function show(id) {
+    document.getElementById('videoOverlay').classList.remove('show');
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    if (id === 'videoOverlay') {
+      document.getElementById('videoOverlay').classList.add('show');
+    } else {
+      document.getElementById(id).classList.add('active');
+    }
+  }
+
+  // Nawigacja między ekranami
+  document.getElementById('to2').addEventListener('click', () => {
+    const name = document.getElementById('teamName').value.trim();
+    if (!name) return alert('Podaj nazwę drużyny');
+    team = name;
+    show('page2');
+  });
+  document.getElementById('to3').addEventListener('click', () => show('page3'));
+
+  // Wybór postaci
+  document.querySelectorAll('.role').forEach(el => el.addEventListener('click', () => {
+    role = el.dataset.role;
+    document.querySelectorAll('.role').forEach(r => r.classList.toggle('selected', r === el));
+    document.getElementById('to4').disabled = false;
+  }));
+  document.getElementById('to4').addEventListener('click', () => {
+    document.getElementById('roleVideo').src = vids[role];
+    show('videoOverlay');
+  });
+
+  // Po filmie
+  document.getElementById('videoNext').addEventListener('click', () => {
+    document.getElementById('roleVideo').pause();
+    show('page4');
+  });
+
+  // Zadania
+  document.getElementById('drawBtn').addEventListener('click', () => {
+    document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random() * sideTasks.length)];
+    document.getElementById('sideBtn').disabled = false;
+  });
+  document.getElementById('sideBtn').addEventListener('click', () => {
+    sideDone = true;
+    document.getElementById('sideBtn').style.background = 'lime';
+  });
+
+  function updateStats() {
+    document.getElementById('count').innerText = count;
+    document.getElementById('toCouncil').disabled = count < 4;
+  }
+
+  // Potwierdzenie zadania
+  document.querySelectorAll('.confirm').forEach(btn => btn.addEventListener('click', () => {
+    const row = btn.closest('.task-row');
+    const answer = row.dataset.ans;
+    const val = row.querySelector('input').value.trim().toUpperCase();
+    if (val === answer) {
+      if (!row.classList.contains('correct')) {
+        row.classList.remove('wrong'); row.classList.add('correct'); count++;
+      }
+    } else {
+      if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
+      row.classList.add('wrong');
+    }
+    updateStats();
+  }));
+
+  // Reset zadania
+  document.querySelectorAll('.reset-icon').forEach(btn => btn.addEventListener('click', () => {
+    const row = btn.closest('.task-row');
+    if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
+    row.classList.remove('wrong');
+    row.querySelector('input').value = '';
+    updateStats();
+  }));
+
+  // Przejście do rady
+  document.getElementById('toCouncil').addEventListener('click', () => show('page5'));
+
+  // Rada
+  document.getElementById('endTrade').addEventListener('click', () => finish('handel'));
+  document.getElementById('endClose').addEventListener('click', () => finish('granice'));
+  document.getElementById('endLaw').addEventListener('click', () => finish('prawo'));
+
+  // Wyświetlenie podsumowania
+  function finish(dec) {
+    document.getElementById('resTeam').innerText = team;
+    document.getElementById('resRole').innerText = role;
+    document.getElementById('resCount').innerText = count;
+    document.getElementById('resSide').innerText = sideDone ? 'TAK' : 'NIE';
+    document.getElementById('resDec').innerText = endings[dec].name;
+    document.getElementById('resDesc').innerText = endings[dec].desc;
+    document.getElementById('avatar').src = role + '.1.png';
+    // Badges and downloads
+    document.querySelector('.badges').innerHTML = '<img src="medalion.1.png" alt="Medalion">' + (sideDone ? '<img src="korona.1.png" alt="Korona">' : '');
+    document.querySelector('.downloads').innerHTML = '<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>' + (sideDone ? '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>' : '');
+    show('page6');
+  }
+
+  // Restart gry
+  document.getElementById('restartBtn').addEventListener('click', () => {
+    team = ''; role = ''; count = 0; sideDone = false;
+    document.getElementById('teamName').value = '';
+    document.querySelectorAll('.role').forEach(r => r.classList.remove('selected'));
+    document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct', 'wrong'));
+    document.querySelectorAll('.task-row input').forEach(i => i.value = '');
+    document.getElementById('randomTask').innerText = '';
+    document.getElementById('sideBtn').disabled = true; document.getElementById('sideBtn').style.background = '';
+    document.getElementById('to4').disabled = true; document.getElementById('toCouncil').disabled = true;
+    updateStats();
+    show('page1');
+  });
+</script>
 </body>
 </html>
