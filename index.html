@@ -54,7 +54,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" autoplay loop playsinline></audio>
+  <audio id="bgMusic" src="celtic-festival-307626.mp3" autoplay loop playsinline></audio>
 
   <!-- 1. Instrukcja gry -->
   <div id="page1" class="screen active">
@@ -96,23 +96,27 @@
       <div class="role" data-role="tkaczka"><img src="tkaczka.1.png" alt="Tkaczka"><p>Tkaczka</p></div>
       <div class="role" data-role="zielarka"><img src="zielarka.1.png" alt="Zielarka"><p>Zielarka</p></div>
       <div class="role" data-role="kupiec"><img src="kupiec.1.png" alt="Kupiec"><p>Kupiec</p></div>
-      <div class="role" data-role="rzemieslnik"><img src="rzemieslnik.1.png" alt="Rzemieślnik"><p>Rzemieślnik</p></div>
+      <div class="role" data-role="rzemieslnik"><img src="rzemieslnik.png" alt="Rzemieślnik"><p>Rzemieślnik</p></div>
     </div>
     <button class="btn" id="to4" disabled>DALEJ</button>
   </div>
 
   <!-- 4. Filmik inicjacyjny -->
-  <div id="videoOverlay"><video id="roleVideo" controls></video><button class="btn" id="videoNext">DALEJ DO ZADAŃ</button></div>
+  <div id="videoOverlay" style="display:none;align-items:center;justify-content:center;flex-direction:column;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);z-index:1000;padding:16px;">
+    <video id="roleVideo" controls style="width:90%;max-width:360px;border-radius:12px;"></video>
+    <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button>
+  </div>
 
   <!-- 5. Interaktywne zadania -->
   <div id="page4" class="screen">
     <h2>INTERAKTYWNE ZADANIA</h2>
     <div class="instruction-box">
-      <p>Wykonaj 4 główne zadania w lokacjach: Brama Grodziska, Warsztat Kowala, Chata Zielarki, Chata Tkaczki, Ratusz oraz Targowisko. Wylosuj i zrealizuj 1 zadanie poboczne.</p>
-      <button class="btn" id="drawBtn">🎲 LOSUJ ZADANIE POBOCZNE</button>
-      <p id="randomTask"></p>
-      <button class="btn" id="sideBtn" disabled>ZREALIZOWANE</button>
+      <p>Wykonaj 4 główne zadania w lokacjach: Brama Grodziska, Warsztat Kowala, Chata Zielarki, Chata Tkaczki, Chata wodza oraz Targowisko. Wylosuj i zrealizuj 1 zadanie poboczne.</p>
     </div>
+    <button class="btn" id="drawBtn">🎲 LOSUJ ZADANIE POBOCZNE</button>
+    <p id="randomTask"></p>
+    <button class="btn" id="sideBtn" disabled>ZREALIZOWANE</button>
+    <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
     <p>Ukończono: <span id="count">0</span>/6</p>
     <div id="tasksList">
       <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
@@ -120,9 +124,8 @@
       <div class="task-row" data-ans="ŻYTO"><span>Targowisko</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
       <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
       <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Ratusz</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="DIRHEMY"><span>Chata wodza</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
     </div>
-    <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
   </div>
 
   <!-- 6. Rada Grodu -->
@@ -155,27 +158,13 @@
   <script>
     const musicTracks = ['celtic-festival-307626.mp3'];
     const bgMusic = document.getElementById('bgMusic');
-    function startBackgroundMusic() { bgMusic.src = musicTracks[0]; bgMusic.load(); bgMusic.play().catch(() => {}); }
-    document.getElementById('teamName').addEventListener('input', startBackgroundMusic, { once: true });
+    function startBackgroundMusic() { bgMusic.play().catch(() => {}); }
+    window.addEventListener('DOMContentLoaded', startBackgroundMusic);
+
     let team='', role='', count=0, sideDone=false;
     const vids={ zwiadowca:'zwiadowca.1.mp4', tkaczka:'tkaczka.1.mp4', zielarka:'zielarka.1.mp4', kupiec:'kupiec.1.mp4', rzemieslnik:'rzemieslnik.1.mp4' };
-    const sideTasks=[
-      'Znajdź coś zielonego i dotknij to.',
-      'Zrób 5 przysiadów przy ławce.',
-      'Znajdź kamień większy niż dłoń.',
-      'Zrób zdjęcie czegoś okrągłego.',
-      'Znajdź coś na literę P.',
-      'Podskocz 3 razy w cieniu.',
-      'Ułóż literę A z patyków.',
-      'Opisz kolor liścia.',
-      'Zrób 10 kroków do przodu i 5 w bok.',
-      'Stań na jednej nodze i licz do 10 na głos.'
-    ];
-    const endings={
-      handel:{name:'Otwarcie na handel',desc:'Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?'},
-      granice:{name:'Zamknięcie granic',desc:'W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?'},
-      prawo:{name:'Wprowadzenie nowego prawa',desc:'Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?'}   
-    };
+    const sideTasks=[ 'Znajdź coś zielonego i dotknij to.', 'Zrób 5 przysiadów przy ławce.', 'Znajdź kamień większy niż dłoń.', 'Zrób zdjęcie czegoś okrągłego.', 'Znajdź coś na literę P.', 'Podskocz 3 razy w cieniu.', 'Ułóż literę A z patyków.', 'Opisz kolor liścia.', 'Zrób 10 kroków do przodu i 5 w bok.', 'Stań na jednej nodze i licz do 10 na głos.' ];
+    const endings={ handel:{name:'Otwarcie na handel',desc:'Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale róównocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?'}, granice:{name:'Zamknięcie granic',	desc:'W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?'}, prawo:{name:'Wprowadzenie nowego prawa',	desc:'Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?'} };
     function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
     document.getElementById('to2').addEventListener('click',()=>{const i=document.getElementById('teamName');if(!i.value.trim())alert('Podaj nazwę drużyny');else{team=i.value.trim();show('page2');}});
     document.getElementById('to3').addEventListener('click',()=>show('page3'));
