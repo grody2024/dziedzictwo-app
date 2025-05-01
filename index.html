@@ -165,6 +165,24 @@
     const bgMusic=document.getElementById('bgMusic');
     bgMusic.src=musicTracks[Math.floor(Math.random()*musicTracks.length)];
     bgMusic.load();
+    
+
+  // ——— Start muzyki przy pierwszym wpisaniu nazwy drużyny ———
+  const teamInput = document.getElementById('teamName');
+  function startBackgroundMusic() {
+    bgMusic.src = 'celtycki-festiwal-307626.mp3';
+    bgMusic.load();
+    bgMusic.muted = false;
+    bgMusic.play().catch(() => {});
+    teamInput.removeEventListener('input', startBackgroundMusic);
+  }
+  teamInput.addEventListener('input', startBackgroundMusic);
+  // ————————————————————————————————————————————————
+
+  document.getElementById('to2').addEventListener('click', () => {
+    // …reszta kodu…
+  });
+
 
     let team='', role='', count=0, sideDone=false;
     const vids={
