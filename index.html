@@ -53,39 +53,30 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" muted autoplay loop playsinline></audio>
+  <audio id="bgMusic" autoplay loop playsinline></audio>
 
-  <!-- 1. Rejestracja -->
+  <!-- 1. Wprowadzenie fabularne -->
   <div id="page1" class="screen active">
     <h1>GRODOWA ODYSEJA</h1>
     <div class="instruction-box">
-      <ul>
-        <li>1. Wpisz nazwę drużyny → <strong>DALEJ</strong></li>
-        <li>2. Przeczytaj fabułę → <strong>DALEJ</strong></li>
-        <li>3. Wybierz postać → <strong>DALEJ</strong></li>
-        <li>4. Obejrzyj filmik → <strong>DALEJ</strong></li>
-        <li>5. Wylosuj zadanie poboczne → <strong>🎲 LOSUJ</strong></li>
-        <li>6. Po realizacji otrzymujesz koronę → <strong>ZREALIZOWANE</strong></li>
-        <li>7. Wykonaj min. 4 zadania główne</li>
-        <li>8. Kliknij <strong>PRZEJDŹ DO RADY</strong></li>
-      </ul>
+      <p>Rok 972. Sopockie Grodzisko tętni życiem po zwycięstwie pod Cedynią. Wieści o triumfie Mieszka przesyłają nadzieję, lecz cesarskie spojrzenie kieruje się ku Pomorzu. Z południa rumorze o bizantyjskich znakach Rusi, z zachodu słowa o chrzcie, z którego płynie pokój i nowe prawo. Ankiety prastarych duchów przeszłości rozbrzmiewają w runach na kamiennych tablicach, a Ty stajesz przed wyborem: otworzyć mury na świat czy strzec ognisk przodków?</p>
     </div>
     <input id="teamName" type="text" placeholder="Nazwa drużyny">
     <button class="btn" id="to2">DALEJ</button>
   </div>
 
-  <!-- 2. Fabuła -->
+  <!-- 2. Tworzenie drużyny -->
   <div id="page2" class="screen">
-    <h2>Rok 972 – Czas Próby</h2>
+    <h2>TWORZENIE DRUŻYNY</h2>
     <div class="instruction-box">
-      <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
-      <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
-      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyjskimi bóstwami, niosąc srebro i niepokój.</p>
-      <p>Z zachodu zaś unoszą się słowa o chrzcie i kaplicach kamiennych: mówią, że Dąbrówka przyniosła pokój, lecz czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
-      <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie pamięć przodków: w popiele ognisk, pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
+      <p>Twórz drużynę solo lub w grupie. Nazwa drużyny będzie towarzyszyć Wam przez całą przygodę.</p>
+      <h3>Role:</h3>
       <ul>
-        <li>– Czy otworzyć Grodzisko na obce mowy, bogów i prawa…</li>
-        <li>– Czy zamknąć bramy na sto lat, strzegąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie.</li>
+        <li><strong>Tkaczka</strong> – strzeżesz przędzy i tradycji rzemieślniczych.</li>
+        <li><strong>Zwiadowca</strong> – cenne wiadomości z zewnątrz i taktyczne spojrzenie.</li>
+        <li><strong>Zielarka</strong> – magia ziół i lekarstwa dla ciała i duszy.</li>
+        <li><strong>Kupiec</strong> – nowe towary, sojusze i wpływy handlowe.</li>
+        <li><strong>Rzemieślnik</strong> – kowalskie młoty i murarskie dłuta budują przyszłość.</li>
       </ul>
     </div>
     <button class="btn" id="to3">DALEJ</button>
@@ -95,23 +86,24 @@
   <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
-      <div class="role" data-role="zwiadowca"><img src="zwiadowca.1.png" alt="Zwiadowca"><p>Zwiadowca</p></div>
-      <div class="role" data-role="tkaczka"><img src="tkaczka.1.png" alt="Tkaczka"><p>Tkaczka</p></div>
-      <div class="role" data-role="zielarka"><img src="zielarka.1.png" alt="Zielarka"><p>Zielarka</p></div>
-      <div class="role" data-role="kupiec"><img src="kupiec.1.png" alt="Kupiec"><p>Kupiec</p></div>
-      <div class="role" data-role="rzemieslnik"><img src="kowal.1.png" alt="Rzemieślnik"><p>Rzemieślnik</p></div>
+      <div class="role" data-role="zwiadowca"><img src="zwiadowca.1.png"><p>Zwiadowca</p></div>
+      <div class="role" data-role="tkaczka"><img src="tkaczka.1.png"><p>Tkaczka</p></div>
+      <div class="role" data-role="zielarka"><img src="zielarka.1.png"><p>Zielarka</p></div>
+      <div class="role" data-role="kupiec"><img src="kupiec.1.png"><p>Kupiec</p></div>
+      <div class="role" data-role="rzemieslnik"><img src="kowal.1.png"><p>Rzemieślnik</p></div>
     </div>
     <button class="btn" id="to4" disabled>DALEJ</button>
   </div>
 
   <!-- 4. Filmik inicjacyjny -->
-  <div id="videoOverlay">  <video id="roleVideo" controls></video>  <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button></div>
+  <div id="videoOverlay"><video id="roleVideo" controls></video><button class="btn" id="videoNext">DALEJ DO ZADAŃ</button></div>
 
-  <!-- 5. Zadania -->
+  <!-- 5. Interaktywne zadania -->
   <div id="page4" class="screen">
-    <h2>ZADANIA</h2>
+    <h2>INTERAKTYWNE ZADANIA</h2>
     <div class="instruction-box">
-      <button class="btn" id="drawBtn">🎲 LOSUJ</button>
+      <p>Wykonaj 4 główne zadania w lokacjach: Brama Grodziska, Warsztat Kowala, Chata Zielarki, Chata Tkaczki, Ratusz oraz Targowisko. Wylosuj i zrealizuj 1 zadanie poboczne.</p>
+      <button class="btn" id="drawBtn">🎲 LOSUJ ZADANIE POBOCZNE</button>
       <p id="randomTask"></p>
       <button class="btn" id="sideBtn" disabled>ZREALIZOWANE</button>
     </div>
@@ -122,75 +114,44 @@
       <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
       <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
       <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Chata Namiestnika</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="DIRHEMY"><span>Ratusz</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
     </div>
     <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
   </div>
 
-  <!-- 6. Rada -->
+  <!-- 6. Rada Grodu -->
   <div id="page5" class="screen">
-    <h2>RADA GRODU</h2>
+    <h2>RADA GRODU – DECYZYJNA KULMINACJA</h2>
     <button class="btn" id="endTrade">🛒 Otwarcie na handel</button>
     <button class="btn" id="endClose">🛡️ Zamknięcie granic</button>
     <button class="btn" id="endLaw">⚖️ Wprowadzenie nowego prawa</button>
   </div>
 
-  <!-- 7. Gratulacje -->
+  <!-- 7. Podsumowanie rozgrywki -->
   <div id="page6" class="screen">
     <img src="logo.1.png" class="museum-logo" alt="Muzeum">
     <h1>GRATULACJE!</h1>
     <div id="finalPortrait"><img id="avatar" alt="Twoja postać"></div>
     <div class="final-box">
-      <p>Drużyna: <strong><span id="resTeam"></span></strong></p>
-      <p>Postać: <strong><span id="resRole"></span></strong></p>
-      <p>Decyzja: <strong><span id="resDec"></span></strong></p>
+      <p><strong>Drużyna:</strong> <span id="resTeam"></span></p>
+      <p><strong>Postać:</strong> <span id="resRole"></span></p>
+      <p><strong>Zadania główne:</strong> <span id="resCount"></span>/6</p>
+      <p><strong>Zadanie poboczne:</strong> <span id="resSide"></span></p>
+      <p><strong>Decyzja Rady:</strong> <span id="resDec"></span></p>
       <p id="resDesc" style="white-space:pre-wrap;margin-top:8px"></p>
-      <p>Zadanie poboczne: <strong><span id="resSide"></span></strong></p>
-      <p>Zadania główne: <strong><span id="resCount"></span>/6</strong></p>
       <div class="badges"></div>
       <div class="downloads"></div>
-      <p class="note">🏅 Odznaka korony za wykonanie zadania losowego</p>
     </div>
     <button class="btn" id="restartBtn">ZAGRAJ PONOWNIE</button>
   </div>
 
   <script>
-    const musicTracks=[
-      'celtycki-festiwal-307626.mp3',
-      'celtycki-taniec-skrzypcowy-307624.mp3',
-      'celtic-glory-307625.mp3',
-      'celtyckie-legendy-307629.mp3',
-      'celtycki-poranny-telefon-307627.mp3'
-    ];
-    const bgMusic=document.getElementById('bgMusic');
-    // ——— Start muzyki przy pierwszym naciśnięciu klawisza w polu nazwy drużyny ———
-const teamInput = document.getElementById('teamName');
-function startBackgroundMusic() {
-  bgMusic.src = 'celtycki-festiwal-307626.mp3';
-  bgMusic.load();
-  bgMusic.muted = false;
-  bgMusic.play().catch(() => {});
-  teamInput.removeEventListener('keydown', startBackgroundMusic);
-}
-teamInput.addEventListener('keydown', startBackgroundMusic);
-// ————————————————————————————————————————————————————————————————
-
-  
-  // ————————————————————————————————————————————————
-
-  document.getElementById('to2').addEventListener('click', () => {
-    // …reszta kodu…
-  });
-
-
+    const musicTracks = ['celtic-festival-307626.mp3'];
+    const bgMusic = document.getElementById('bgMusic');
+    function startBackgroundMusic() { bgMusic.src = musicTracks[0]; bgMusic.load(); bgMusic.play().catch(() => {}); }
+    document.getElementById('teamName').addEventListener('input', startBackgroundMusic, { once: true });
     let team='', role='', count=0, sideDone=false;
-    const vids={
-      zwiadowca:'zwiadowca.1.mp4',
-      tkaczka:'tkaczka.1.mp4',
-      zielarka:'zielarka.1.mp4',
-      kupiec:'kupiec.1.mp4',
-      rzemieslnik:'rzemieslnik.1.mp4'
-    };
+    const vids={ zwiadowca:'zwiadowca.1.mp4', tkaczka:'tkaczka.1.mp4', zielarka:'zielarka.1.mp4', kupiec:'kupiec.1.mp4', rzemieslnik:'rzemieslnik.1.mp4' };
     const sideTasks=[
       'Znajdź coś zielonego i dotknij to.',
       'Zrób 5 przysiadów przy ławce.',
@@ -204,77 +165,25 @@ teamInput.addEventListener('keydown', startBackgroundMusic);
       'Stań na jednej nodze i licz do 10 na głos.'
     ];
     const endings={
-      handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw. Targowiska rozbłysły kolorami, a rzemieślnicy zyskali dostęp do nowych surowców i technik.
-
-Lecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?`},
-      granice:{name:'Zamknięcie granic',desc:`Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.
-
-Jednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?`},
-      prawo:{name:'Wprowadzenie nowego prawa',desc:`Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.
-
-Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku? A może reforma stanie się iskrą większego ognia?`}
+      handel:{name:'Otwarcie na handel',desc:`Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?`},
+      granice:{name:'Zamknięcie granic',desc:`W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?`},
+      prawo:{name:'Wprowadzenie nowego prawa',desc:`Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?`}  
     };
-
-    function show(id){
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-    document.getElementById('to2').addEventListener('click',()=>{
-      const input=document.getElementById('teamName');
-      if(!input.value.trim()) alert('Podaj nazwę drużyny');
-      else { team=input.value.trim(); bgMusic.muted=false; bgMusic.play().catch(()=>{}); show('page2'); }
-    });
+    function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+    document.getElementById('to2').addEventListener('click',()=>{const i=document.getElementById('teamName');if(!i.value.trim())alert('Podaj nazwę drużyny');else{team=i.value.trim();show('page2');}});
     document.getElementById('to3').addEventListener('click',()=>show('page3'));
-    document.querySelectorAll('.role').forEach(el=>el.addEventListener('click',()=>{
-      role=el.dataset.role;
-      document.querySelectorAll('.role').forEach(r=>r.classList.toggle('selected',r===el));
-      document.getElementById('to4').disabled=false;
-    }));
-    document.getElementById('to4').addEventListener('click',()=>{
-      document.getElementById('roleVideo').src=vids[role];
-      document.getElementById('videoOverlay').style.display='flex';
-    });
-    document.getElementById('videoNext').addEventListener('click',()=>{document.getElementById('videoOverlay').style.display='none'; show('page4');});
-    function updateStats(){document.getElementById('count').innerText=count; document.getElementById('toCouncil').disabled=count<4;}
-    document.querySelectorAll('.confirm').forEach(btn=>btn.addEventListener('click',()=>{
-      const row=btn.closest('.task-row'), ans=row.dataset.ans, val=row.querySelector('input').value.trim().toUpperCase();
-      if(val===ans){ if(!row.classList.contains('correct')){row.classList.remove('wrong');row.classList.add('correct');count++;}} else {if(row.classList.contains('correct')){row.classList.remove('correct');count--;} row.classList.add('wrong');}
-      updateStats();
-    }));
-    document.querySelectorAll('.reset-icon').forEach(btn=>btn.addEventListener('click',()=>{
-      const row=btn.closest('.task-row'); if(row.classList.contains('correct')){row.classList.remove('correct');count--;} row.classList.remove('wrong'); row.querySelector('input').value=''; updateStats();
-    }));
-    document.getElementById('drawBtn').addEventListener('click',()=>{document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)]; document.getElementById('sideBtn').disabled=false;});
-    document.getElementById('sideBtn').addEventListener('click',()=>{sideDone=true; document.getElementById('sideBtn').style.background='lime';});
+    document.querySelectorAll('.role').forEach(el=>el.addEventListener('click',()=>{role=el.dataset.role;document.querySelectorAll('.role').forEach(r=>r.classList.toggle('selected',r===el));document.getElementById('to4').disabled=false;}));
+    document.getElementById('to4').addEventListener('click',()=>{document.getElementById('roleVideo').src=vids[role];document.getElementById('videoOverlay').style.display='flex';});
+    document.getElementById('videoNext').addEventListener('click',()=>{document.getElementById('videoOverlay').style.display='none';show('page4');});
+    function updateStats(){document.getElementById('count').innerText=count;document.getElementById('toCouncil').disabled=count<4;}
+    document.querySelectorAll('.confirm').forEach(btn=>btn.addEventListener('click',()=>{const row=btn.closest('.task-row'),ans=row.dataset.ans,val=row.querySelector('input').value.trim().toUpperCase();if(val===ans){if(!row.classList.contains('correct')){row.classList.remove('wrong');row.classList.add('correct');count++;}}else{if(row.classList.contains('correct')){row.classList.remove('correct');count--;}row.classList.add('wrong');}updateStats();}));
+    document.querySelectorAll('.reset-icon').forEach(btn=>btn.addEventListener('click',()=>{const row=btn.closest('.task-row');if(row.classList.contains('correct')){row.classList.remove('correct');count--;}row.classList.remove('wrong');row.querySelector('input').value='';updateStats();}));
+    document.getElementById('drawBtn').addEventListener('click',()=>{document.getElementById('randomTask').innerText=sideTasks[Math.floor(Math.random()*sideTasks.length)];document.getElementById('sideBtn').disabled=false;});
+    document.getElementById('sideBtn').addEventListener('click',()=>{sideDone=true;document.getElementById('sideBtn').style.background='lime';});
     document.getElementById('toCouncil').addEventListener('click',()=>show('page5'));
-    document.getElementById('endTrade').addEventListener('click',()=>finish('handel'));
-    document.getElementById('endClose').addEventListener('click',()=>finish('granice'));
-    document.getElementById('endLaw').addEventListener('click',()=>finish('prawo'));
-    function finish(dec){
-      document.getElementById('resTeam').innerText=team;
-      document.getElementById('resRole').innerText=role;
-      document.getElementById('resDec').innerText=endings[dec].name;
-      document.getElementById('resDesc').innerText=endings[dec].desc;
-      document.getElementById('avatar').src=role+'.png';
-      document.getElementById('resSide').innerText=sideDone?'TAK':'NIE';
-      document.getElementById('resCount').innerText=count;
-      document.querySelector('.badges').innerHTML='<img src="medalion.1.png" alt="Medalion">'+(sideDone?'<img src="korona.1.png" alt="Korona">':'');
-      document.querySelector('.downloads').innerHTML='<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>'+(sideDone?'<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>':'');
-      show('page6');
-    }
-    document.getElementById('restartBtn').addEventListener('click',()=>{
-      team=''; role=''; count=0; sideDone=false;
-      document.getElementById('teamName').value='';
-      document.querySelectorAll('.task-row').forEach(r=>r.classList.remove('correct','wrong'));
-      document.querySelectorAll('.task-row input').forEach(i=>i.value='');
-      document.getElementById('randomTask').innerText='';
-      document.getElementById('sideBtn').disabled=true; document.getElementById('sideBtn').style.background='';
-      document.querySelectorAll('.role').forEach(r=>r.classList.remove('selected'));
-      document.getElementById('to4').disabled=true;
-      document.getElementById('toCouncil').disabled=true;
-      updateStats();
-      show('page1');
-    });
+    document.getElementById('endTrade').addEventListener('click',()=>finish('handel'));document.getElementById('endClose').addEventListener('click',()=>finish('granice'));document.getElementById('endLaw').addEventListener('click',()=>finish('prawo'));
+    function finish(dec){document.getElementById('resTeam').innerText=team;document.getElementById('resRole').innerText=role;document.getElementById('resDec').innerText=endings[dec].name;document.getElementById('resDesc').innerText=endings[dec].desc;document.getElementById('avatar').src=role+'.1.png';document.getElementById('resSide').innerText=sideDone?'TAK':'NIE';document.getElementById('resCount').innerText=count;document.querySelector('.badges').innerHTML='<img src="medalion.1.png" alt="Medalion">'+(sideDone?'<img src="korona.1.png" alt="Korona">':'');document.querySelector('.downloads').innerHTML='<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>'+(sideDone?'<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>':'');show('page6');}
+    document.getElementById('restartBtn').addEventListener('click',()=>{team='';role='';count=0;sideDone=false;document.getElementById('teamName').value='';document.querySelectorAll('.task-row').forEach(r=>r.classList.remove('correct','wrong'));document.querySelectorAll('.task-row input').forEach(i=>i.value='');document.getElementById('randomTask').innerText='';document.getElementById('sideBtn').disabled=true;document.getElementById('sideBtn').style.background='';document.querySelectorAll('.role').forEach(r=>r.classList.remove('selected'));document.getElementById('to4').disabled=true;document.getElementById('toCouncil').disabled=true;updateStats();show('page1');});
   </script>
 </body>
 </html>
