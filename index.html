@@ -163,20 +163,19 @@
       'celtycki-poranny-telefon-307627.mp3'
     ];
     const bgMusic=document.getElementById('bgMusic');
-    bgMusic.src=musicTracks[Math.floor(Math.random()*musicTracks.length)];
-    bgMusic.load();
-    
+    // ——— Start muzyki przy pierwszym naciśnięciu klawisza w polu nazwy drużyny ———
+const teamInput = document.getElementById('teamName');
+function startBackgroundMusic() {
+  bgMusic.src = 'celtycki-festiwal-307626.mp3';
+  bgMusic.load();
+  bgMusic.muted = false;
+  bgMusic.play().catch(() => {});
+  teamInput.removeEventListener('keydown', startBackgroundMusic);
+}
+teamInput.addEventListener('keydown', startBackgroundMusic);
+// ————————————————————————————————————————————————————————————————
 
-  // ——— Start muzyki przy pierwszym wpisaniu nazwy drużyny ———
-  const teamInput = document.getElementById('teamName');
-  function startBackgroundMusic() {
-    bgMusic.src = 'celtycki-festiwal-307626.mp3';
-    bgMusic.load();
-    bgMusic.muted = false;
-    bgMusic.play().catch(() => {});
-    teamInput.removeEventListener('input', startBackgroundMusic);
-  }
-  teamInput.addEventListener('input', startBackgroundMusic);
+  
   // ————————————————————————————————————————————————
 
   document.getElementById('to2').addEventListener('click', () => {
