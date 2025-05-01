@@ -90,8 +90,28 @@
     .task-row.wrong input { border-color: crimson; background: rgba(255,0,0,.2); }
     .reset-icon { background: none; border: none; font-size: 18px; cursor: pointer; }
     .museum-logo {
-      width: 40px; margin: 8px auto;
-      border: 2px solid gold; padding: 2px; border-radius: 6px;
+      width: 30px;
+      margin: 8px auto;
+      border: 2px solid gold;
+      padding: 2px;
+      border-radius: 6px;
+    }
+    .avatar-frame {
+      width: 60px;
+      margin: 8px auto;
+      border: 2px solid gold;
+      padding: 2px;
+      border-radius: 10px;
+    }
+    .avatar-frame img { width: 100%; display: block; border-radius: 8px; }
+    .badges img {
+      width: 30px;
+      margin-right: 4px;
+    }
+    .downloads .btn {
+      padding: 6px;
+      font-size: 14px;
+      margin-right: 4px;
     }
     .avatar-frame {
       width: 80px; margin: 8px auto;
@@ -107,7 +127,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgMusic" autoplay loop playsinline></audio>
+  <audio id="bgMusic" autoplay loop playsinline controls></audio>
 
   <!-- Screens -->
   <div id="page1" class="screen active">
