@@ -1,60 +1,17 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
   <title>Grodowa Odyseja</title>
-  <!-- Czcionki średniowieczne -->
-  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing:border-box; margin:0; padding:0; }
-    html, body { height:100%; }
-    body {
-      font-family:'MedievalSharp',cursive;
-      background:url('tło gry.png') center/cover fixed;
-      color:#f4f1e6;
-      overflow:hidden;
-    }
-    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-    .screen { display:none; animation:fadeIn .4s; padding:16px; max-width:480px; margin:auto; min-height:100vh; overflow-y:auto; }
-    .active { display:block; }
-    h1,h2,h3 {
-      text-align:center;
-      font-family:'Uncial Antiqua',cursive;
-      text-shadow:2px 2px 4px rgba(0,0,0,.6);
-      margin-bottom:12px;
-    }
-    input[type=text] { width:100%; padding:10px; margin:8px 0; border:none; border-radius:6px; font-size:16px; }
-    .btn { width:100%; padding:12px; margin:8px 0; font-size:18px; border:none; border-radius:8px; background:linear-gradient(to bottom,#c49e5b,#8b6237); color:#fff9e6; cursor:pointer; }
-    .btn:disabled { opacity:.6; cursor:default; }
-    .instruction-box, .final-box { background:rgba(0,0,0,.6); border:2px solid #8d744a; border-radius:8px; padding:12px; margin:12px 0; font-size:14px; line-height:1.4; }
-    .instruction-box ul { list-style:disc inside; margin-left:16px; }
-    .roles { display:grid; grid-template-columns:repeat(auto-fit,minmax(80px,1fr)); gap:12px; justify-items:center; }
-    .role { background:rgba(0,0,0,.5); padding:6px; border-radius:12px; text-align:center; cursor:pointer; transition:transform .2s; }
-    .role img { width:80px; height:80px; object-fit:cover; object-position:top center; border-radius:12px; border:2px solid transparent; }
-    .role.selected img { border-color:gold; box-shadow:0 0 6px gold; }
-    #videoOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.9); display:none; align-items:center; justify-content:center; flex-direction:column; z-index:1000; padding:16px; }
-    #videoOverlay video { width:90%; max-width:360px; border-radius:12px; }
-    .task-row { display:flex; gap:8px; align-items:center; margin:8px 0; }
-    .task-row span { flex:1; }
-    .task-row input { flex:1 1 100px; padding:6px; border:2px solid #444; border-radius:4px; }
-    .task-row.correct input { border-color:lime; background:rgba(0,128,0,.2); }
-    .task-row.wrong input { border-color:crimson; background:rgba(255,0,0,.2); }
-    .reset-icon { background:none; border:none; font-size:18px; cursor:pointer; }
-    #page6 { display:flex; flex-direction:column; align-items:center; text-align:center; padding:16px; background:rgba(0,0,0,.6); border-radius:12px; box-shadow:0 0 12px rgba(0,0,0,.8); max-height:90vh; overflow-y:auto; }
-    .museum-logo { width:60px; margin-bottom:8px; border:2px solid gold; padding:2px; border-radius:6px; }
-    #finalPortrait img { width:80px; height:auto; max-height:120px; object-fit:cover; object-position:top center; border-radius:10px; border:3px solid gold; padding:1px; }
-    .badges { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
-    .badges img { width:50px; height:auto; }
-    .downloads { display:flex; flex-wrap:wrap; gap:8px; margin:8px 0; }
-    .downloads .btn { padding:8px; font-size:14px; }
-    .note { font-size:12px; color:#ddd; margin-top:8px; }
-    @media(max-width:400px) { .btn { font-size:14px; padding:8px; } h1{font-size:24px;} h2{font-size:20px;} .instruction-box{font-size:12px;} }
-    #restartBtn { font-size:20px; padding:16px; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap"
+    rel="stylesheet"> <!-- Czcionki średniowieczne -->
+  <link rel="stylesheet" href="styles.css"> <!-- Dodano link do arkusza stylów -->
 </head>
+
 <body>
-  <audio id="bgMusic" src="celtic-festival-307626.mp3" autoplay loop playsinline></audio>
+  <audio id="bgMusic" src="resources/mp3/celtic_festival.mp3" autoplay playsinline></audio>
 
   <!-- 1. Instrukcja gry -->
   <div id="page1" class="screen active">
@@ -75,14 +32,20 @@
   <div id="page2" class="screen">
     <h2>PEŁNA FABUŁA</h2>
     <div class="instruction-box">
-      <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
-      <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
-      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyckimi bóstwami, niosąc srebro i niepokój.</p>
-      <p>Z zachodu zaś unoszą się słowa o chrzcie i kamiennych kaplicach: mówią, że Dąbrówka przyniosła pokój, lecz czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
-      <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie pamięć przodków: w popiele ognisk, pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
+      <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała
+        nadciągające przesilenie.</p>
+      <p>Z południa dobiegają echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a
+        cesarskie spojrzenie zwraca się ku naszym granicom.</p>
+      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyckimi
+        bóstwami, niosąc srebro i niepokój.</p>
+      <p>Z zachodu zaś unoszą się słowa o chrzcie i kamiennych kaplicach: mówią, że Dąbrówka przyniosła pokój, lecz czy
+        pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
+      <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie pamięć przodków: w popiele ognisk,
+        pod korzeniami starych dębów, w runach wyrytych na kamieniu.</p>
       <ul>
         <li>– Czy otworzyć Grodzisko na obce mowy, bogów i prawo?</li>
-        <li>– Czy zamknąć bramy na sto lat, strzegąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie?</li>
+        <li>– Czy zamknąć bramy na sto lat, strzegąc ognia, który płonął tutaj, zanim wybito pierwsze monety cesarskie?
+        </li>
       </ul>
     </div>
     <button class="btn" id="to3">DALEJ</button>
@@ -92,17 +55,28 @@
   <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
-      <div class="role" data-role="zwiadowca"><img src="zwiadowca.1.png" alt="Zwiadowca"><p>Zwiadowca</p></div>
-      <div class="role" data-role="tkaczka"><img src="tkaczka.1.png" alt="Tkaczka"><p>Tkaczka</p></div>
-      <div class="role" data-role="zielarka"><img src="zielarka.1.png" alt="Zielarka"><p>Zielarka</p></div>
-      <div class="role" data-role="kupiec"><img src="kupiec.1.png" alt="Kupiec"><p>Kupiec</p></div>
-      <div class="role" data-role="kowal"><img src="kowal.1.png" alt="Rzemieślnik"><p>Rzemieślnik</p></div>
+      <div class="role" data-role="zwiadowca"><img src="resources/images/zwiadowca.png" alt="Zwiadowca">
+        <p>Zwiadowca</p>
+      </div>
+      <div class="role" data-role="tkaczka"><img src="resources/images/tkaczka.png" alt="Tkaczka">
+        <p>Tkaczka</p>
+      </div>
+      <div class="role" data-role="zielarka"><img src="resources/images/zielarka.png" alt="Zielarka">
+        <p>Zielarka</p>
+      </div>
+      <div class="role" data-role="kupiec"><img src="resources/images/kupiec.png" alt="Kupiec">
+        <p>Kupiec</p>
+      </div>
+      <div class="role" data-role="kowal"><img src="resources/images/kowal.png" alt="Kowal">
+        <p>Kowal</p>
+      </div>
     </div>
     <button class="btn" id="to4" disabled>DALEJ</button>
   </div>
 
   <!-- 4. Filmik inicjacyjny -->
-  <div id="videoOverlay" class="screen" style="display:none;align-items:center;justify-content:center;flex-direction:column;">
+  <div id="videoOverlay" class="screen"
+    style="display:none;align-items:center;justify-content:center;flex-direction:column;">
     <video id="roleVideo" controls></video>
     <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button>
   </div>
@@ -111,7 +85,8 @@
   <div id="page4" class="screen">
     <h2>INTERAKTYWNE ZADANIA</h2>
     <div class="instruction-box">
-      <p>Wykonaj 4 główne zadania w lokacjach: Brama Grodziska, Warsztat Kowala, Chata Zielarki, Chata Tkaczki, Chata wodza oraz Targowisko. Wylosuj i zrealizuj 1 zadanie poboczne.</p>
+      <p>Wykonaj 4 główne zadania w lokacjach: Brama Grodziska, Warsztat Kowala, Chata Zielarki, Chata Tkaczki, Chata
+        wodza oraz Targowisko. Wylosuj i zrealizuj 1 zadanie poboczne.</p>
     </div>
     <button class="btn" id="drawBtn">🎲 LOSUJ ZADANIE POBOCZNE</button>
     <p id="randomTask"></p>
@@ -119,65 +94,21 @@
     <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
     <p>Ukończono: <span id="count">0</span>/6</p>
     <div id="tasksList">
-      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="ŻYTO"><span>Targowisko</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Chata wodza</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button
+          class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button
+          class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="ŻYTO"><span>Targowisko</span><input type="text"><button
+          class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button
+          class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button
+          class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="DIRHEMY"><span>Chata wodza</span><input type="text"><button
+          class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
     </div>
   </div>
 
-<pre>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-</pre>
-  
   <!-- 6. Rada Grodu -->
   <div id="page5" class="screen">
     <h2>RADA GRODU – DECYZYJNA KULMINACJA</h2>
@@ -188,7 +119,7 @@
 
   <!-- 7. Podsumowanie rozgrywki -->
   <div id="page6" class="screen">
-    <img src="logo.1.png" class="museum-logo" alt="Muzeum">
+    <img src="resources/images/logo.png" class="museum-logo" alt="Muzeum">
     <h1>GRATULACJE!</h1>
     <div id="finalPortrait"><img id="avatar" alt="Twoja postać"></div>
     <div class="final-box">
@@ -206,14 +137,35 @@
   </div>
 
   <script>
-    const musicTracks = ['celtic-festival-307626.mp3'];
-    const bgMusic = document.getElementById('bgMusic');
-    function startBackgroundMusic() { bgMusic.play().catch(() => {}); }
-    window.addEventListener('DOMContentLoaded', startBackgroundMusic);
+    const musicTracks = [
+    'resources/mp3/celtic_dance.mp3',
+    'resources/mp3/celtic_festival.mp3',
+    'resources/mp3/celtic_legends.mp3',
+    'resources/mp3/celtic_morning.mp3'
+  ];
+  let currentTrack = 0;
+  const bgMusic = document.getElementById('bgMusic');
+
+  function playTrack(idx) {
+    bgMusic.src = musicTracks[idx];
+    bgMusic.play().catch(() => {});
+  }
+
+  function startBackgroundMusic() {
+    playTrack(currentTrack);
+  }
+
+  // When a track ends, play the next one (loop back to start)
+  bgMusic.addEventListener('ended', () => {
+    currentTrack = (currentTrack + 1) % musicTracks.length;
+    playTrack(currentTrack);
+  });
+
+  window.addEventListener('DOMContentLoaded', startBackgroundMusic);
 
     let team = '', role = '', count = 0, sideDone = false;
-    const vids = { zwiadowca:'zwiadowca.1.mp4', tkaczka:'tkaczka.1.mp4', zielarka:'zielarka.1.mp4', kupiec:'kupiec.1.mp4', rzemieslnik:'rzemieslnik.1.mp4' };
-    const avatars = { zwiadowca:'zwiadowca.1.png', tkaczka:'tkaczka.1.png', zielarka:'zielarka.1.png', kupiec:'kupiec.1.png', rzemieslnik:'kowal.1.png' };
+    const vids = { zwiadowca: 'resources/mp4/zwiadowca.mp4', tkaczka: 'resources/mp4/tkaczka.mp4', zielarka: 'resources/mp4/zielarka.mp4', kupiec: 'resources/mp4/kupiec.mp4', kowal: 'resources/mp4/kowal.mp4' };
+    const avatars = { zwiadowca: 'resources/images/zwiadowca.png', tkaczka: 'resources/images/tkaczka.png', zielarka: 'resources/images/zielarka.png', kupiec: 'resources/images/kupiec.png', kowal: 'resources/images/kowal.png' };
     const sideTasks = [
       'Znajdź coś zielonego i dotknij to.',
       'Zrób 5 przysiadów przy ławce.',
@@ -227,83 +179,83 @@
       'Stań na jednej nodze i licz do 10 na głos.'
     ];
     const endings = {
-      handel:{name:'Otwarcie na handel',desc:'Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?'},
-      granice:{name:'Zamknięcie granic',desc:'W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?'},
-      prawo:{name:'Wprowadzenie nowego prawa',desc:'Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?'}
+      handel: { name: 'Otwarcie na handel', desc: 'Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu - czy zyskało dzięki temu swe prawdziwe dziedzictwo?' },
+      granice: { name: 'Zamknięcie granic', desc: 'W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?' },
+      prawo: { name: 'Wprowadzenie nowego prawa', desc: 'Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?' }
     };
 
-    function show(id){
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    function show(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
 
-    document.getElementById('to2').addEventListener('click',()=>{
+    document.getElementById('to2').addEventListener('click', () => {
       const input = document.getElementById('teamName');
-      if(!input.value.trim()) alert('Podaj nazwę drużyny');
+      if (!input.value.trim()) alert('Podaj nazwę drużyny');
       else { team = input.value.trim(); show('page2'); }
     });
 
-    document.getElementById('to3').addEventListener('click',() => show('page3'));
+    document.getElementById('to3').addEventListener('click', () => show('page3'));
 
-    document.querySelectorAll('.role').forEach(el => el.addEventListener('click',() => {
+    document.querySelectorAll('.role').forEach(el => el.addEventListener('click', () => {
       role = el.dataset.role;
       document.querySelectorAll('.role').forEach(r => r.classList.toggle('selected', r === el));
       document.getElementById('to4').disabled = false;
     }));
 
-    document.getElementById('to4').addEventListener('click',() => {
+    document.getElementById('to4').addEventListener('click', () => {
       document.getElementById('roleVideo').src = vids[role];
       document.getElementById('videoOverlay').style.display = 'flex';
     });
 
-    document.getElementById('videoNext').addEventListener('click',() => {
+    document.getElementById('videoNext').addEventListener('click', () => {
       document.getElementById('videoOverlay').style.display = 'none';
       show('page4');
     });
 
-    function updateStats(){
+    function updateStats() {
       document.getElementById('count').innerText = count;
       document.getElementById('toCouncil').disabled = count < 4;
     }
 
-    document.querySelectorAll('.confirm').forEach(btn => btn.addEventListener('click',() => {
+    document.querySelectorAll('.confirm').forEach(btn => btn.addEventListener('click', () => {
       const row = btn.closest('.task-row');
       const answer = row.dataset.ans;
       const user = row.querySelector('input').value.trim().toUpperCase();
-      if(user === answer) {
-        if(!row.classList.contains('correct')) { row.classList.remove('wrong'); row.classList.add('correct'); count++; }
+      if (user === answer) {
+        if (!row.classList.contains('correct')) { row.classList.remove('wrong'); row.classList.add('correct'); count++; }
       } else {
-        if(row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
+        if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
         row.classList.add('wrong');
       }
       updateStats();
     }));
 
-    document.querySelectorAll('.reset-icon').forEach(btn => btn.addEventListener('click',() => {
+    document.querySelectorAll('.reset-icon').forEach(btn => btn.addEventListener('click', () => {
       const row = btn.closest('.task-row');
-      if(row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
+      if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
       row.classList.remove('wrong');
       row.querySelector('input').value = '';
       updateStats();
     }));
 
-    document.getElementById('drawBtn').addEventListener('click',() => {
+    document.getElementById('drawBtn').addEventListener('click', () => {
       document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random() * sideTasks.length)];
       document.getElementById('sideBtn').disabled = false;
     });
 
-    document.getElementById('sideBtn').addEventListener('click',() => {
+    document.getElementById('sideBtn').addEventListener('click', () => {
       sideDone = true;
       document.getElementById('sideBtn').style.background = 'lime';
     });
 
-    document.getElementById('toCouncil').addEventListener('click',() => show('page5'));
+    document.getElementById('toCouncil').addEventListener('click', () => show('page5'));
 
-    document.getElementById('endTrade').addEventListener('click',() => finish('handel'));
-    document.getElementById('endClose').addEventListener('click',() => finish('granice'));
-    document.getElementById('endLaw').addEventListener('click',() => finish('prawo'));
+    document.getElementById('endTrade').addEventListener('click', () => finish('handel'));
+    document.getElementById('endClose').addEventListener('click', () => finish('granice'));
+    document.getElementById('endLaw').addEventListener('click', () => finish('prawo'));
 
-    function finish(dec){
+    function finish(dec) {
       document.getElementById('resTeam').innerText = team;
       document.getElementById('resRole').innerText = role;
       document.getElementById('resCount').innerText = count;
@@ -311,25 +263,26 @@
       document.getElementById('resDec').innerText = endings[dec].name;
       document.getElementById('resDesc').innerText = endings[dec].desc;
       document.getElementById('avatar').src = avatars[role];
-      document.querySelector('.badges').innerHTML = '<img src="medalion.1.png" alt="Medalion">' + (sideDone ? '<img src="korona.1.png" alt="Korona">' : '');
-      document.querySelector('.downloads').innerHTML = '<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>' + (sideDone ? '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>' : '');
+      document.querySelector('.badges').innerHTML = '<img src="resources/images/medalion.png" alt="Medalion">' + (sideDone ? '<img src="resources/images/korona.png" alt="Korona">' : '');
+      document.querySelector('.downloads').innerHTML = '<a href="resources/images/medalion.png" download class="btn">POBIERZ MEDALION</a>' + (sideDone ? '<a href="resources/images/korona.png" download class="btn">POBIERZ KORONĘ</a>' : '');
       show('page6');
     }
 
-    document.getElementById('restartBtn').addEventListener('click',() => {
-      team=''; role=''; count=0; sideDone=false;
-      document.getElementById('teamName').value='';
-      document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct','wrong'));
-      document.querySelectorAll('#tasksList input').forEach(i => i.value='');
-      document.getElementById('randomTask').innerText='';
-      document.getElementById('sideBtn').disabled=true;
-      document.getElementById('sideBtn').style.background='';
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      team = ''; role = ''; count = 0; sideDone = false;
+      document.getElementById('teamName').value = '';
+      document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct', 'wrong'));
+      document.querySelectorAll('#tasksList input').forEach(i => i.value = '');
+      document.getElementById('randomTask').innerText = '';
+      document.getElementById('sideBtn').disabled = true;
+      document.getElementById('sideBtn').style.background = '';
       document.querySelectorAll('.role').forEach(r => r.classList.remove('selected'));
-      document.getElementById('to4').disabled=true;
-      document.getElementById('toCouncil').disabled=true;
+      document.getElementById('to4').disabled = true;
+      document.getElementById('toCouncil').disabled = true;
       updateStats();
       show('page1');
     });
   </script>
 </body>
+
 </html>
