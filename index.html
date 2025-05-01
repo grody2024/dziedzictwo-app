@@ -155,7 +155,6 @@
     playTrack(currentTrack);
   }
 
-  // When a track ends, play the next one (loop back to start)
   bgMusic.addEventListener('ended', () => {
     currentTrack = (currentTrack + 1) % musicTracks.length;
     playTrack(currentTrack);
@@ -284,5 +283,4 @@
     });
   </script>
 </body>
-
 </html>
