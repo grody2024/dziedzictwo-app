@@ -8,46 +8,124 @@
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
     * { box-sizing:border-box; margin:0; padding:0; }
-    html, body { height:100%; overflow:hidden; }
+    html, body { height:100%; margin:0; padding:0; }
     body {
       font-family:'MedievalSharp', cursive;
       background: url('tło gry.png') center/cover fixed;
       color: #f4f1e6;
+      overflow: hidden;
     }
     @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    /* Ekrany aplikacji: pełna szerokość na smartfonach */
     .screen {
       display: none;
       animation: fadeIn .4s;
       padding: 16px;
-      max-width: 480px;
-      margin: auto;
-      min-height: 100vh;
+      width: 100%;
+      max-width: 100%;
+      height: 100vh;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
     .active { display: block; }
+    /* Overlay wideo: zawsze na wierzchu, pełny ekran */
+    #videoOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 1000;
+      padding: 16px;
+    }
+    /* Pokaż overlay, gdy ma klasę active */
+    #videoOverlay.active {
+      display: flex;
+    }
+    #videoOverlay video {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 12px;
+    }
     h1, h2, h3 {
       text-align: center;
       font-family: 'Uncial Antiqua', cursive;
       text-shadow: 2px 2px 4px rgba(0,0,0,.6);
       margin-bottom: 12px;
     }
-    input[type=text] { width:100%; padding:10px; margin:8px 0; border:none; border-radius:6px; font-size:16px; }
-    .btn { width:100%; padding:12px; margin:8px 0; font-size:18px; border:none; border-radius:8px; background:linear-gradient(to bottom,#c49e5b,#8b6237); color:#fff9e6; cursor:pointer; }
-    .btn:disabled { opacity:.6; cursor: default; }
-    .instruction-box, .final-box { background:rgba(0,0,0,.6); border:2px solid #8d744a; border-radius:8px; padding:12px; margin:12px 0; font-size:14px; line-height:1.4; }
-    .instruction-box ul { list-style:disc inside; margin-left:16px; }
-    .roles { display:grid; grid-template-columns:repeat(auto-fit,minmax(80px,1fr)); gap:12px; justify-items:center; }
-    .role { background:rgba(0,0,0,.5); padding:6px; border-radius:12px; text-align:center; cursor:pointer; transition:transform .2s; }
-    .role img { width:80px; height:80px; object-fit:cover; object-position:top center; border-radius:12px; border:2px solid transparent; }
-    .role.selected img { border-color:gold; box-shadow:0 0 6px gold; }
-    .task-row { display:flex; gap:8px; align-items:center; margin:8px 0; }
-    .task-row span { flex:1; }
-    .task-row input { flex:1 1 100px; padding:6px; border:2px solid #444; border-radius:4px; }
-    .task-row.correct input { border-color:lime; background:rgba(0,128,0,.2); }
-    .task-row.wrong input { border-color:crimson; background:rgba(255,0,0,.2); }
-    .reset-icon { background:none; border:none; font-size:18px; cursor:pointer; }
-    @media(max-width:400px) { .btn { font-size:14px; padding:8px; } h1{font-size:24px;} h2{font-size:20px;} .instruction-box{font-size:12px;} }
+    input[type=text] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(to bottom,#c49e5b,#8b6237);
+      color: #fff9e6;
+      cursor: pointer;
+    }
+    .btn:disabled { opacity: .6; cursor: default; }
+    .instruction-box, .final-box {
+      background: rgba(0,0,0,.6);
+      border: 2px solid #8d744a;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .instruction-box ul { list-style: disc inside; margin-left: 16px; }
+    .roles {
+      display: grid;
+      grid-template-columns: repeat( auto-fit, minmax(80px, 1fr) );
+      gap: 12px;
+      justify-items: center;
+    }
+    .role {
+      background: rgba(0,0,0,.5);
+      padding: 6px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+    .role img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 12px;
+      border: 2px solid transparent;
+    }
+    .role.selected img {
+      border-color: gold;
+      box-shadow: 0 0 6px gold;
+    }
+    .task-row { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
+    .task-row span { flex: 1; }
+    .task-row input { flex: 1 1 100px; padding: 6px; border: 2px solid #444; border-radius: 4px; }
+    .task-row.correct input { border-color: lime; background: rgba(0,128,0,.2); }
+    .task-row.wrong input { border-color: crimson; background: rgba(255,0,0,.2); }
+    .reset-icon { background: none; border: none; font-size: 18px; cursor: pointer; }
+    @media (max-width: 500px) {
+      .btn { font-size: 16px; padding: 10px; }
+      h1 { font-size: 22px; }
+      h2 { font-size: 18px; }
+      .instruction-box { font-size: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -99,7 +177,7 @@
   </div>
 
   <!-- 4. Filmik inicjacyjny -->
-  <div id="videoOverlay" class="screen">
+  <div id="videoOverlay">
     <video id="roleVideo" controls></video>
     <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button>
   </div>
@@ -113,16 +191,9 @@
       <p id="randomTask"></p>
       <button class="btn" id="sideBtn" disabled>ZREALIZOWANE</button>
     </div>
-    <p>Ukończono: <span id="count">0</span>/6</p>
-    <div id="tasksList">
-      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-      <div class="task-row" data-ans="DIRHEMY"><span>Ratusz</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
-    </div>
     <button class="btn" id="toCouncil" disabled>PRZEJDŹ DO RADY</button>
+    <p>Ukończono: <span id="count">0</span>/6</p>
+    <div id="tasksList">$1</div>
   </div>
 
   <!-- 6. Rada Grodu -->
@@ -210,7 +281,15 @@
   });
 
   // po wideo -> zadania
-  document.getElementById('videoNext').addEventListener('click', () => show('page4'));
+  document.getElementById('videoNext').addEventListener('click', () => {
+    // Ukryj overlay wideo i zatrzymaj odtwarzanie
+    const overlay = document.getElementById('videoOverlay');
+    overlay.classList.remove('active');
+    const video = document.getElementById('roleVideo');
+    video.pause(); video.currentTime = 0;
+    // Pokaż ekran z zadaniami
+    show('page4');
+  });
 
   // aktualizacja licznika i przycisku rady
   function updateStats() {
