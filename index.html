@@ -6,97 +6,44 @@
   <title>Grodowa Odyseja</title>
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
-    body {
-      font-family: 'MedievalSharp', cursive;
-      background: url('tło gry.png') center/cover fixed;
-      color: #f4f1e6;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;overflow:hidden}
+    body{font-family:'MedievalSharp',cursive;background:url('tło gry.png')center/cover fixed;color:#f4f1e6}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    .screen{display:none;animation:fadeIn .4s;padding:16px;width:100%;height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+    .active{display:block}
+    #videoOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:1000;padding:16px}
+    #videoOverlay.show{display:flex}
+
+    /* Gratulacje screen */
+    #page6{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:16px;height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+    .final-box{width:100%;max-width:480px;background:rgba(0,0,0,.6);border:2px solid #8d744a;border-radius:8px;padding:12px;margin:12px 0;font-size:14px;line-height:1.4}
+    .final-box h1{text-align:center;font-family:'Uncial Antiqua',cursive;font-size:24px;color:#fff;margin-bottom:8px}
+    .final-box p{margin:4px 0;font-size:13px}
+    .museum-logo{width:24px;margin:8px auto;border:2px solid gold;padding:2px;border-radius:6px}
+    .avatar-frame{width:48px;margin:8px auto;border:2px solid gold;padding:2px;border-radius:10px}
+    .avatar-frame img{width:100%;display:block;border-radius:8px;object-fit:contain;object-position:top center;height:80px}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+    .badges img{width:24px;margin-right:4px}
+    .downloads{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+    .downloads .btn{padding:6px;font-size:14px;margin-right:4px}
+
+    .music-toggle{position:fixed;top:8px;right:8px;width:32px;height:32px;background:rgba(0,0,0,.5);border:none;border-radius:50%;font-size:18px;color:#ccc;display:flex;align-items:center;justify-content:center;z-index:1100;cursor:pointer}
+    .music-toggle.playing{color:purple}
+
+    @media(max-width:500px){
+      .btn{font-size:16px;padding:10px}
+      h1{font-size:22px}
+      h2{font-size:18px}
+      .instruction-box,.final-box{font-size:12px}
     }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .screen {
-      display: none;
-      animation: fadeIn .4s;
-      padding: 16px;
-      width: 100%; height: 100vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .active { display: block; }
-    #videoOverlay {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      align-items: center; justify-content: center; flex-direction: column;
-      z-index: 1000; padding: 16px;
-    }
-    #videoOverlay.show { display: flex; }
-    #videoOverlay video { width: 100%; max-width: 360px; border-radius: 12px; }
-    h1, h2, h3 {
-      text-align: center;
-      font-family: 'Uncial Antiqua', cursive;
-      text-shadow: 2px 2px 4px rgba(0,0,0,.6);
-      margin-bottom: 12px;
-    }
-    input[type=text] {
-      width: 100%; padding: 10px; margin: 8px 0;
-      border: none; border-radius: 6px; font-size: 16px;
-    }
-    .btn {
-      width: 100%; padding: 12px; margin: 8px 0;
-      font-size: 18px; border: none; border-radius: 8px;
-      background: linear-gradient(to bottom, #c49e5b, #8b6237);
-      color: #fff9e6; cursor: pointer;
-    }
-    .btn:disabled { opacity: .6; cursor: default; }
-    .instruction-box, .final-box {
-      background: rgba(0,0,0,.6);
-      border: 2px solid #8d744a;
-      border-radius: 8px;
-      padding: 12px; margin: 12px 0;
-      font-size: 14px; line-height: 1.4;
-    }
-    .instruction-box ul { list-style: disc inside; margin-left: 16px; }
-    .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 12px; justify-items: center; }
-    .role {
-      background: rgba(0,0,0,.5); padding: 6px; border-radius: 12px;
-      text-align: center; cursor: pointer; transition: transform .2s;
-    }
-    .role img { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; border: 2px solid transparent; }
-    .role.selected img { border-color: gold; box-shadow: 0 0 6px gold; }
-    .task-row { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
-    .task-row span { flex: 1; }
-    .task-row input { flex: 1 1 100px; padding: 6px; border: 2px solid #444; border-radius: 4px; }
-    .task-row.correct input { border-color: lime; background: rgba(0,128,0,.2); }
-    .task-row.wrong input { border-color: crimson; background: rgba(255,0,0,.2); }
-    .reset-icon { background: none; border: none; font-size: 18px; cursor: pointer; }
-    .museum-logo { width: 24px; margin: 8px auto; border: 2px solid gold; padding: 2px; border-radius: 6px; }
-    .avatar-frame { width: 48px; margin: 8px auto; border: 2px solid gold; padding: 2px; border-radius: 10px; }
-    .avatar-frame img {
-      width: 100%;
-      display: block;
-      border-radius: 8px;
-      object-fit: contain;
-      object-position: top center;
-      height: 80px;
-    }
-    .badges img { width: 24px; margin-right: 4px; }
-    .downloads .btn { padding: 6px; font-size: 14px; margin-right: 4px; }
-    .music-toggle {
-      position: fixed; top: 8px; right: 8px;
-      width: 32px; height: 32px; background: rgba(0,0,0,0.5);
-      border: none; border-radius: 50%; font-size: 18px; color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 1100; cursor: pointer;
-    }
-    @media(max-width:500px) { .btn{font-size:16px;padding:10px}h1{font-size:22px}h2{font-size:18px}.instruction-box,.final-box{font-size:12px} }
   </style>
 </head>
 <body>
   <audio id="bgMusic" loop playsinline></audio>
   <button id="musicToggle" class="music-toggle">🎵</button>
 
+  <!-- 1. Instrukcja -->
   <div id="page1" class="screen active">
     <h1>GRODOWA ODYSEJA</h1>
     <div class="instruction-box">
@@ -111,22 +58,23 @@
     <button id="to2" class="btn">DALEJ</button>
   </div>
 
+  <!-- 2. Pełna fabuła -->
   <div id="page2" class="screen">
     <h2>PEŁNA FABUŁA</h2>
     <div class="instruction-box">
       <p>Rok 972. Sopockie Grodzisko pamięta spokój ostatniego lata – lecz teraz Ziemia drży, jakby wyczuwała nadciągające przesilenie.</p>
-      <p>Z południa echa zwycięstwa pod Cedynią: Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie ku naszym granicom.</p>
-      <p>Ze wschodu twarde znaki Rusi – bizantyjskie krzyże i bałtyckie bóstwa niosą srebro i niepokój.</p>
-      <p>Z zachodu słowa o chrzcie i kamiennych kaplicach: pokój czy kajdany?</p>
-      <p>A wy – tkacze, cieśle, zwiadowcy, zielarki, kowale, handlarze – strzeżecie pamięć przodków.</p>
+      <p>Z południa echa zwycięstwa pod Cedynią: książę Mieszko triumfuje, Hodon pada pod mieczem Czcibora, a cesarskie spojrzenie zwraca się ku naszym granicom.</p>
+      <p>Ze wschodu płynie nowa mowa – twarde znaki Rusi, które łączą bizantyjskie krzyże z pradawnymi bałtyjskimi bóstwami, niosąc srebro i niepokój.</p>
+      <p>Z zachodu zaś unoszą się słowa o chrzcie i kamiennych kaplicach: czy pokój wykuwany w żelaznej wierze jest darem czy kajdanami?</p>
       <ul>
         <li>– Otworzyć Grodzisko na obce mowy, bogów i prawo?</li>
-        <li>– Zamknąć bramy na sto lat, strzegąc ognia?</li>
+        <li>– Zamknąć bramy na sto lat, strzegąc ognia sprzed monet cesarskich?</li>
       </ul>
     </div>
     <button id="to3" class="btn">DALEJ</button>
   </div>
 
+  <!-- 3. Wybór postaci -->
   <div id="page3" class="screen">
     <h2>WYBIERZ POSTAĆ</h2>
     <div class="roles">
@@ -139,77 +87,47 @@
     <button id="to4" class="btn" disabled>DALEJ</button>
   </div>
 
+  <!-- 4. Filmik -->
   <div id="videoOverlay">
     <video id="roleVideo" controls></video>
-    <button id="videoNext" class="btn">DALEJ DO ZADAŃ</button>
+    <button id="videoNext" class="btn">DALEJ DO ZADAŃ</button> 
   </div>
 
+  <!-- 5. Zadania -->
   <div id="page4" class="screen">
     <h2>INTERAKTYWNE ZADANIA</h2>
     <div class="instruction-box">
-      <p>Wykonaj 4 główne zadania oraz 1 poboczne.</p>
-      <button id="drawBtn" class="btn">🎲 LOSUJ ZADANIE</button>
+      <p>Wykonaj 4 główne zadania w lokacjach: Brama Grodziska, Warsztat Kowala, Chata Zielarki, Chata Tkaczki, Namiestnik oraz Targowisko – i 1 zadanie poboczne.</p>
+      <button id="drawBtn" class="btn">🎲 LOSUJ ZADANIE POBOCZNE</button>
       <p id="randomTask"></p>
       <button id="sideBtn" class="btn" disabled>ZREALIZOWANE</button>
     </div>
-
     <p>Ukończono: <span id="count">0</span>/6</p>
     <button id="toCouncil" class="btn" disabled>PRZEJDŹ DO RADY</button>
-
     <div id="tasksList">
-      <div class="task-row" data-ans="LAMELKA">
-        <span>Brama Grodziska</span>
-        <input type="text">
-        <button class="btn confirm">ZATWIERDŹ</button>
-        <button class="reset-icon">🔄</button>
-      </div>
-      <div class="task-row" data-ans="MIECH">
-        <span>Warsztat Kowala</span>
-        <input type="text">
-        <button class="btn confirm">ZATWIERDŹ</button>
-        <button class="reset-icon">🔄</button>
-      </div>
-      <div class="task-row" data-ans="ŻYTO">
-        <span>Zagroda</span>
-        <input type="text">
-        <button class="btn confirm">ZATWIERDŹ</button>
-        <button class="reset-icon">🔄</button>
-      </div>
-      <div class="task-row" data-ans="LEN">
-        <span>Chata Tkaczki</span>
-        <input type="text">
-        <button class="btn confirm">ZATWIERDŹ</button>
-        <button class="reset-icon">🔄</button>
-      </div>
-      <div class="task-row" data-ans="POKRZYWA">
-        <span>Chata Zielarki</span>
-        <input type="text">
-        <button class="btn confirm">ZATWIERDŹ</button>
-        <button class="reset-icon">🔄</button>
-      </div>
-      <div class="task-row" data-ans="DIRHEMY">
-        <span>Namiestnik</span>
-        <input type="text">
-        <button class="btn confirm">ZATWIERDŹ</button>
-        <button class="reset-icon">🔄</button>
-      </div>
+      <div class="task-row" data-ans="LAMELKA"><span>Brama Grodziska</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="MIECH"><span>Warsztat Kowala</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="ŻYTO"><span>Zagroda</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="LEN"><span>Chata Tkaczki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="POKRZYWA"><span>Chata Zielarki</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
+      <div class="task-row" data-ans="DIRHEMY"><span>Namiestnik</span><input type="text"><button class="btn confirm">ZATWIERDŹ</button><button class="reset-icon">🔄</button></div>
     </div>
   </div>
-    <button id="toCouncil" class="btn" disabled>PRZEJDŹ DO RADY</button>
-    <p>Ukończono: <span id="count">0</span>/6</p>
-    $1
-  $3 class="screen">
+
+  <!-- 6. Rada -->
+  <div id="page5" class="screen">
     <h2>RADA GRODU – DECYZYJNA KULMINACJA</h2>
     <button id="endTrade" class="btn">🛒 Otwarcie na handel</button>
     <button id="endClose" class="btn">🛡️ Zamknięcie granic</button>
     <button id="endLaw" class="btn">⚖️ Wprowadzenie nowego prawa</button>
   </div>
 
+  <!-- 7. Gratulacje -->
   <div id="page6" class="screen">
-    <h1>GRATULACJE!</h1>
-    <img src="logo.1.png" class="museum-logo" alt="Muzeum">
-    <div class="avatar-frame"><img id="avatar" alt="Twoja postać"></div>
     <div class="final-box">
+      <img src="logo.1.png" class="museum-logo" alt="Muzeum">
+      <h1>GRATULACJE!</h1>
+      <div class="avatar-frame"><img id="avatar" alt="Twoja postać"></div>
       <p><strong>Drużyna:</strong> <span id="resTeam"></span></p>
       <p><strong>Postać:</strong> <span id="resRole"></span></p>
       <p><strong>Zadania główne:</strong> <span id="resCount"></span>/6</p>
@@ -218,177 +136,163 @@
       <p id="resDesc" style="white-space:pre-wrap;margin-top:8px"></p>
       <div class="badges"></div>
       <div class="downloads"></div>
+      <button id="restartBtn" class="btn">ZAGRAJ PONOWNIE</button>
     </div>
-    <button id="restartBtn" class="btn">ZAGRAJ PONOWNIE</button>
   </div>
 
   <script>
-  // Muzyka i toggle
-  const musicTracks = ['celtic-festival-307626.mp3'];
-  const bgMusic = document.getElementById('bgMusic');
-  const musicToggle = document.getElementById('musicToggle');
-  musicToggle.onclick = () => {
-    if (bgMusic.paused) { bgMusic.play(); musicToggle.textContent = '🔇'; }
-    else { bgMusic.pause(); musicToggle.textContent = '🎵'; }
-  };
-  document.getElementById('teamName').addEventListener('input', () => {
-    bgMusic.src = musicTracks[0]; bgMusic.load(); bgMusic.play().catch(() => {});
-    musicToggle.textContent = '🔇';
-  }, { once: true });
-
-  // Dane globalne
-  const vids = {
-    zwiadowca: 'zwiadowca.1.mp4',
-    tkaczka: 'tkaczka.1.mp4',
-    zielarka: 'zielarka.1.mp4',
-    kupiec: 'kupiec.1.mp4',
-    rzemieslnik: 'rzemieslnik.1.mp4'
-  };
-  const sideTasks = [
-    'Znajdź coś zielonego i dotknij to.',
-    'Zrób 5 przysiadów przy ławce.',
-    'Znajdź kamień większy niż dłoń.',
-    'Zrób zdjęcie czegoś okrągłego.',
-    'Znajdź coś na literę P.',
-    'Podskocz 3 razy w cieniu.',
-    'Ułóż literę A z patyków.',
-    'Opisz kolor liścia.',
-    'Zrób 10 kroków do przodu i 5 w bok.',
-    'Stań na jednej nodze i licz do 10 na głos.'
-  ];
-  const endings = {
-    handel: {
-      name: 'Otwarcie na handel',
-      desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu wyłoniła nowe możliwości wymiany. Bramy otwarto, kupcy przybyli z odległych krain, a w powietrzu unosił się zapach przypraw i dźwięk monet. Rzemieślnicy poszerzyli horyzonty, ale równocześnie wzrosło ryzyko chorób i oszustw. Grodzisko stało się prężnym ośrodkiem handlu – czy zyskało dzięki temu swe prawdziwe dziedzictwo?`
-    },
-    granice: {
-      name: 'Zamknięcie granic',
-      desc: `W obawie przed nieznanym Rada podjęła decyzję o zamknięciu murów. Straże wzmocniono, handel ograniczono, a mieszkańcy zwrócili się ku własnym plonom. Spokój zapanował, ale wraz z nim narastała izolacja. Ciche szeptania o bogactwach poza murami pobudzały tęsknotę. Czy bezpieczeństwo usprawiedliwiło utratę wolności ducha?`
-    },
-    prawo: {
-      name: 'Wprowadzenie nowego prawa',
-      desc: `Pod przewodnictwem starszyzny wprowadzono świeże ustawy. Każdy – możny i prosty – musiał podporządkować się nowym paragrafom. Spory szybko narosły, gdy reguły interpretowano na różne sposoby. Nowe prawo obiecało porządek, ale także rozpoczęło walkę o wpływy i odsłoniło pęknięcia w jedności wspólnoty. Czy ów ład zdołał przetrwać burze ambicji?`
-    }
-  };
-
-  let team = '';
-  let role = '';
-  let count = 0;
-  let sideDone = false;
-
-  // Funkcja przełączania ekranów
-  function show(id) {
-    document.getElementById('videoOverlay').classList.remove('show');
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    if (id === 'videoOverlay') {
-      document.getElementById('videoOverlay').classList.add('show');
-    } else {
-      document.getElementById(id).classList.add('active');
-    }
-  }
-
-  // Nawigacja między ekranami
-  document.getElementById('to2').addEventListener('click', () => {
-    const name = document.getElementById('teamName').value.trim();
-    if (!name) return alert('Podaj nazwę drużyny');
-    team = name;
-    show('page2');
-  });
-  document.getElementById('to3').addEventListener('click', () => show('page3'));
-
-  // Wybór postaci
-  document.querySelectorAll('.role').forEach(el => el.addEventListener('click', () => {
-    role = el.dataset.role;
-    document.querySelectorAll('.role').forEach(r => r.classList.toggle('selected', r === el));
-    document.getElementById('to4').disabled = false;
-  }));
-  document.getElementById('to4').addEventListener('click', () => {
-    document.getElementById('roleVideo').src = vids[role];
-    show('videoOverlay');
-  });
-
-  // Po filmie
-  document.getElementById('videoNext').addEventListener('click', () => {
-    document.getElementById('roleVideo').pause();
-    show('page4');
-  });
-
-  // Zadania
-  document.getElementById('drawBtn').addEventListener('click', () => {
-    document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random() * sideTasks.length)];
-    document.getElementById('sideBtn').disabled = false;
-  });
-  document.getElementById('sideBtn').addEventListener('click', () => {
-    sideDone = true;
-    document.getElementById('sideBtn').style.background = 'lime';
-  });
-
-  function updateStats() {
-    document.getElementById('count').innerText = count;
-    document.getElementById('toCouncil').disabled = count < 4;
-  }
-
-  // Potwierdzenie zadania
-  document.querySelectorAll('.confirm').forEach(btn => btn.addEventListener('click', () => {
-    const row = btn.closest('.task-row');
-    const answer = row.dataset.ans;
-    const val = row.querySelector('input').value.trim().toUpperCase();
-    if (val === answer) {
-      if (!row.classList.contains('correct')) {
-        row.classList.remove('wrong'); row.classList.add('correct'); count++;
+    // Muzyka i toggle
+    const musicTracks = ['celtic-festival-307626.mp3'];
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    musicToggle.onclick = () => {
+      if (bgMusic.paused) {
+        bgMusic.play(); musicToggle.textContent = '🎵'; musicToggle.classList.add('playing');
+      } else {
+        bgMusic.pause(); musicToggle.textContent = '🎵'; musicToggle.classList.remove('playing');
       }
-    } else {
-      if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
-      row.classList.add('wrong');
+    };
+    // Start muzyki po wpisaniu nazwy drużyny
+    document.getElementById('teamName').addEventListener('input', () => {
+      bgMusic.src = musicTracks[0]; bgMusic.load(); bgMusic.play().catch(() => {});
+      musicToggle.textContent = '🎵'; musicToggle.classList.add('playing');
+    }, { once: true });
+
+    // Dane i logika gry
+    const vids = {
+      zwiadowca: 'zwiadowca.1.mp4',
+      tkaczka:   'tkaczka.1.mp4',
+      zielarka:  'zielarka.1.mp4',
+      kupiec:    'kupiec.1.mp4',
+      rzemieslnik:'rzemieslnik.1.mp4'
+    };
+    const sideTasks = [
+      'Znajdź coś zielonego i dotknij to.',
+      'Zrób 5 przysiadów przy ławce.',
+      'Znajdź kamień większy niż dłoń.',
+      'Zrób zdjęcie czegoś okrągłego.',
+      'Znajdź coś na literę P.',
+      'Podskocz 3 razy w cieniu.',
+      'Ułóż literę A z patyków.',
+      'Opisz kolor liścia.',
+      'Zrób 10 kroków do przodu i 5 w bok.',
+      'Stań na jednej nodze i licz do 10 na głos.'
+    ];
+    const endings = {
+      handel:  { name:'Otwarcie na handel', desc:`Po dniach...` },
+      granice:{ name:'Zamknięcie granic', desc:`W obawie...` },
+      prawo:   { name:'Wprowadzenie nowego prawa', desc:`Pod...` }
+    };
+    let team='', role='', count=0, sideDone=false;
+
+    function show(id){
+      document.getElementById('videoOverlay').classList.remove('show');
+      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+      if (id==='videoOverlay') document.getElementById('videoOverlay').classList.add('show');
+      else document.getElementById(id).classList.add('active');
     }
-    updateStats();
-  }));
 
-  // Reset zadania
-  document.querySelectorAll('.reset-icon').forEach(btn => btn.addEventListener('click', () => {
-    const row = btn.closest('.task-row');
-    if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
-    row.classList.remove('wrong');
-    row.querySelector('input').value = '';
-    updateStats();
-  }));
+    // Przejścia
+    document.getElementById('to2').onclick = ()=>{
+      let n = document.getElementById('teamName').value.trim();
+      if (!n) return alert('Podaj nazwę drużyny');
+      team = n; show('page2');
+    };
+    document.getElementById('to3').onclick = ()=>show('page3');
+    document.querySelectorAll('.role').forEach(el=>el.onclick=()=>{
+      role = el.dataset.role;
+      document.querySelectorAll('.role').forEach(r=>r.classList.toggle('selected', r===el));
+      document.getElementById('to4').disabled = false;
+    });
+    document.getElementById('to4').onclick = ()=>{
+      document.getElementById('roleVideo').src = vids[role];
+      show('videoOverlay');
+    };
+    document.getElementById('videoNext').onclick = ()=>{
+      document.getElementById('roleVideo').pause();
+      show('page4');
+    };
 
-  // Przejście do rady
-  document.getElementById('toCouncil').addEventListener('click', () => show('page5'));
+    // Zadania poboczne
+    document.getElementById('drawBtn').onclick = ()=>{
+      document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random()*sideTasks.length)];
+      document.getElementById('sideBtn').disabled = false;
+    };
+    document.getElementById('sideBtn').onclick = ()=>{
+      sideDone = true; document.getElementById('sideBtn').style.background='lime';
+    };
 
-  // Rada
-  document.getElementById('endTrade').addEventListener('click', () => finish('handel'));
-  document.getElementById('endClose').addEventListener('click', () => finish('granice'));
-  document.getElementById('endLaw').addEventListener('click', () => finish('prawo'));
+    function updateStats(){
+      document.getElementById('count').innerText = count;
+      document.getElementById('toCouncil').disabled = count<4;
+    }
 
-  // Wyświetlenie podsumowania
-  function finish(dec) {
-    document.getElementById('resTeam').innerText = team;
-    document.getElementById('resRole').innerText = role;
-    document.getElementById('resCount').innerText = count;
-    document.getElementById('resSide').innerText = sideDone ? 'TAK' : 'NIE';
-    document.getElementById('resDec').innerText = endings[dec].name;
-    document.getElementById('resDesc').innerText = endings[dec].desc;
-    document.getElementById('avatar').src = role + '.1.png';
-    // Badges and downloads
-    document.querySelector('.badges').innerHTML = '<img src="medalion.1.png" alt="Medalion">' + (sideDone ? '<img src="korona.1.png" alt="Korona">' : '');
-    document.querySelector('.downloads').innerHTML = '<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>' + (sideDone ? '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>' : '');
-    show('page6');
-  }
+    // Potwierdzanie i reset zadań
+    document.querySelectorAll('.confirm').forEach(btn=>btn.onclick=()=>{
+      let row = btn.closest('.task-row'),
+          ans = row.dataset.ans,
+          val = row.querySelector('input').value.trim().toUpperCase();
+      if (val===ans){
+        if (!row.classList.contains('correct')){
+          row.classList.add('correct'); row.classList.remove('wrong'); count++;
+        }
+      } else {
+        if (row.classList.contains('correct')){ row.classList.remove('correct'); count--; }
+        row.classList.add('wrong');
+      }
+      updateStats();
+    });
+    document.querySelectorAll('.reset-icon').forEach(btn=>btn.onclick=()=>{
+      let row = btn.closest('.task-row');
+      if (row.classList.contains('correct')){ row.classList.remove('correct'); count--; }
+      row.classList.remove('wrong'); row.querySelector('input').value = '';
+      updateStats();
+    });
 
-  // Restart gry
-  document.getElementById('restartBtn').addEventListener('click', () => {
-    team = ''; role = ''; count = 0; sideDone = false;
-    document.getElementById('teamName').value = '';
-    document.querySelectorAll('.role').forEach(r => r.classList.remove('selected'));
-    document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct', 'wrong'));
-    document.querySelectorAll('.task-row input').forEach(i => i.value = '');
-    document.getElementById('randomTask').innerText = '';
-    document.getElementById('sideBtn').disabled = true; document.getElementById('sideBtn').style.background = '';
-    document.getElementById('to4').disabled = true; document.getElementById('toCouncil').disabled = true;
-    updateStats();
-    show('page1');
-  });
-</script>
+    // Rada
+    document.getElementById('toCouncil').onclick = ()=>show('page5');
+    document.getElementById('endTrade').onclick = ()=>finish('handel');
+    document.getElementById('endClose').onclick = ()=>finish('granice');
+    document.getElementById('endLaw').onclick = ()=>finish('prawo');
+
+    function finish(dec){
+      document.getElementById('resTeam').innerText = team;
+      document.getElementById('resRole').innerText = role;
+      document.getElementById('resCount').innerText = count;
+      document.getElementById('resSide').innerText  = sideDone?'TAK':'NIE';
+      document.getElementById('resDec').innerText   = endings[dec].name;
+      document.getElementById('resDesc').innerText  = endings[dec].desc;
+      document.getElementById('avatar').src         = role+'.1.png';
+
+      // Medalion i korona
+      let badgesHTML = '<img src="medalion.1.png" alt="Medalion">';
+      if (sideDone) badgesHTML += '<img src="korona.1.png" alt="Korona">';
+      document.querySelector('.badges').innerHTML = badgesHTML;
+
+      // Pobieranie
+      let dl = '<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>';
+      if (sideDone) dl += '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>';
+      document.querySelector('.downloads').innerHTML = dl;
+
+      show('page6');
+    }
+
+    // Restart
+    document.getElementById('restartBtn').onclick = ()=>{
+      team=''; role=''; count=0; sideDone=false;
+      document.getElementById('teamName').value='';
+      document.querySelectorAll('.role').forEach(r=>r.classList.remove('selected'));
+      document.querySelectorAll('.task-row').forEach(r=>r.classList.remove('correct','wrong'));
+      document.querySelectorAll('.task-row input').forEach(i=>i.value='');
+      document.getElementById('randomTask').innerText='';
+      document.getElementById('sideBtn').disabled=true;
+      document.getElementById('sideBtn').style.background='';
+      document.getElementById('to4').disabled=true;
+      document.getElementById('toCouncil').disabled=true;
+      updateStats();
+      show('page1');
+    };
+  </script>
+
 </body>
 </html>
