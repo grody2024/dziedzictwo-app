@@ -105,7 +105,10 @@
   </div>
 
   <!-- 4. Filmik inicjacyjny -->
-  <div id="videoOverlay">  <video id="roleVideo" controls></video>  <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button></div>
+  <div id="videoOverlay">
+    <video id="roleVideo" controls></video>
+    <button class="btn" id="videoNext">DALEJ DO ZADAŃ</button>
+  </div>
 
   <!-- 5. Zadania -->
   <div id="page4" class="screen">
@@ -155,170 +158,168 @@
   </div>
 
   <script>
-<script>
-  // 1) Lista utworów i inicjalizacja audio
-  const musicTracks = [
-    'celtycki-festiwal-307626.mp3',
-    'celtycki-taniec-skrzypcowy-307624.mp3',
-    'celtic-glory-307625.mp3',
-    'celtyckie-legendy-307629.mp3',
-    'celtycki-poranny-telefon-307627.mp3'
-  ];
-  const bgMusic = document.getElementById('bgMusic');
-  // wybieramy losowo i ładujemy plik, ale jeszcze nie odtwarzamy (jest muted)
-  bgMusic.src = musicTracks[Math.floor(Math.random() * musicTracks.length)];
-  bgMusic.load();
+    // 1) Lista utworów i inicjalizacja audio
+    const musicTracks = [
+      'celtycki-festiwal-307626.mp3',
+      'celtycki-taniec-skrzypcowy-307624.mp3',
+      'celtic-glory-307625.mp3',
+      'celtyckie-legendy-307629.mp3',
+      'celtycki-poranny-telefon-307627.mp3'
+    ];
+    const bgMusic = document.getElementById('bgMusic');
+    bgMusic.src = musicTracks[Math.floor(Math.random() * musicTracks.length)];
+    bgMusic.load();
 
-  // 2) Odpalenie odtwarzania przy pierwszym wpisaniu czegokolwiek
-  const teamInput = document.getElementById('teamName');
-  teamInput.addEventListener('input', () => {
-    bgMusic.muted = false;
-    bgMusic.play().catch(() => {});
-  }, { once: true });
+    // 2) Odpalenie odtwarzania przy pierwszym wpisaniu czegokolwiek
+    const teamInput = document.getElementById('teamName');
+    teamInput.addEventListener('input', () => {
+      bgMusic.muted = false;
+      bgMusic.play().catch(() => {});
+    }, { once: true });
 
-  // 3) Reszta Twojego dotychczasowego kodu:
-  let team = '', role = '', count = 0, sideDone = false;
-  const vids = {
-    zwiadowca: 'zwiadowca.1.mp4',
-    tkaczka: 'tkaczka.1.mp4',
-    zielarka: 'zielarka.1.mp4',
-    kupiec: 'kupiec.1.mp4',
-    rzemieslnik: 'rzemieslnik.1.mp4'
-  };
-  const sideTasks = [
-    'Znajdź coś zielonego i dotknij to.',
-    'Zrób 5 przysiadów przy ławce.',
-    'Znajdź kamień większy niż dłoń.',
-    'Zrób zdjęcie czegoś okrągłego.',
-    'Znajdź coś na literę P.',
-    'Podskocz 3 razy w cieniu.',
-    'Ułóż literę A z patyków.',
-    'Opisz kolor liścia.',
-    'Zrób 10 kroków do przodu i 5 w bok.',
-    'Stań na jednej nodze i licz do 10 na głos.'
-  ];
-  const endings = {
-    handel: {
-      name: 'Otwarcie na handel',
-      desc: `Po dniach pełnych gorących dyskusji… (tu pełny opis)`
-    },
-    granice: {
-      name: 'Zamknięcie granic',
-      desc: `Decyzja zapadła w ciszy… (tu pełny opis)`
-    },
-    prawo: {
-      name: 'Wprowadzenie nowego prawa',
-      desc: `Głos Starszyzny niósł się echem… (tu pełny opis)`
+    // 3) Reszta Twojego kodu:
+    let team = '', role = '', count = 0, sideDone = false;
+    const vids = {
+      zwiadowca: 'zwiadowca.1.mp4',
+      tkaczka:   'tkaczka.1.mp4',
+      zielarka:  'zielarka.1.mp4',
+      kupiec:    'kupiec.1.mp4',
+      rzemieslnik:'rzemieslnik.1.mp4'
+    };
+    const sideTasks = [
+      'Znajdź coś zielonego i dotknij to.',
+      'Zrób 5 przysiadów przy ławce.',
+      'Znajdź kamień większy niż dłoń.',
+      'Zrób zdjęcie czegoś okrągłego.',
+      'Znajdź coś na literę P.',
+      'Podskocz 3 razy w cieniu.',
+      'Ułóż literę A z patyków.',
+      'Opisz kolor liścia.',
+      'Zrób 10 kroków do przodu i 5 w bok.',
+      'Stań na jednej nodze i licz do 10 na głos.'
+    ];
+    const endings = {
+      handel: {
+        name: 'Otwarcie na handel',
+        desc: `Po dniach pełnych gorących dyskusji, sprzecznych głosów i narad pod gwiazdami, Rada Grodu podjęła decyzję, która odmieniła losy krainy. Bramy zostały otwarte, strażnicy powitali pierwsze karawany, a kurz z traktów przyniósł zapachy nieznanych przypraw i szelest monet z odległych królestw. Targowiska rozbłysły kolorami, a rzemieślnicy zyskali dostęp do nowych surowców i technik.
+
+Lecz z handlem przyszły też cienie. Wieści o znikających dobrach, szpiegach i dziwnych chorobach krążą po zaułkach. Grodowi nie brak bogactwa – lecz czy nie przypłaci go duszą?`
+      },
+      granice: {
+        name: 'Zamknięcie granic',
+        desc: `Decyzja zapadła w ciszy, przerywanej jedynie trzaskiem pochodni i dźwiękiem zamykanych wrót. Rada Grodu postawiła na bezpieczeństwo. Straże podwojono, mury wzmocniono, a szlaki pokryła trawa zapomnienia. Zapanował porządek, ludzie żyją w spokoju, karmiąc się plonami własnych pól i ufając jedynie tym, których znają od dziecka.
+
+Jednak z każdym dniem grodowe powietrze staje się cięższe. Zaczyna brakować inspiracji, wieści ze świata, nowości. Plotki o tajemniczych sylwetkach za murem, szeptane nocą, zaczynają niepokoić nawet najodważniejszych. Zamknięcie uratowało Grodu ciało – ale czy nie zgubiono jego ducha?`
+      },
+      prawo: {
+        name: 'Wprowadzenie nowego prawa',
+        desc: `Głos Starszyzny niósł się echem po sali, gdy ogłoszono narodziny nowego ładu. Dotychczasowe zasady – stare jak same mury – ustąpiły miejsca świeżym postanowieniom. Ustawa objęła każdego: możnych i prostych, żołnierzy i zielarki, kupców i bardów. Jedni powitali ją z nadzieją, inni z trwogą.
+
+Nowe prawo dało początek przemianom. Ale z każdym paragrafem rosła też pokusa – nadużycia, spory interpretacyjne, walki o wpływy. Czy Grodowi uda się zachować równowagę między wolą ludu a potrzebą porządku? A może reforma stanie się iskrą większego ognia?`
+      }
+    };
+
+    function show(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
-  };
-
-  function show(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-  }
-
-  document.getElementById('to2').addEventListener('click', () => {
-    const input = document.getElementById('teamName');
-    if (!input.value.trim()) {
-      alert('Podaj nazwę drużyny');
-    } else {
-      team = input.value.trim();
-      show('page2');
+    document.getElementById('to2').addEventListener('click', () => {
+      const input = document.getElementById('teamName');
+      if (!input.value.trim()) alert('Podaj nazwę drużyny');
+      else { team = input.value.trim(); show('page2'); }
+    });
+    document.getElementById('to3').addEventListener('click', () => show('page3'));
+    document.querySelectorAll('.role').forEach(el =>
+      el.addEventListener('click', () => {
+        role = el.dataset.role;
+        document.querySelectorAll('.role')
+          .forEach(r => r.classList.toggle('selected', r === el));
+        document.getElementById('to4').disabled = false;
+      })
+    );
+    document.getElementById('to4').addEventListener('click', () => {
+      document.getElementById('roleVideo').src = vids[role];
+      document.getElementById('videoOverlay').style.display = 'flex';
+    });
+    document.getElementById('videoNext').addEventListener('click', () => {
+      document.getElementById('videoOverlay').style.display = 'none';
+      show('page4');
+    });
+    function updateStats() {
+      document.getElementById('count').innerText = count;
+      document.getElementById('toCouncil').disabled = count < 4;
     }
-  });
-
-  document.getElementById('to3').addEventListener('click', () => show('page3'));
-
-  document.querySelectorAll('.role').forEach(el => el.addEventListener('click', () => {
-    role = el.dataset.role;
-    document.querySelectorAll('.role').forEach(r => r.classList.toggle('selected', r === el));
-    document.getElementById('to4').disabled = false;
-  }));
-
-  document.getElementById('to4').addEventListener('click', () => {
-    document.getElementById('roleVideo').src = vids[role];
-    document.getElementById('videoOverlay').style.display = 'flex';
-  });
-
-  document.getElementById('videoNext').addEventListener('click', () => {
-    document.getElementById('videoOverlay').style.display = 'none';
-    show('page4');
-  });
-
-  function updateStats() {
-    document.getElementById('count').innerText = count;
-    document.getElementById('toCouncil').disabled = count < 4;
-  }
-
-  document.querySelectorAll('.confirm').forEach(btn => btn.addEventListener('click', () => {
-    const row = btn.closest('.task-row'),
-          ans = row.dataset.ans,
-          val = row.querySelector('input').value.trim().toUpperCase();
-    if (val === ans) {
-      if (!row.classList.contains('correct')) { row.classList.remove('wrong'); row.classList.add('correct'); count++; }
-    } else {
-      if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
-      row.classList.add('wrong');
+    document.querySelectorAll('.confirm').forEach(btn =>
+      btn.addEventListener('click', () => {
+        const row = btn.closest('.task-row'),
+              ans = row.dataset.ans,
+              val = row.querySelector('input').value.trim().toUpperCase();
+        if (val === ans) {
+          if (!row.classList.contains('correct')) {
+            row.classList.remove('wrong');
+            row.classList.add('correct');
+            count++;
+          }
+        } else {
+          if (row.classList.contains('correct')) {
+            row.classList.remove('correct');
+            count--;
+          }
+          row.classList.add('wrong');
+        }
+        updateStats();
+      })
+    );
+    document.querySelectorAll('.reset-icon').forEach(btn =>
+      btn.addEventListener('click', () => {
+        const row = btn.closest('.task-row');
+        if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
+        row.classList.remove('wrong');
+        row.querySelector('input').value = '';
+        updateStats();
+      })
+    );
+    document.getElementById('drawBtn').addEventListener('click', () => {
+      document.getElementById('randomTask').innerText =
+        sideTasks[Math.floor(Math.random() * sideTasks.length)];
+      document.getElementById('sideBtn').disabled = false;
+    });
+    document.getElementById('sideBtn').addEventListener('click', () => {
+      sideDone = true;
+      document.getElementById('sideBtn').style.background = 'lime';
+    });
+    document.getElementById('toCouncil').addEventListener('click', () => show('page5'));
+    document.getElementById('endTrade').addEventListener('click', () => finish('handel'));
+    document.getElementById('endClose').addEventListener('click', () => finish('granice'));
+    document.getElementById('endLaw').addEventListener('click', () => finish('prawo'));
+    function finish(dec) {
+      document.getElementById('resTeam').innerText = team;
+      document.getElementById('resRole').innerText = role;
+      document.getElementById('resDec').innerText = endings[dec].name;
+      document.getElementById('resDesc').innerText = endings[dec].desc;
+      document.getElementById('avatar').src = role + '.png';
+      document.getElementById('resSide').innerText = sideDone ? 'TAK' : 'NIE';
+      document.getElementById('resCount').innerText = count;
+      document.querySelector('.badges').innerHTML =
+        '<img src="medalion.1.png" alt="Medalion">' + (sideDone ? '<img src="korona.1.png" alt="Korona">' : '');
+      document.querySelector('.downloads').innerHTML =
+        '<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>' +
+        (sideDone ? '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>' : '');
+      show('page6');
     }
-    updateStats();
-  }));
-
-  document.querySelectorAll('.reset-icon').forEach(btn => btn.addEventListener('click', () => {
-    const row = btn.closest('.task-row');
-    if (row.classList.contains('correct')) { row.classList.remove('correct'); count--; }
-    row.classList.remove('wrong');
-    row.querySelector('input').value = '';
-    updateStats();
-  }));
-
-  document.getElementById('drawBtn').addEventListener('click', () => {
-    document.getElementById('randomTask').innerText = sideTasks[Math.floor(Math.random() * sideTasks.length)];
-    document.getElementById('sideBtn').disabled = false;
-  });
-
-  document.getElementById('sideBtn').addEventListener('click', () => {
-    sideDone = true;
-    document.getElementById('sideBtn').style.background = 'lime';
-  });
-
-  document.getElementById('toCouncil').addEventListener('click', () => show('page5'));
-
-  document.getElementById('endTrade').addEventListener('click', () => finish('handel'));
-  document.getElementById('endClose').addEventListener('click', () => finish('granice'));
-  document.getElementById('endLaw').addEventListener('click', () => finish('prawo'));
-
-  function finish(dec) {
-    document.getElementById('resTeam').innerText = team;
-    document.getElementById('resRole').innerText = role;
-    document.getElementById('resDec').innerText = endings[dec].name;
-    document.getElementById('resDesc').innerText = endings[dec].desc;
-    document.getElementById('avatar').src = role + '.png';
-    document.getElementById('resSide').innerText = sideDone ? 'TAK' : 'NIE';
-    document.getElementById('resCount').innerText = count;
-    document.querySelector('.badges').innerHTML =
-      '<img src="medalion.1.png" alt="Medalion">' + (sideDone ? '<img src="korona.1.png" alt="Korona">' : '');
-    document.querySelector('.downloads').innerHTML =
-      '<a href="medalion.1.png" download class="btn">POBIERZ MEDALION</a>' +
-      (sideDone ? '<a href="korona.1.png" download class="btn">POBIERZ KORONĘ</a>' : '');
-    show('page6');
-  }
-
-  document.getElementById('restartBtn').addEventListener('click', () => {
-    team = ''; role = ''; count = 0; sideDone = false;
-    document.getElementById('teamName').value = '';
-    document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct','wrong'));
-    document.querySelectorAll('.task-row input').forEach(i => i.value = '');
-    document.getElementById('randomTask').innerText = '';
-    document.getElementById('sideBtn').disabled = true; document.getElementById('sideBtn').style.background = '';
-    document.querySelectorAll('.role').forEach(r => r.classList.remove('selected'));
-    document.getElementById('to4').disabled = true;
-    document.getElementById('toCouncil').disabled = true;
-    updateStats();
-    show('page1');
-  });
-</script>
-   
-
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      team = ''; role = ''; count = 0; sideDone = false;
+      document.getElementById('teamName').value = '';
+      document.querySelectorAll('.task-row').forEach(r => r.classList.remove('correct','wrong'));
+      document.querySelectorAll('.task-row input').forEach(i => i.value = '');
+      document.getElementById('randomTask').innerText = '';
+      document.getElementById('sideBtn').disabled = true; document.getElementById('sideBtn').style.background = '';
+      document.querySelectorAll('.role').forEach(r => r.classList.remove('selected'));
+      document.getElementById('to4').disabled = true;
+      document.getElementById('toCouncil').disabled = true;
+      updateStats();
+      show('page1');
+    });
   </script>
 </body>
 </html>
